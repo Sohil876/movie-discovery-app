@@ -14,9 +14,6 @@ const HomeScreen = () => {
 				<MediaWrapper>
 					<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
 				</MediaWrapper>
-				<MediaWrapper mb="120px">
-					<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
-				</MediaWrapper>
 			</HomeWrapper>
 		</StyledSafeArea>
 	);

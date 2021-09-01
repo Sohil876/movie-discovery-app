@@ -6,6 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -31,10 +32,12 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<StatusBar style="light" backgroundColor="#000" />
-			<HomeScreen />
-		</View>
+		<NavigationContainer>
+			<View style={styles.container}>
+				<StatusBar style="light" backgroundColor="#000" />
+				<HomeScreen />
+			</View>
+		</NavigationContainer>
 	);
 }
 
