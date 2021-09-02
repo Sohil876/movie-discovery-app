@@ -27,10 +27,10 @@ const MediaRow = ({ title, url }) => {
 				<FlatList
 					horizontal
 					data={mediaData}
+					keyExtractor={item => toString(item.id)}
 					renderItem={({ item }) => {
 						return <MediaCard media={item} />;
 					}}
-					keyExtractor={item => toString(item.id)}
 				></FlatList>
 			);
 		}
@@ -65,7 +65,6 @@ const RowTitle = styled.Text`
 
 const ViewBtn = styled.TouchableOpacity`
 	border-radius: 100px;
-	/* border: 1px solid ${colors.primaryClr}; */
 	padding: 10px 20px;
 `;
 

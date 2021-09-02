@@ -11,8 +11,11 @@ import { BASE_IMG_URL } from 'utils/requests';
 const MediaCard = ({ media }) => {
 	const [state, setState] = useState({
 		title: media.title || media.name || media.original_title || media.original_name,
+
 		rating: Number(media.vote_average).toFixed(1),
+
 		posterURL: `${media.poster_path ? `${BASE_IMG_URL}${media.poster_path}` : null}`,
+
 		year: `${new Date(media.release_date).getFullYear() || 'N/A'}`,
 	});
 

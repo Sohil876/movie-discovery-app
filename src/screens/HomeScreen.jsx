@@ -1,31 +1,24 @@
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import MediaRow from 'layoutcomp/MediaRow';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
-import MediaRow from 'layoutcomp/MediaRow';
 import { movieRequests } from 'utils/requests';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const HomeScreen = () => {
-	const extraPadding = 80;
 	const bottomNavBarHeight = useBottomTabBarHeight();
 
 	return (
-		<StyledSafeArea>
-			<HomeWrapper>
-				<MediaWrapper>
-					<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
-				</MediaWrapper>
-				<MediaWrapper marginBottom={bottomNavBarHeight + extraPadding}>
-					<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
-				</MediaWrapper>
-			</HomeWrapper>
-		</StyledSafeArea>
+		<HomeWrapper>
+			<MediaWrapper>
+				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
+			</MediaWrapper>
+			<MediaWrapper marginBottom={bottomNavBarHeight}>
+				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
+			</MediaWrapper>
+		</HomeWrapper>
 	);
 };
-
-const StyledSafeArea = styled.SafeAreaView`
-	flex: 1;
-`;
 
 const HomeWrapper = styled.ScrollView`
 	flex: 1;

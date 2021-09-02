@@ -1,12 +1,11 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faPlay, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faPlay, faPlayCircle, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';
+import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import HomeScreen from './src/screens/HomeScreen';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text } from 'react-native';
 import BottomNavBar from './src/components/navigation/BottomNavBar';
 
 export default function App() {
@@ -17,7 +16,7 @@ export default function App() {
 	 * so that they may be resused in different
 	 * components throughout the app
 	 */
-	library.add(fab, faPlay, faStar);
+	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle);
 
 	// Load custom fonts
 	useEffect(() => {
@@ -34,11 +33,8 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
+			<StatusBar style="light" backgroundColor="#000" />
 			<BottomNavBar />
-			{/* <View style={styles.container}>
-				<StatusBar style="light" backgroundColor="#000" />
-				<HomeScreen />
-			</View> */}
 		</NavigationContainer>
 	);
 }

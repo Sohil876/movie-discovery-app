@@ -4,30 +4,76 @@ import HomeScreen from 'screens/HomeScreen';
 import SearchScreen from 'screens/SearchScreen';
 import TrailersScreen from 'screens/TrailersScreen';
 import { colors } from 'styles/styles.js';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
+const renderTabIcon = (title, focused) => {
+	return (
+		<FontAwesomeIcon
+			/**prettier-ignore */
+			icon={title}
+			color={focused ? `${colors.primaryClr}` : `${colors.offWhite}`}
+			size={22}
+		/>
+	);
+};
+
 const BottomNavBar = () => {
 	return (
-		<Navigator backBehavior={'history'} screenOptions={{ tabBarShowLabel: false, tabBarStyle: styles.tabStyle }}>
-			<Screen name="Home" component={HomeScreen} />
-			<Screen name="Search" component={SearchScreen} />
-			<Screen name="Trailers" component={TrailersScreen} />
+		<Navigator
+			backBehavior={'history'}
+			screenOptions={{
+				tabBarShowLabel: false,
+				tabBarStyle: styles.tabStyle,
+				tabBarHideOnKeyboard: true,
+				headerShown: false,
+			}}
+		>
+			<Screen
+				name="Home"
+				component={HomeScreen}
+				options={{
+					tabBarIcon: ({ focused }) => renderTabIcon('home', focused),
+				}}
+			/>
+			<Screen
+				name="Search"
+				component={SearchScreen}
+				options={{
+					tabBarIcon: ({ focused }) => renderTabIcon('search', focused),
+				}}
+			/>
+			<Screen
+				name="Trailers"
+				component={TrailersScreen}
+				options={{
+					tabBarIcon: ({ focused }) => renderTabIcon('play-circle', focused),
+				}}
+			/>
 		</Navigator>
 	);
 };
 
 const styles = StyleSheet.create({
 	tabStyle: {
-		position: 'absolute',
-		bottom: 5,
-		left: 10,
-		right: 10,
-		elevation: 0,
+		// position: 'absolute',
+		// bottom: 5,
+		// left: 10,
+		// right: 10,
+		// elevation: 0,
+		// borderRadius: 10,
 		backgroundColor: `${colors.primaryBg}`,
-		height: 80,
-		borderRadius: 10,
+		height: 70,
+		shadowColor: '#000',
+		shadowOpacity: 0.25,
+		shadowRadius: 3.5,
+		elevation: 5,
+		shadowOffset: {
+			width: 0,
+			height: 10,
+		},
 	},
 });
 
