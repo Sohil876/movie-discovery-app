@@ -19,6 +19,23 @@ const MediaRow = ({ title, url }) => {
 		}
 	};
 
+	const renderMediaRow = () => {
+		if (!mediaData) {
+			return <Loading>Loading...</Loading>;
+		} else {
+			return (
+				<FlatList
+					horizontal
+					data={mediaData}
+					renderItem={({ item }) => {
+						return <MediaCard media={item} />;
+					}}
+					keyExtractor={item => toString(item.id)}
+				></FlatList>
+			);
+		}
+	};
+
 	useEffect(() => {
 		fetchMediaData();
 	}, []);
@@ -26,8 +43,6 @@ const MediaRow = ({ title, url }) => {
 	useEffect(() => {
 		console.log(mediaData);
 	}, [mediaData]);
-
-	if (!mediaData) return <Loading>Loading...</Loading>;
 
 	return (
 		<View>
@@ -37,14 +52,7 @@ const MediaRow = ({ title, url }) => {
 					<BtnText>View All</BtnText>
 				</ViewBtn>
 			</TitleWrapper>
-			<FlatList
-				horizontal
-				data={mediaData}
-				renderItem={({ item }) => {
-					return <MediaCard media={item} />;
-				}}
-				keyExtractor={item => toString(item.id)}
-			></FlatList>
+			{renderMediaRow()}
 		</View>
 	);
 };

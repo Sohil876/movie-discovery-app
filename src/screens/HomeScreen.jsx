@@ -11,7 +11,7 @@ const HomeScreen = () => {
 				<MediaWrapper>
 					<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
 				</MediaWrapper>
-				<MediaWrapper>
+				<MediaWrapper marginBottom="120px">
 					<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
 				</MediaWrapper>
 			</HomeWrapper>
@@ -32,7 +32,7 @@ const HomeWrapper = styled.ScrollView`
 const MediaWrapper = styled.View`
 	flex: 1;
 	margin-top: 40px;
-	margin-bottom: ${({ mb }) => (mb ? mb : 0)};
+	margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 0)};
 `;
 
 export default HomeScreen;
