@@ -3,15 +3,19 @@ import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import MediaRow from 'layoutcomp/MediaRow';
 import { movieRequests } from 'utils/requests';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const HomeScreen = () => {
+	const extraPadding = 80;
+	const bottomNavBarHeight = useBottomTabBarHeight();
+
 	return (
 		<StyledSafeArea>
 			<HomeWrapper>
 				<MediaWrapper>
 					<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
 				</MediaWrapper>
-				<MediaWrapper marginBottom="120px">
+				<MediaWrapper marginBottom={bottomNavBarHeight + extraPadding}>
 					<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
 				</MediaWrapper>
 			</HomeWrapper>

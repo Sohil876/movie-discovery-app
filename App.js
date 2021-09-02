@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
+import BottomNavBar from './src/components/navigation/BottomNavBar';
 
 export default function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -33,10 +34,11 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<View style={styles.container}>
+			<BottomNavBar />
+			{/* <View style={styles.container}>
 				<StatusBar style="light" backgroundColor="#000" />
 				<HomeScreen />
-			</View>
+			</View> */}
 		</NavigationContainer>
 	);
 }
