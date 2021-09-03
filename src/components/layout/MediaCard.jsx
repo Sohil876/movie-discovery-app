@@ -11,16 +11,23 @@ import { TouchableOpacity } from 'react-native';
 
 const MediaCard = ({ media, navigation }) => {
 	const [state, setState] = useState({
+		...media,
+
 		title: media.title || media.name || media.original_title || media.original_name,
+
 		rating: Number(media.vote_average).toFixed(1),
+
 		posterURL: `${media.poster_path ? `${BASE_IMG_URL}${media.poster_path}` : null}`,
-		year: `${new Date(media.release_date).getFullYear() || 'N/A'}`,
+
+		year: `${new Date(media.release_date || media.first_air_date).getFullYear() || 'N/A'}`,
+
+		type: `${media.title || media.original_title ? 'movie' : 'tv'}`,
 	});
 
 	return (
 		<CardWrapper
 			onPress={() => {
-				navigation.push('MediaDetails');
+				navigation.push('MediaDetails', { media: state });
 				// alert('success');
 				console.log(state.title);
 			}}

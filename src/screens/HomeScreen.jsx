@@ -13,6 +13,9 @@ const HomeScreen = ({ navigation }) => {
 			<MediaWrapper>
 				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} navigation={navigation} />
 			</MediaWrapper>
+			<MediaWrapper>
+				<MediaRow title="Popular on TV" url={movieRequests.fetchPopularTVShowsPg1} navigation={navigation} />
+			</MediaWrapper>
 			<MediaWrapper marginBottom={bottomNavBarHeight}>
 				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} navigation={navigation} />
 			</MediaWrapper>
