@@ -5,16 +5,16 @@ import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { movieRequests } from 'utils/requests';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
 	const bottomNavBarHeight = useBottomTabBarHeight();
 
 	return (
 		<HomeWrapper>
 			<MediaWrapper>
-				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
+				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} navigation={navigation} />
 			</MediaWrapper>
 			<MediaWrapper marginBottom={bottomNavBarHeight}>
-				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
+				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} navigation={navigation} />
 			</MediaWrapper>
 		</HomeWrapper>
 	);
@@ -29,7 +29,7 @@ const HomeWrapper = styled.ScrollView`
 const MediaWrapper = styled.View`
 	flex: 1;
 	margin-top: 40px;
-	margin-bottom: ${({ marginBottom }) => (marginBottom ? marginBottom : 0)};
+	margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : '0px')};
 `;
 
 export default HomeScreen;

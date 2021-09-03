@@ -5,7 +5,7 @@ import tmdb from 'utils/baseURL';
 import MediaCard from './MediaCard';
 import { colors } from 'styles/styles.js';
 
-const MediaRow = ({ title, url }) => {
+const MediaRow = ({ title, url, navigation }) => {
 	const [mediaData, setMediaData] = useState();
 
 	const fetchMediaData = async () => {
@@ -27,9 +27,9 @@ const MediaRow = ({ title, url }) => {
 				<FlatList
 					horizontal
 					data={mediaData}
-					keyExtractor={item => toString(item.id)}
+					keyExtractor={item => item.id.toString()}
 					renderItem={({ item }) => {
-						return <MediaCard media={item} />;
+						return <MediaCard media={item} navigation={navigation} />;
 					}}
 				></FlatList>
 			);
@@ -40,9 +40,9 @@ const MediaRow = ({ title, url }) => {
 		fetchMediaData();
 	}, []);
 
-	useEffect(() => {
-		console.log(mediaData);
-	}, [mediaData]);
+	// useEffect(() => {
+	// 	console.log(mediaData);
+	// }, [mediaData]);
 
 	return (
 		<View>

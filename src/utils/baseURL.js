@@ -3,7 +3,7 @@ import axios from 'axios';
 /**
  * base url to make requests to TMDB database
  *
- * https://developers.themoviedb.org/3
+ * API Docs: https://developers.themoviedb.org/3
  *
  */
 const tmdb = axios.create({
