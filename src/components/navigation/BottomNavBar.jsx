@@ -17,7 +17,7 @@ const renderTabIcon = (title, focused) => {
 			/**prettier-ignore */
 			icon={title}
 			color={focused ? `${colors.primaryClr}` : `${colors.offWhite}`}
-			size={22}
+			size={20}
 		/>
 	);
 };
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 		// elevation: 0,
 		// borderRadius: 10,
 		backgroundColor: `${colors.primaryBg}`,
-		height: 70,
+		height: 60,
 		shadowColor: '#000',
 		shadowOpacity: 0.25,
 		shadowRadius: 3.5,

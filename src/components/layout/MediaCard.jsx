@@ -7,7 +7,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
-import { TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 const MediaCard = ({ media, navigation }) => {
 	const [state, setState] = useState({
@@ -34,6 +35,7 @@ const MediaCard = ({ media, navigation }) => {
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
 			<CardImage source={{ uri: state.posterURL }} resizeMode="cover" />
+
 			<CardInfo>
 				<CardTitle numberOfLines={1}>{state.title}</CardTitle>
 				<CardBottom>
@@ -95,7 +97,6 @@ const CardImage = styled.Image`
 
 const CardWrapper = styled.Pressable`
 	margin: 20px 15px 0 0;
-	/* box-shadow: '0px 3px 12px -6px #000000'; */
 `;
 
 export default MediaCard;

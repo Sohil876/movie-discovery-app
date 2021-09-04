@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import BottomNavBar from './src/components/navigation/BottomNavBar';
+import { colors } from 'styles/styles.js';
 
 export default function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -46,8 +47,9 @@ const styles = StyleSheet.create({
 	},
 	loading: {
 		justifyContent: 'center',
-		alignItems: 'center',
+		alignSelf: 'center',
 		color: '#000',
 		fontSize: 20,
+		top: '50%',
 	},
 });
