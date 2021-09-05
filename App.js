@@ -26,7 +26,10 @@ export default function App() {
 			'poppins-regular': require('./src/assets/fonts/Poppins-Regular.ttf'),
 			'poppins-medium': require('./src/assets/fonts/Poppins-Medium.ttf'),
 			'poppins-semiBold': require('./src/assets/fonts/Poppins-SemiBold.ttf'),
-		}).then(() => setIsLoaded(true));
+		})
+			.then(() => setIsLoaded(true))
+			.catch(er => console.error(er))
+			.finally(() => setIsLoaded(true));
 	}, []);
 
 	if (!isLoaded) {

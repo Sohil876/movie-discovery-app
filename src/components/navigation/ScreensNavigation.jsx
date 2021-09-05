@@ -15,7 +15,7 @@ export const HomeScreenStack = () => {
 	return (
 		<HomeStack.Navigator screenOptions={{ headerShown: false }}>
 			<HomeStack.Screen name="Home" component={HomeScreen} />
-			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
+			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen}/>
 		</HomeStack.Navigator>
 	);
 };

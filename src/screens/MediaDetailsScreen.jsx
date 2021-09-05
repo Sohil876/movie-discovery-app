@@ -1,12 +1,11 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import styled from 'styled-components/native';
-import { calcMediaRuntime, fetchCredits, fetchGenres, fetchMediaImages, formatDate } from '../utils/helpers';
+import { calcMediaRuntime, fetchCredits, fetchMediaImages, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
+import Cast from './../components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
-import BaseText from './../components/layout/BaseText';
-import { BASE_IMG_URL } from 'utils/requests';
 
 const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
@@ -19,16 +18,16 @@ const MediaDetailsScreen = ({ route }) => {
 				...res,
 				...prev,
 				runtime: res.runtime || res.episode_run_time[0],
+				episode_time: res.episode_run_time || null,
 				genres: res.genres,
 			}));
 		});
 
-		// fetch images
-		fetchMediaImages(state.type, state).then(res => setState(prev => ({ ...prev, images: res })));
-
 		// fetch cast
 		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
 	}, []);
+
+	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const renderGenres = () => {
 		return (
@@ -48,38 +47,27 @@ const MediaDetailsScreen = ({ route }) => {
 					<Text style={styles.posterInfo}>{renderGenres()} • </Text>
 					<Text style={styles.posterInfo}>{calcMediaRuntime(state.runtime)}</Text>
 				</PosterInfo>
-				{state.tagline && <Tagline>{state.tagline}</Tagline>}
+				<Tagline>{state.tagline || null}</Tagline>
 			</PosterDetails>
 			<LinearGradient colors={['transparent', `${colors.primaryBg}`]} style={styles.gradient} />
-			<PosterImg source={state.posterURL ? { uri: state.posterURL } : null} style={styles.posterImg} />
+			<PosterImg
+				source={state.posterURL ? { uri: state.posterURL } : require('../assets/images/no-img-found.png')}
+				style={styles.posterImg}
+			/>
 
 			<DetailsBottom>
 				<SectionWrapper>
 					<SectionTitle>Description</SectionTitle>
 					<Overview>{state.overview || 'No summary available.'}</Overview>
 				</SectionWrapper>
-
 				<SectionWrapper>
 					<SectionTitle>Cast</SectionTitle>
-					<FlatList
-						horizontal
-						data={state.credits?.cast}
-						renderItem={({ item }) => (
-							<View style={{ marginRight: 20, alignItems: 'center' }}>
-								<Image
-									source={{ uri: `${BASE_IMG_URL}${item.profile_path}` }}
-									style={{ height: 70, width: 70, borderRadius: 100, marginBottom: 10 }}
-								/>
-								<CastName>{item.name || 'Unknown'}</CastName>
-							</View>
-						)}
-						keyExtractor={item => item.id.toString()}
-					/>
+					<Cast data={state.credits?.cast} />
 				</SectionWrapper>
-
 				<SectionWrapper>
-					<SectionTitle>Description</SectionTitle>
-					<Overview>{state.overview || 'No summary available.'}</Overview>
+					<SectionTitle>
+						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
+					</SectionTitle>
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
@@ -101,6 +89,11 @@ const styles = StyleSheet.create({
 		color: `${colors.offWhite}`,
 		fontSize: 13,
 		fontFamily: 'poppins-medium',
+		textAlign: 'center',
+	},
+	amount: {
+		fontSize: 11,
+		color: `${colors.offWhite}`,
 	},
 });
 
@@ -122,7 +115,7 @@ const PosterInfo = styled.View`
 	justify-content: center;
 	flex-wrap: wrap;
 	align-self: center;
-	width: 85%;
+	width: 90%;
 `;
 
 const Title = styled.Text`
@@ -133,10 +126,6 @@ const Title = styled.Text`
 	width: 75%;
 	color: #fff;
 	z-index: 1222;
-`;
-
-const CastName = styled.Text`
-	color: #fff;
 `;
 
 const PosterImg = styled.Image`
@@ -151,7 +140,7 @@ const SectionWrapper = styled.View`
 	margin-top: 30px;
 `;
 
-const Overview = styled.Text`
+export const Overview = styled.Text`
 	color: ${colors.offWhite};
 	line-height: 22px;
 	font-family: 'poppins-regular';
@@ -160,7 +149,7 @@ const Overview = styled.Text`
 
 const SectionTitle = styled.Text`
 	color: #fff;
-	margin-bottom: 10px;
+	margin-bottom: 8px;
 	font-size: 15px;
 	font-family: 'poppins-semiBold';
 `;

@@ -1,3 +1,8 @@
+/**
+ * TMDb API
+ * https://developers.themoviedb.org/3/getting-started/introduction
+ */
+
 import tmdb from './baseURL';
 import { API_KEY } from './requests';
 
@@ -37,13 +42,17 @@ export const fetchGenres = async type => {
 };
 
 /**
- * fetch Media Details
+ * Fetch Media Details
+ *
+ * This will also fetch images and videos:
+ * See https://developers.themoviedb.org/3/getting-started/append-to-response
  */
 
 export const fetchMediaDetails = async (type, media) => {
 	try {
-		//prettier-ignore
-		const { data, status } = await tmdb.get(`/${type}/${media.id}?api_key=${API_KEY}&language=en-US`);
+		const { data, status } = await tmdb.get(
+			`/${type}/${media.id}?api_key=${API_KEY}&language=en-US&include_image_language=en&append_to_response=videos,images`
+		);
 		if (status !== 200) throw Error('error fetching media details');
 		// console.log(data, 'RUNTIME OBJECT');
 
@@ -54,7 +63,6 @@ export const fetchMediaDetails = async (type, media) => {
 };
 
 /**
- *
  * Calculate media runtime
  */
 export const calcMediaRuntime = runtime => {
