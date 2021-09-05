@@ -28,8 +28,7 @@ const MediaCard = ({ media, navigation }) => {
 	return (
 		<CardWrapper
 			onPress={() => {
-				navigation.push('MediaDetails', { media: state });
-				// alert('success');
+				navigation.push('MediaDetails', { media: state, navigation });
 				console.log(state.title);
 			}}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}

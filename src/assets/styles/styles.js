@@ -30,3 +30,8 @@ export const colors = {
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',
 };
+
+export const shadow = {
+	shadowColor: '#000',
+	elevation: 5,
+};

@@ -1,13 +1,15 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import styled from 'styled-components/native';
 import { calcMediaRuntime, fetchCredits, fetchMediaImages, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
+import { BANNER_IMG_URL, BASE_IMG_URL } from './../utils/requests';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
-const MediaDetailsScreen = ({ route }) => {
+const MediaDetailsScreen = ({ route, navigation }) => {
 	const { media } = route.params;
 	const [state, setState] = useState(media);
 
@@ -18,7 +20,7 @@ const MediaDetailsScreen = ({ route }) => {
 				...res,
 				...prev,
 				runtime: res.runtime || res.episode_run_time[0],
-				episode_time: res.episode_run_time || null,
+				episode_times: res.episode_run_time || null,
 				genres: res.genres,
 			}));
 		});
@@ -27,7 +29,11 @@ const MediaDetailsScreen = ({ route }) => {
 		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
 	}, []);
 
-	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+	useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+
+	const goToVideos = () => {
+		navigation.navigate('Videos', { data: state.videos });
+	};
 
 	const renderGenres = () => {
 		return (
@@ -68,6 +74,22 @@ const MediaDetailsScreen = ({ route }) => {
 					<SectionTitle>
 						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
 					</SectionTitle>
+					<VideoImage
+						style={styles.shadow}
+						resizeMode="cover"
+						source={
+							state.images?.backdrops[0]
+								? { uri: `${BASE_IMG_URL}${state.images.backdrops[0].file_path}` }
+								: null
+						}
+					>
+						<VideoIcon icon="play" size={30} />
+					</VideoImage>
+				</SectionWrapper>
+				<SectionWrapper>
+					<SectionTitle>
+						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
+					</SectionTitle>
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
@@ -102,8 +124,21 @@ const DetailsWrapper = styled.ScrollView`
 	background-color: ${colors.primaryBg};
 `;
 
+const VideoIcon = styled(FontAwesomeIcon)`
+	top: 50%;
+	left: 50%;
+	color: #fff;
+`;
+
 const DetailsBottom = styled.View`
 	padding: 0 30px;
+`;
+
+const VideoImage = styled.ImageBackground`
+	flex: 1;
+	height: 200px;
+	width: 100%;
+	border-radius: 10px;
 `;
 
 const PosterDetails = styled.View`
