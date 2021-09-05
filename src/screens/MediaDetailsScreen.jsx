@@ -74,17 +74,15 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 					<SectionTitle>
 						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
 					</SectionTitle>
+
 					<VideoImage
-						style={styles.shadow}
+						imageStyle={{ borderRadius: 10 }}
 						resizeMode="cover"
-						source={
-							state.images?.backdrops[0]
-								? { uri: `${BASE_IMG_URL}${state.images.backdrops[0].file_path}` }
-								: null
-						}
+						source={state.images ? { uri: `${BASE_IMG_URL}${state.images.backdrops[0]?.file_path}` } : {}}
 					>
-						<VideoIcon icon="play" size={30} />
+						<VideoIcon icon="play-circle" size={40} />
 					</VideoImage>
+					<Overlay />
 				</SectionWrapper>
 				<SectionWrapper>
 					<SectionTitle>
@@ -104,15 +102,18 @@ const styles = StyleSheet.create({
 		width: '100%',
 		elevation: -1,
 	},
+
 	posterImg: {
 		elevation: -1,
 	},
+
 	posterInfo: {
 		color: `${colors.offWhite}`,
 		fontSize: 13,
 		fontFamily: 'poppins-medium',
 		textAlign: 'center',
 	},
+
 	amount: {
 		fontSize: 11,
 		color: `${colors.offWhite}`,
@@ -124,21 +125,29 @@ const DetailsWrapper = styled.ScrollView`
 	background-color: ${colors.primaryBg};
 `;
 
-const VideoIcon = styled(FontAwesomeIcon)`
-	top: 50%;
-	left: 50%;
-	color: #fff;
-`;
-
 const DetailsBottom = styled.View`
 	padding: 0 30px;
+`;
+
+const Overlay = styled.View`
+	flex: 1;
+	height: 100%;
+
+	z-index: 999;
+	background-color: #00000063;
+`;
+
+const VideoIcon = styled(FontAwesomeIcon)`
+	color: #fff;
+	z-index: 1;
 `;
 
 const VideoImage = styled.ImageBackground`
 	flex: 1;
 	height: 200px;
 	width: 100%;
-	border-radius: 10px;
+	justify-content: center;
+	align-items: center;
 `;
 
 const PosterDetails = styled.View`

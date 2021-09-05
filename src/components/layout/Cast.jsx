@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
-import { FlatList, Text } from 'react-native';
+import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { BASE_IMG_URL } from 'utils/requests';
 import { Overview } from 'screens/MediaDetailsScreen';
 
@@ -30,7 +30,7 @@ const Cast = ({ data }) => {
 	);
 };
 
-const Wrapper = styled.View`
+const Wrapper = styled.TouchableOpacity`
 	margin-right: 20px;
 	align-items: center;
 `;
