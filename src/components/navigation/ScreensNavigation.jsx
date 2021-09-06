@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import React, { useRef } from 'react';
 import MediaDetailsScreen from '../../screens/MediaDetailsScreen';
 import HomeScreen from './../../screens/HomeScreen';
 import SearchScreen from './../../screens/SearchScreen';
@@ -11,10 +11,11 @@ const SearchStack = createStackNavigator();
 const TrailersStack = createStackNavigator();
 
 export const HomeScreenStack = () => {
+	const navigator = useRef();
 	return (
-		<HomeStack.Navigator screenOptions={{ headerShown: false }}>
+		<HomeStack.Navigator screenOptions={{ headerShown: false }} ref={navigator}>
 			<HomeStack.Screen name="Home" component={HomeScreen} />
-			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} options={{ headerTitle: '' }} />
+			<HomeStack.Screen name="MediaDetails" component={MediaDetailsScreen} />
 			<HomeStack.Screen name="Videos" component={VideosScreen} />
 		</HomeStack.Navigator>
 	);

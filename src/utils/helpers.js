@@ -14,6 +14,8 @@ export const months = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'A
  */
 
 export const formatDate = date => {
+	if (!date) return 'N/A';
+
 	const day = new Date(date).getDate();
 	const month = new Date(date).getMonth();
 	const year = new Date(date).getFullYear();
@@ -23,6 +25,23 @@ export const formatDate = date => {
 
 export const fetchTrailers = () => {
 	return {};
+};
+
+/**
+ * Fetch Similar Movies
+ */
+
+export const fetchSimilar = async (media, type) => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/${type}/${media.id}/similar?api_key=${API_KEY}&language=en-US&page=1`
+		);
+		if (status !== 200) throw Error(statusText);
+
+		return data.results;
+	} catch (er) {
+		console.error(er, 'error fetching similar media');
+	}
 };
 
 /**

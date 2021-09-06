@@ -29,9 +29,16 @@ export const colors = {
 	offWhite: `${coolGray[400]}`,
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',
-};
 
-export const shadow = {
-	shadowColor: '#000',
-	elevation: 5,
+	gray900: `${coolGray[900]}`,
+	gray800: `${coolGray[800]}`,
+	gray700: `${coolGray[700]}`,
+	gray600: `${coolGray[600]}`,
+	gray500: `${coolGray[500]}`,
+	gray400: `${coolGray[400]}`,
+	gray500: `${coolGray[500]}`,
+	gray300: `${coolGray[300]}`,
+	gray200: `${coolGray[200]}`,
+	gray100: `${coolGray[100]}`,
+	gray50: `${coolGray[50]}`,
 };

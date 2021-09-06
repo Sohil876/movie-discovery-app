@@ -45,14 +45,14 @@ const CastImage = styled.Image`
 const Name = styled.Text`
 	font-family: 'poppins-regular';
 	color: #fff;
-	font-size: 12px;
+	font-size: 13px;
 `;
 
 const Role = styled.Text`
 	font-family: 'poppins-regular';
 	font-style: italic;
 	color: ${colors.offWhite};
-	font-size: 12px;
+	font-size: 13px;
 	justify-content: center;
 	text-align: center;
 `;

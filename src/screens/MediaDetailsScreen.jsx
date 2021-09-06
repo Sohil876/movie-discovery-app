@@ -1,13 +1,16 @@
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, Pressable, View } from 'react-native';
 import styled from 'styled-components/native';
-import { calcMediaRuntime, fetchCredits, fetchMediaImages, formatDate } from '../utils/helpers';
+import Details from '../components/layout/Details';
+import LightboxView from '../components/layout/LightboxView';
+import Photos from '../components/layout/Photos';
+import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
-import { BANNER_IMG_URL, BASE_IMG_URL } from './../utils/requests';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { BASE_IMG_URL } from './../utils/requests';
 
 const MediaDetailsScreen = ({ route, navigation }) => {
 	const { media } = route.params;
@@ -20,8 +23,9 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 				...res,
 				...prev,
 				runtime: res.runtime || res.episode_run_time[0],
-				episode_times: res.episode_run_time || null,
+				episodeTimes: res.episode_run_time, // array
 				genres: res.genres,
+				releaseDate: res.release_date || res.first_air_date,
 			}));
 		});
 
@@ -29,7 +33,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
 	}, []);
 
-	useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const goToVideos = () => {
 		navigation.navigate('Videos', { data: state.videos });
@@ -49,7 +53,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 			<PosterDetails>
 				<Title>{state.title}</Title>
 				<PosterInfo>
-					<Text style={styles.posterInfo}>{formatDate(state.release_date || state.first_air_date)} • </Text>
+					<Text style={styles.posterInfo}>{formatDate(state.releaseDate)} • </Text>
 					<Text style={styles.posterInfo}>{renderGenres()} • </Text>
 					<Text style={styles.posterInfo}>{calcMediaRuntime(state.runtime)}</Text>
 				</PosterInfo>
@@ -78,16 +82,40 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 					<VideoImage
 						imageStyle={{ borderRadius: 10 }}
 						resizeMode="cover"
-						source={state.images ? { uri: `${BASE_IMG_URL}${state.images.backdrops[0]?.file_path}` } : {}}
+						source={
+							state.images?.backdrops.length > 0
+								? { uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}` }
+								: { uri: `${BASE_IMG_URL}${state.images?.posters[0]?.file_path}` }
+						}
 					>
 						<VideoIcon icon="play-circle" size={40} />
 					</VideoImage>
 					<Overlay />
 				</SectionWrapper>
+
 				<SectionWrapper>
 					<SectionTitle>
-						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
+						Photos
+						<Text style={styles.amount}>
+							{state.images && ` (${state.images.posters.length + state.images.backdrops.length})`}
+						</Text>
 					</SectionTitle>
+
+					{state.images?.posters && <Photos data={state.images.posters} />}
+
+					<View style={{ marginTop: 10 }}>
+						{state.images?.backdrops && <Photos data={state.images.backdrops} />}
+					</View>
+				</SectionWrapper>
+
+				<SectionWrapper>
+					<SectionTitle>Details</SectionTitle>
+					<Details data={state} />
+				</SectionWrapper>
+
+				<SectionWrapper>
+					<SectionTitle>More Like This</SectionTitle>
+					<Details data={state} />
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
@@ -117,6 +145,7 @@ const styles = StyleSheet.create({
 	amount: {
 		fontSize: 11,
 		color: `${colors.offWhite}`,
+		fontFamily: 'poppins-regular',
 	},
 });
 
@@ -184,6 +213,10 @@ const SectionWrapper = styled.View`
 	margin-top: 30px;
 `;
 
+const InfoWrapper = styled.View`
+	margin-top: 10px;
+`;
+
 export const Overview = styled.Text`
 	color: ${colors.offWhite};
 	line-height: 22px;
@@ -194,7 +227,7 @@ export const Overview = styled.Text`
 const SectionTitle = styled.Text`
 	color: #fff;
 	margin-bottom: 8px;
-	font-size: 15px;
+	font-size: 16px;
 	font-family: 'poppins-semiBold';
 `;
 

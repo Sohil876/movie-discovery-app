@@ -31,7 +31,7 @@ const MediaRow = ({ title, url, navigation }) => {
 					renderItem={({ item }) => {
 						return <MediaCard media={item} navigation={navigation} />;
 					}}
-				></FlatList>
+				/>
 			);
 		}
 	};
@@ -39,10 +39,6 @@ const MediaRow = ({ title, url, navigation }) => {
 	useEffect(() => {
 		fetchMediaData();
 	}, []);
-
-	// useEffect(() => {
-	// 	console.log(mediaData);
-	// }, [mediaData]);
 
 	return (
 		<View>
