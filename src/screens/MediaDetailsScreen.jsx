@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import styled from 'styled-components/native';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
@@ -10,7 +10,7 @@ import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
-import { BASE_IMG_URL } from './../utils/requests';
+import { BASE_IMG_URL, BANNER_IMG_URL } from './../utils/requests';
 
 const MediaDetailsScreen = ({ route, navigation }) => {
 	const { media } = route.params;
@@ -48,10 +48,33 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 		);
 	};
 
+	const renderTitle = () => {
+		if (state.images?.logos.length > 0) {
+			/**
+			 * Checks if the image is an .svg
+			 * android cannot render SVG's
+			 * so render the text title instead.
+			 */
+			if (state.images.logos[0].file_path.toString().includes('.svg')) {
+				return <Title>{state.title}</Title>;
+			}
+
+			return (
+				<Image
+					resizeMode="contain"
+					style={styles.logo}
+					source={{ uri: `${BASE_IMG_URL}${state.images.logos[0].file_path}` }}
+				/>
+			);
+		}
+
+		return <Title>{state.title}</Title>;
+	};
+
 	return (
 		<DetailsWrapper>
 			<PosterDetails>
-				<Title>{state.title}</Title>
+				{renderTitle()}
 				<PosterInfo>
 					<Text style={styles.posterInfo}>{formatDate(state.releaseDate)} • </Text>
 					<Text style={styles.posterInfo}>{renderGenres()} • </Text>
@@ -87,7 +110,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 						source={
 							state.images?.backdrops.length > 0
 								? { uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}` }
-								: { uri: `${BASE_IMG_URL}${state.images?.posters[0]?.file_path}` }
+								: { uri: state.posterURL }
 						}
 					>
 						<VideoIcon icon="play-circle" size={40} />
@@ -160,6 +183,12 @@ const styles = StyleSheet.create({
 		fontSize: 11,
 		color: `${colors.offWhite}`,
 		fontFamily: 'poppins-regular',
+	},
+	logo: {
+		width: '90%',
+		height: 100,
+		alignSelf: 'center',
+		marginBottom: 10,
 	},
 });
 

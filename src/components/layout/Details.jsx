@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { formatAsCurrency, formatDate } from 'utils/helpers';
-import { Overview } from '../../screens/MediaDetailsScreen';
+import { Overview } from 'screens/MediaDetailsScreen';
 
 const renderList = data => {
 	return data.map((item, i, arr) => {
@@ -23,6 +23,10 @@ export const TVDetails = ({ data }) => {
 			<Overview>{data.created_by?.length > 0 ? renderList(data.created_by) : '-'}</Overview>
 			<Separator />
 
+			<Title>Original Name</Title>
+			<Overview>{data.original_name || '-'}</Overview>
+			<Separator />
+
 			<Title>Last Episode Aired On</Title>
 			<Overview>{formatDate(data.last_air_date) || '-'}</Overview>
 			<Separator />
@@ -31,8 +35,16 @@ export const TVDetails = ({ data }) => {
 			<Overview>{formatDate(data.next_episode_to_air?.air_date) || '-'}</Overview>
 			<Separator />
 
+			<Title>In Production</Title>
+			<Overview>{data.in_production ? 'Yes' : 'No' || '-'}</Overview>
+			<Separator />
+
 			<Title>Number of Seasons</Title>
 			<Overview>{data.number_of_seasons || '-'}</Overview>
+			<Separator />
+
+			<Title>Number of Episodes</Title>
+			<Overview>{data.number_of_episodes || '-'}</Overview>
 			<Separator />
 
 			<Title>Episode Runtimes (mins)</Title>

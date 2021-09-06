@@ -34,6 +34,7 @@ const MediaCard = ({ media, navigation }) => {
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
 			<CardImage
+				// defaultSource={require('../../assets/images/no-img-found.png')}
 				source={state.posterURL ? { uri: state.posterURL } : require('../../assets/images/no-img-found.png')}
 				resizeMode="cover"
 			/>
