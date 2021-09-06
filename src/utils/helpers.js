@@ -41,6 +41,7 @@ export const fetchSimilar = async (media, type) => {
 		return data.results;
 	} catch (er) {
 		console.error(er, 'error fetching similar media');
+		throw Error(er);
 	}
 };
 

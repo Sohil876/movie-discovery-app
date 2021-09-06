@@ -6,6 +6,7 @@ import styled from 'styled-components/native';
 import Details from '../components/layout/Details';
 import LightboxView from '../components/layout/LightboxView';
 import Photos from '../components/layout/Photos';
+import Similiar from '../components/layout/Similiar';
 import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
@@ -115,7 +116,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 
 				<SectionWrapper>
 					<SectionTitle>More Like This</SectionTitle>
-					<Details data={state} />
+					<Similiar data={state} navigation={navigation} />
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
