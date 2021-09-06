@@ -1,12 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, Pressable, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';
-import Details from '../components/layout/Details';
-import LightboxView from '../components/layout/LightboxView';
+import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
-import Similiar from '../components/layout/Similiar';
+import Similar, { Recommended } from '../components/layout/Similar';
 import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
@@ -34,7 +33,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
 	}, []);
 
-	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+	useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const goToVideos = () => {
 		navigation.navigate('Videos', { data: state.videos });
@@ -71,10 +70,12 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 					<SectionTitle>Description</SectionTitle>
 					<Overview>{state.overview || 'No summary available.'}</Overview>
 				</SectionWrapper>
+
 				<SectionWrapper>
 					<SectionTitle>Cast</SectionTitle>
 					<Cast data={state.credits?.cast} />
 				</SectionWrapper>
+
 				<SectionWrapper>
 					<SectionTitle>
 						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
@@ -109,6 +110,13 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 					</View>
 				</SectionWrapper>
 
+				{state.type === 'tv' && (
+					<SectionWrapper>
+						<SectionTitle>TV Show Details</SectionTitle>
+						<TVDetails data={state} />
+					</SectionWrapper>
+				)}
+
 				<SectionWrapper>
 					<SectionTitle>Details</SectionTitle>
 					<Details data={state} />
@@ -116,7 +124,12 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 
 				<SectionWrapper>
 					<SectionTitle>More Like This</SectionTitle>
-					<Similiar data={state} navigation={navigation} />
+					<Similar data={state} navigation={navigation} />
+				</SectionWrapper>
+
+				<SectionWrapper>
+					<SectionTitle>Recommended</SectionTitle>
+					<Recommended data={state} navigation={navigation} />
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
@@ -157,6 +170,7 @@ const DetailsWrapper = styled.ScrollView`
 
 const DetailsBottom = styled.View`
 	padding: 0 30px;
+	margin-bottom: 20px;
 `;
 
 const Overlay = styled.View`
@@ -212,10 +226,6 @@ const PosterImg = styled.Image`
 const SectionWrapper = styled.View`
 	flex: 1;
 	margin-top: 30px;
-`;
-
-const InfoWrapper = styled.View`
-	margin-top: 10px;
 `;
 
 export const Overview = styled.Text`

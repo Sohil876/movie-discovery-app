@@ -1,4 +1,11 @@
 import 'react-native-gesture-handler'; // This import should ALWAYS be first or else app might crash in prod
+import 'intl';
+import 'intl/locale-data/jsonp/en';
+
+/**
+ * The above imports should ALWAYS appear in that order
+ * or the app may crash in prod.
+ */
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faHome, faPlay, faPlayCircle, faSearch, faStar } from '@fortawesome/free-solid-svg-icons';

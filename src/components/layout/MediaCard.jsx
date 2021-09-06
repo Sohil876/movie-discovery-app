@@ -33,7 +33,10 @@ const MediaCard = ({ media, navigation }) => {
 			}}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
-			<CardImage source={{ uri: state.posterURL }} resizeMode="cover" />
+			<CardImage
+				source={state.posterURL ? { uri: state.posterURL } : require('../../assets/images/no-img-found.png')}
+				resizeMode="cover"
+			/>
 
 			<CardInfo>
 				<CardTitle numberOfLines={1}>{state.title}</CardTitle>

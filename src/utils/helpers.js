@@ -28,7 +28,23 @@ export const fetchTrailers = () => {
 };
 
 /**
- * Fetch Similar Movies
+ * Format number as currency (USD)
+ * @returns number formatted in USD (e.g. USD$10,000)
+ */
+
+export const formatAsCurrency = num => {
+	if (!num) return null;
+
+	const formatter = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+	});
+
+	return formatter.format(num);
+};
+
+/**
+ * Fetch Similar Media
  */
 
 export const fetchSimilar = async (media, type) => {
@@ -41,6 +57,26 @@ export const fetchSimilar = async (media, type) => {
 		return data.results;
 	} catch (er) {
 		console.error(er, 'error fetching similar media');
+		throw Error(er);
+	}
+};
+
+/**
+ * Fetch Recommended Media
+ *
+ * https://developers.themoviedb.org/3/movies/get-movie-recommendations
+ */
+
+export const fetchRecommended = async (media, type) => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/${type}/${media.id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+		);
+		if (status !== 200) throw Error(statusText);
+
+		return data.results;
+	} catch (er) {
+		console.error(er, 'error fetching recommended media');
 		throw Error(er);
 	}
 };
