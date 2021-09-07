@@ -8,10 +8,11 @@ import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
 import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
-import Cast from './../components/layout/Cast';
+import Cast from 'components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
-import { BASE_IMG_URL, BANNER_IMG_URL } from './../utils/requests';
+import { BASE_IMG_URL, BANNER_IMG_URL, API_KEY } from './../utils/requests';
 import { useNavigation } from '@react-navigation/native';
+import { SeeMoreBtn, BtnText } from 'components/layout/MediaRow';
 
 const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
@@ -149,12 +150,36 @@ const MediaDetailsScreen = ({ route }) => {
 				</SectionWrapper>
 
 				<SectionWrapper>
-					<SectionTitle>More Like This</SectionTitle>
+					<TitleWrapper>
+						<SectionTitle mb="0">More Like This</SectionTitle>
+						<SeeMoreBtn
+							onPress={() => {
+								navigation.push('MediaList', {
+									url: `/${state.type}/${state.id}/recommendations?api_key=${API_KEY}&language=en-US`,
+									title: `More like ${state.title}`,
+								});
+							}}
+						>
+							<BtnText>view all</BtnText>
+						</SeeMoreBtn>
+					</TitleWrapper>
 					<Similar data={state} />
 				</SectionWrapper>
 
 				<SectionWrapper>
-					<SectionTitle>Recommended</SectionTitle>
+					<TitleWrapper>
+						<SectionTitle mb="0">Recommended</SectionTitle>
+						<SeeMoreBtn
+							onPress={() => {
+								navigation.push('MediaList', {
+									url: `/${state.type}/${state.id}/recommendations?api_key=${API_KEY}&language=en-US`,
+									title: `Recommendations for ${state.title}`,
+								});
+							}}
+						>
+							<BtnText>view all</BtnText>
+						</SeeMoreBtn>
+					</TitleWrapper>
 					<Recommended data={state} />
 				</SectionWrapper>
 			</DetailsBottom>
@@ -230,6 +255,12 @@ const PosterDetails = styled.View`
 	margin-top: 68%;
 `;
 
+const TitleWrapper = styled.View`
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+`;
+
 const PosterInfo = styled.View`
 	flex-direction: row;
 	justify-content: center;
@@ -245,7 +276,6 @@ const Title = styled.Text`
 	text-align: center;
 	width: 75%;
 	color: #fff;
-	/* z-index: 1222; */
 `;
 
 const PosterImg = styled.Image`
@@ -269,7 +299,7 @@ export const Overview = styled.Text`
 
 const SectionTitle = styled.Text`
 	color: #fff;
-	margin-bottom: 8px;
+	margin-bottom: ${({ mb }) => (mb ? mb : '8px')};
 	font-size: 16px;
 	font-family: 'poppins-semiBold';
 `;

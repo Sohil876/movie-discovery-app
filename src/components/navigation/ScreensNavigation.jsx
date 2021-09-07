@@ -1,36 +1,59 @@
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useRef } from 'react';
+import React from 'react';
+import { View } from 'react-native';
 import MediaDetailsScreen from '../../screens/MediaDetailsScreen';
 import HomeScreen from './../../screens/HomeScreen';
+import MediaListScreen from './../../screens/MediaListScreen';
 import SearchScreen from './../../screens/SearchScreen';
 import TrailersScreen from './../../screens/TrailersScreen';
 import VideosScreen from './../../screens/VideosScreen';
-import { colors } from 'styles/styles.js';
-import { View } from 'react-native';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
 const Trailers = createStackNavigator();
 
+const options = {
+	mainOptions: {
+		gestureEnabled: true,
+		gestureDirection: 'horizontal',
+
+		headerTitleStyle: {
+			fontFamily: 'poppins-regular',
+			fontSize: 18,
+			marginTop: 5,
+			color: '#fff',
+		},
+
+		title: false,
+		headerTransparent: true,
+
+		// custom back btn
+		headerBackImage: () => (
+			<FontAwesomeIcon icon="arrow-circle-left" color="#fff" style={{ marginLeft: 5 }} size={25} />
+		),
+
+		headerBackground: () => (
+			<View
+				style={{
+					backgroundColor: '#0b0d24d1',
+					color: '#fff',
+					height: 45,
+					width: 45,
+					borderRadius: 100,
+					top: 30,
+					left: 6,
+				}}
+			/>
+		),
+	},
+};
+
 export const HomeScreenStack = () => (
-	<Home.Navigator
-		screenOptions={{
-			// gestureEnabled: true,
-			// gestureDirection: 'horizontal',
-			headerTitleStyle: {
-				fontFamily: 'poppins-regular',
-				fontSize: 18,
-				marginTop: 5,
-				color: '#fff',
-			},
-			headerTransparent: true,
-			headerBackground: () => (
-				<View style={{ backgroundColor: '#161b4770', color: '#fff', height: 80, width: '100%' }} />
-			),
-		}}
-	>
+	<Home.Navigator screenOptions={options.mainOptions}>
 		<Home.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} options={{ title: 'Back' }} />
+		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} />
+		<Home.Screen name="MediaList" component={MediaListScreen} />
 		<Home.Screen name="Videos" component={VideosScreen} />
 	</Home.Navigator>
 );

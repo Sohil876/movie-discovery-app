@@ -70,7 +70,7 @@ export const fetchSimilar = async (media, type) => {
 export const fetchRecommended = async (media, type) => {
 	try {
 		const { data, status, statusText } = await tmdb.get(
-			`/${type}/${media.id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`
+			`/${type}/${media.id}/recommendations?api_key=${API_KEY}&language=en-US`
 		);
 		if (status !== 200) throw Error(statusText);
 

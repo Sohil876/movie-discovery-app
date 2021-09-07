@@ -31,7 +31,6 @@ const MediaCard = ({ media }) => {
 		<CardWrapper
 			onPress={() => {
 				navigation.push('MediaDetails', { media: state });
-				console.log(state.title);
 			}}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
@@ -46,7 +45,7 @@ const MediaCard = ({ media }) => {
 				<CardBottom>
 					<CardYear>{state.year}</CardYear>
 					<RatingWrapper>
-						<Icon icon="star" color={colors.yellow} size={13} />
+						<CardIcon icon="star" color={colors.yellow} size={13} />
 						<CardRating>{state.rating <= 0 ? 'NR' : state.rating}</CardRating>
 					</RatingWrapper>
 				</CardBottom>
@@ -55,52 +54,52 @@ const MediaCard = ({ media }) => {
 	);
 };
 
-const Icon = styled(FontAwesomeIcon)`
+export const CardIcon = styled(FontAwesomeIcon)`
 	margin-right: 5px;
 	margin-top: 3px;
 `;
 
-const CardInfo = styled.View`
+export const CardInfo = styled.View`
 	margin-top: 15px;
 `;
 
-const CardTitle = styled.Text`
+export const CardTitle = styled.Text`
 	color: #fff;
 	width: 145px;
 	font-family: 'poppins-medium';
 	font-size: 15px;
 `;
 
-const RatingWrapper = styled.View`
+export const RatingWrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	padding-right: 5px;
 `;
 
-const CardBottom = styled.View`
+export const CardBottom = styled.View`
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 2px;
 	flex-direction: row;
 `;
 
-const CardYear = styled.Text`
+export const CardYear = styled.Text`
 	color: ${colors.offWhite};
 	font-family: 'poppins-regular';
 `;
 
-const CardRating = styled.Text`
+export const CardRating = styled.Text`
 	color: ${colors.yellow};
 	font-family: 'poppins-regular';
 `;
 
-const CardImage = styled.Image`
+export const CardImage = styled.Image`
 	height: 240px;
 	width: 150px;
 	border-radius: 10px;
 `;
 
-const CardWrapper = styled.Pressable`
+export const CardWrapper = styled.Pressable`
 	margin: 20px 15px 0 0;
 `;
 

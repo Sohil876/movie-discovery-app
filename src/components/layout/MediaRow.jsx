@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import styled from 'styled-components/native';
@@ -7,6 +8,7 @@ import BaseText from './BaseText';
 import MediaCard from './MediaCard';
 
 const MediaRow = ({ title, url }) => {
+	const navigation = useNavigation();
 	const [mediaData, setMediaData] = useState();
 
 	const renderMediaRow = () => {
@@ -34,7 +36,11 @@ const MediaRow = ({ title, url }) => {
 		<View>
 			<TitleWrapper>
 				<RowTitle>{title}</RowTitle>
-				<SeeMoreBtn onPress={() => alert('test')}>
+				<SeeMoreBtn
+					onPress={() => {
+						navigation.push('MediaList', { url, title });
+					}}
+				>
 					<BtnText>View All</BtnText>
 				</SeeMoreBtn>
 			</TitleWrapper>
@@ -49,13 +55,14 @@ const RowTitle = styled.Text`
 	font-family: 'poppins-medium';
 `;
 
-const SeeMoreBtn = styled.TouchableOpacity`
+export const SeeMoreBtn = styled.TouchableOpacity`
 	border-radius: 100px;
 	padding: 10px 20px;
 `;
 
-const BtnText = styled(BaseText)`
+export const BtnText = styled(BaseText)`
 	color: ${colors.primaryClr};
+	text-transform: capitalize;
 `;
 
 const TitleWrapper = styled.View`

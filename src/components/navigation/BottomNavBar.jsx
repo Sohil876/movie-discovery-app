@@ -60,12 +60,6 @@ const BottomNavBar = () => {
 
 const styles = StyleSheet.create({
 	tabStyle: {
-		// position: 'absolute',
-		// bottom: 5,
-		// left: 10,
-		// right: 10,
-		// elevation: 0,
-		// borderRadius: 10,
 		backgroundColor: `${colors.primaryBg}`,
 		height: 60,
 		borderTopColor: `transparent`,
