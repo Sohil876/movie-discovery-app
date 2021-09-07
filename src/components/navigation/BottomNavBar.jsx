@@ -34,21 +34,21 @@ const BottomNavBar = () => {
 			}}
 		>
 			<Screen
-				name="Home"
+				name="HomeScreen"
 				component={HomeScreenStack}
 				options={{
 					tabBarIcon: ({ focused }) => renderTabIcon('home', focused),
 				}}
 			/>
 			<Screen
-				name="Search"
+				name="SearchScreen"
 				component={SearchScreenStack}
 				options={{
 					tabBarIcon: ({ focused }) => renderTabIcon('search', focused),
 				}}
 			/>
 			<Screen
-				name="Trailers"
+				name="TrailersScreen"
 				component={TrailersScreenStack}
 				options={{
 					tabBarIcon: ({ focused }) => renderTabIcon('play-circle', focused),
@@ -68,14 +68,7 @@ const styles = StyleSheet.create({
 		// borderRadius: 10,
 		backgroundColor: `${colors.primaryBg}`,
 		height: 60,
-		shadowColor: '#000',
-		shadowOpacity: 0.25,
-		shadowRadius: 3.5,
-		elevation: 5,
-		shadowOffset: {
-			width: 0,
-			height: 10,
-		},
+		borderTopColor: `transparent`,
 	},
 });
 

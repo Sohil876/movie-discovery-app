@@ -11,10 +11,12 @@ import { colors } from './../assets/styles/styles';
 import Cast from './../components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
 import { BASE_IMG_URL, BANNER_IMG_URL } from './../utils/requests';
+import { useNavigation } from '@react-navigation/native';
 
-const MediaDetailsScreen = ({ route, navigation }) => {
+const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
 	const [state, setState] = useState(media);
+	const navigation = useNavigation();
 
 	useEffect(() => {
 		// fetch details
@@ -33,7 +35,7 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
 	}, []);
 
-	useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const goToVideos = () => {
 		navigation.navigate('Videos', { data: state.videos });
@@ -50,11 +52,6 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 
 	const renderTitle = () => {
 		if (state.images?.logos.length > 0) {
-			/**
-			 * Checks if the image is an .svg
-			 * android cannot render SVG's
-			 * so render the text title instead.
-			 */
 			if (state.images.logos[0].file_path.toString().includes('.svg')) {
 				return <Title>{state.title}</Title>;
 			}
@@ -104,18 +101,24 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
 					</SectionTitle>
 
-					<VideoImage
-						imageStyle={{ borderRadius: 10 }}
-						resizeMode="cover"
-						source={
-							state.images?.backdrops.length > 0
-								? { uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}` }
-								: { uri: state.posterURL }
-						}
-					>
-						<VideoIcon icon="play-circle" size={40} />
-					</VideoImage>
-					<Overlay />
+					{state.videos?.results.length > 0 ? (
+						<>
+							<VideoImage
+								imageStyle={{ borderRadius: 10 }}
+								resizeMode="cover"
+								source={
+									state.images?.backdrops.length > 0
+										? { uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}` }
+										: { uri: state.posterURL }
+								}
+							>
+								<VideoIcon icon="play-circle" size={40} />
+							</VideoImage>
+							<Overlay />
+						</>
+					) : (
+						<Overview>-</Overview>
+					)}
 				</SectionWrapper>
 
 				<SectionWrapper>
@@ -147,12 +150,12 @@ const MediaDetailsScreen = ({ route, navigation }) => {
 
 				<SectionWrapper>
 					<SectionTitle>More Like This</SectionTitle>
-					<Similar data={state} navigation={navigation} />
+					<Similar data={state} />
 				</SectionWrapper>
 
 				<SectionWrapper>
 					<SectionTitle>Recommended</SectionTitle>
-					<Recommended data={state} navigation={navigation} />
+					<Recommended data={state} />
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
@@ -180,7 +183,7 @@ const styles = StyleSheet.create({
 	},
 
 	amount: {
-		fontSize: 11,
+		fontSize: 12,
 		color: `${colors.offWhite}`,
 		fontFamily: 'poppins-regular',
 	},
@@ -242,7 +245,7 @@ const Title = styled.Text`
 	text-align: center;
 	width: 75%;
 	color: #fff;
-	z-index: 1222;
+	/* z-index: 1222; */
 `;
 
 const PosterImg = styled.Image`
@@ -259,9 +262,9 @@ const SectionWrapper = styled.View`
 
 export const Overview = styled.Text`
 	color: ${colors.offWhite};
-	line-height: 22px;
+	line-height: 23px;
 	font-family: 'poppins-regular';
-	font-size: 13px;
+	font-size: 15px;
 `;
 
 const SectionTitle = styled.Text`
@@ -273,11 +276,14 @@ const SectionTitle = styled.Text`
 
 const Tagline = styled.Text`
 	color: ${colors.primaryClr};
-	font-size: 12px;
+	font-size: 13px;
 	margin-top: 10px;
 	font-family: 'poppins-regular';
+
 	align-self: center;
+	text-align: center;
 	font-style: italic;
+	width: 80%;
 `;
 
 export default MediaDetailsScreen;

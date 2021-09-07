@@ -9,8 +9,10 @@ import { colors } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const MediaCard = ({ media, navigation }) => {
+const MediaCard = ({ media }) => {
+	const navigation = useNavigation();
 	const [state, setState] = useState({
 		...media,
 
@@ -28,7 +30,7 @@ const MediaCard = ({ media, navigation }) => {
 	return (
 		<CardWrapper
 			onPress={() => {
-				navigation.push('MediaDetails', { media: state, navigation });
+				navigation.push('MediaDetails', { media: state });
 				console.log(state.title);
 			}}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}

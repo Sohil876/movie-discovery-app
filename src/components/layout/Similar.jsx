@@ -4,7 +4,7 @@ import { fetchSimilar, fetchRecommended } from 'utils/helpers';
 import { Overview } from 'screens/MediaDetailsScreen';
 import MediaCard from './MediaCard';
 
-export const Recommended = ({ data, navigation }) => {
+export const Recommended = ({ data }) => {
 	const [media, setMedia] = useState([]);
 	const [error, setError] = useState(false);
 
@@ -21,12 +21,12 @@ export const Recommended = ({ data, navigation }) => {
 			horizontal
 			data={media}
 			keyExtractor={item => item.id.toString()}
-			renderItem={({ item }) => <MediaCard media={item} navigation={navigation} />}
+			renderItem={({ item }) => <MediaCard media={item} />}
 		/>
 	);
 };
 
-const Similar = ({ data, navigation }) => {
+const Similar = ({ data }) => {
 	const [media, setMedia] = useState([]);
 	const [error, setError] = useState(false);
 
@@ -36,14 +36,14 @@ const Similar = ({ data, navigation }) => {
 			.catch(() => setError(true));
 	}, [data]);
 
-	if (error || !media.length) return <Text>No similar media found.</Text>;
+	if (error || !media.length) return <Overview>No similar media found.</Overview>;
 
 	return (
 		<FlatList
 			horizontal
 			data={media}
 			keyExtractor={item => item.id.toString()}
-			renderItem={({ item }) => <MediaCard media={item} navigation={navigation} />}
+			renderItem={({ item }) => <MediaCard media={item} />}
 		/>
 	);
 };

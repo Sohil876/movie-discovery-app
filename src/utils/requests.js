@@ -33,6 +33,14 @@ export const movieRequests = {
 	// now playing movies
 	fetchNowPlaying: `/movie/now_playing?api_key=${API_KEY}&language=en-US`,
 
+	// upcoming movies
+	fetchUpcoming: `/movie/upcoming?api_key=${API_KEY}&language=en-US`,
+};
+
+export const tvRequests = {
+	// trending tv
+	fetchTrendingTVShows: `/trending/tv/day?api_key=${API_KEY}&language=en-US`,
+
 	// popular tv
-	fetchPopularTVShowsPg1: `/tv/popular?api_key=${API_KEY}&language=en-US`,
+	fetchPopularTVShows: `/tv/popular?api_key=${API_KEY}&language=en-US`,
 };

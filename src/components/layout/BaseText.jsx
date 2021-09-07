@@ -3,17 +3,12 @@ import { StyleSheet, Text } from 'react-native';
 import styled from 'styled-components/native';
 
 const BaseText = props => {
-	return <StyledText>{props.children}</StyledText>;
+	return <StyledText style={props.style}>{props.children}</StyledText>;
 };
 
 const StyledText = styled.Text`
 	font-family: 'poppins-regular';
+	font-size: 14px;
 `;
-
-const styles = StyleSheet.create({
-	text: {
-		fontFamily: 'poppins-regular',
-	},
-});
 
 export default BaseText;

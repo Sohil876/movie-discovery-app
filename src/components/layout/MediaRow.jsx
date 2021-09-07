@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, View, Text, Image } from 'react-native';
+import { FlatList, View } from 'react-native';
 import styled from 'styled-components/native';
-import tmdb from 'utils/baseURL';
-import MediaCard from './MediaCard';
 import { colors } from 'styles/styles.js';
+import { fetchMediaData } from 'utils/helpers';
+import BaseText from './BaseText';
+import MediaCard from './MediaCard';
 
-const MediaRow = ({ title, url, navigation }) => {
+const MediaRow = ({ title, url }) => {
 	const [mediaData, setMediaData] = useState();
-
-	const fetchMediaData = async () => {
-		try {
-			const { data, status } = await tmdb.get(url);
-			if (status !== 200) throw Error(`Error fetching ${title} movie data`);
-
-			setMediaData(data.results);
-		} catch (er) {
-			console.log(er);
-		}
-	};
 
 	const renderMediaRow = () => {
 		if (!mediaData) {
@@ -29,7 +19,7 @@ const MediaRow = ({ title, url, navigation }) => {
 					data={mediaData}
 					keyExtractor={item => item.id.toString()}
 					renderItem={({ item }) => {
-						return <MediaCard media={item} navigation={navigation} />;
+						return <MediaCard media={item} />;
 					}}
 				/>
 			);
@@ -37,16 +27,16 @@ const MediaRow = ({ title, url, navigation }) => {
 	};
 
 	useEffect(() => {
-		fetchMediaData();
+		fetchMediaData(url).then(res => setMediaData(res));
 	}, []);
 
 	return (
 		<View>
 			<TitleWrapper>
 				<RowTitle>{title}</RowTitle>
-				<ViewBtn onPress={() => alert('test')}>
+				<SeeMoreBtn onPress={() => alert('test')}>
 					<BtnText>View All</BtnText>
-				</ViewBtn>
+				</SeeMoreBtn>
 			</TitleWrapper>
 			{renderMediaRow()}
 		</View>
@@ -59,12 +49,12 @@ const RowTitle = styled.Text`
 	font-family: 'poppins-medium';
 `;
 
-const ViewBtn = styled.TouchableOpacity`
+const SeeMoreBtn = styled.TouchableOpacity`
 	border-radius: 100px;
 	padding: 10px 20px;
 `;
 
-const BtnText = styled.Text`
+const BtnText = styled(BaseText)`
 	color: ${colors.primaryClr};
 `;
 

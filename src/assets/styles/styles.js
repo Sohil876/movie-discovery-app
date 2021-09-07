@@ -26,6 +26,7 @@ const blue = {
 
 export const colors = {
 	primaryBg: '#0e0b20',
+	navbar: '#090227',
 	offWhite: `${coolGray[400]}`,
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',

@@ -3,23 +3,31 @@ import MediaRow from 'layoutcomp/MediaRow';
 import React from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
-import { movieRequests } from 'utils/requests';
+import { movieRequests, tvRequests } from '../utils/requests';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
 	const bottomNavBarHeight = useBottomTabBarHeight();
 
 	return (
 		<HomeWrapper>
 			<MediaWrapper>
-				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} navigation={navigation} />
+				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
 			</MediaWrapper>
 
 			<MediaWrapper>
-				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} navigation={navigation} />
+				<MediaRow title="Upcoming Movies" url={movieRequests.fetchUpcoming} />
+			</MediaWrapper>
+
+			<MediaWrapper>
+				<MediaRow title="Trending Movies" url={movieRequests.fetchTrendingMovies} />
+			</MediaWrapper>
+
+			<MediaWrapper>
+				<MediaRow title="Trending on TV" url={tvRequests.fetchTrendingTVShows} />
 			</MediaWrapper>
 
 			<MediaWrapper marginBottom={bottomNavBarHeight}>
-				<MediaRow title="Popular on TV" url={movieRequests.fetchPopularTVShowsPg1} navigation={navigation} />
+				<MediaRow title="Popular on TV" url={tvRequests.fetchPopularTVShows} />
 			</MediaWrapper>
 		</HomeWrapper>
 	);

@@ -88,17 +88,35 @@ export const fetchRecommended = async (media, type) => {
 export const fetchGenres = async type => {
 	// type param can either be 'movie' || 'tv'
 	try {
-		const { data, status } = await tmdb.get(`/genre/${type}/list?api_key=${API_KEY}&language=en-US`);
-		if (status !== 200) throw Error('error fetching movie genres');
+		const { data, status, statusText } = await tmdb.get(`/genre/${type}/list?api_key=${API_KEY}&language=en-US`);
+		if (status !== 200) throw Error(statusText);
 
 		return data;
 	} catch (er) {
-		console.error(er);
+		console.error('error fetching movie genres', er);
+	}
+};
+
+/**
+ * Fetch Media Data
+ *
+ * @param {string} url url to fetch
+ */
+export const fetchMediaData = async url => {
+	try {
+		const { data, status, statusText } = await tmdb.get(url);
+		if (status !== 200) throw Error(statusText);
+
+		return data.results;
+	} catch (er) {
+		console.log(er, `Error fetching media data`);
 	}
 };
 
 /**
  * Fetch Media Details
+ *
+ * @param {string} type 'movie' or 'tv'
  *
  * This will also fetch images and videos:
  * See https://developers.themoviedb.org/3/getting-started/append-to-response

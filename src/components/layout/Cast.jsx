@@ -6,6 +6,7 @@ import { BASE_IMG_URL } from 'utils/requests';
 import { Overview } from 'screens/MediaDetailsScreen';
 
 const Cast = ({ data }) => {
+	if (!data?.length) return <Overview>Loading...</Overview>;
 	if (!data) return <Overview>No cast found.</Overview>;
 
 	return (
@@ -36,8 +37,8 @@ const Wrapper = styled.TouchableOpacity`
 `;
 
 const CastImage = styled.Image`
-	height: 70px;
-	width: 70px;
+	height: 90px;
+	width: 90px;
 	border-radius: 100px;
 	margin-bottom: 10px;
 `;
@@ -45,14 +46,14 @@ const CastImage = styled.Image`
 const Name = styled.Text`
 	font-family: 'poppins-regular';
 	color: #fff;
-	font-size: 13px;
+	font-size: 15px;
 `;
 
 const Role = styled.Text`
 	font-family: 'poppins-regular';
 	font-style: italic;
 	color: ${colors.offWhite};
-	font-size: 13px;
+	font-size: 14px;
 	justify-content: center;
 	text-align: center;
 `;
