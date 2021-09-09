@@ -3,13 +3,11 @@
  * https://github.com/FortAwesome/react-native-fontawesome
  */
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const MediaCard = ({ media }) => {
 	const navigation = useNavigation();
@@ -103,4 +101,5 @@ export const CardWrapper = styled.Pressable`
 	margin: 20px 15px 0 0;
 `;
 
-export default MediaCard;
+// export const MemoizedMediaCard =
+export default React.memo(MediaCard);

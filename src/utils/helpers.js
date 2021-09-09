@@ -94,6 +94,7 @@ export const fetchGenres = async type => {
 		return data;
 	} catch (er) {
 		console.error('error fetching movie genres', er);
+		throw Error(er);
 	}
 };
 
@@ -110,6 +111,7 @@ export const fetchMediaData = async url => {
 		return data.results;
 	} catch (er) {
 		console.log(er, `Error fetching media data`);
+		throw Error(er);
 	}
 };
 
@@ -124,15 +126,16 @@ export const fetchMediaData = async url => {
 
 export const fetchMediaDetails = async (type, media) => {
 	try {
-		const { data, status } = await tmdb.get(
+		const { data, status, statusText } = await tmdb.get(
 			`/${type}/${media.id}?api_key=${API_KEY}&language=en-US&include_image_language=en&append_to_response=videos,images`
 		);
-		if (status !== 200) throw Error('error fetching media details');
+		if (status !== 200) throw Error(statusText);
 		// console.log(data, 'RUNTIME OBJECT');
 
 		return data;
 	} catch (er) {
-		console.error(er);
+		console.error(er, 'error fetching media details');
+		throw Error(er);
 	}
 };
 
@@ -176,8 +179,10 @@ export const fetchCredits = async (type, media) => {
 			`/${type}/${media.id}/credits?api_key=${API_KEY}&language=en-US`
 		);
 		if (status !== 200) throw Error(statusText);
+
 		return data;
 	} catch (e) {
 		console.error(e, 'error fetching credits data');
+		throw Error(statusText);
 	}
 };

@@ -1,39 +1,54 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useNavigation } from '@react-navigation/native';
+import Cast from 'components/layout/Cast';
+import { BtnText, SeeMoreBtn } from 'components/layout/MediaRow';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { Image, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
 import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
 import { colors } from './../assets/styles/styles';
-import Cast from 'components/layout/Cast';
 import { fetchMediaDetails } from './../utils/helpers';
-import { BASE_IMG_URL, BANNER_IMG_URL, API_KEY } from './../utils/requests';
-import { useNavigation } from '@react-navigation/native';
-import { SeeMoreBtn, BtnText } from 'components/layout/MediaRow';
+import { API_KEY, BASE_IMG_URL } from './../utils/requests';
 
 const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
 	const [state, setState] = useState(media);
+	const [isRefreshing, setIsRefreshing] = useState(false);
 	const navigation = useNavigation();
 
-	useEffect(() => {
+	const init = () => {
 		// fetch details
-		fetchMediaDetails(state.type, state).then(res => {
-			setState(prev => ({
-				...res,
-				...prev,
-				runtime: res.runtime || res.episode_run_time[0],
-				episodeTimes: res.episode_run_time, // array
-				genres: res.genres,
-				releaseDate: res.release_date || res.first_air_date,
-			}));
-		});
+		fetchMediaDetails(state.type, state)
+			.then(res => {
+				setState(prev => ({
+					...res,
+					...prev,
+					runtime: res.runtime || res.episode_run_time[0],
+					episodeTimes: res.episode_run_time, // array
+					genres: res.genres,
+					releaseDate: res.release_date || res.first_air_date,
+				}));
+			})
+			.catch(er => console.error(er))
+			.finally(() => setIsRefreshing(false));
 
 		// fetch cast
-		fetchCredits(state.type, state).then(res => setState(prev => ({ ...prev, credits: res })));
+		fetchCredits(state.type, state)
+			.then(res => setState(prev => ({ ...prev, credits: res })))
+			.finally(() => setIsRefreshing(false));
+	};
+
+	const refreshData = () => {
+		setIsRefreshing(true);
+		init();
+	};
+
+	useEffect(() => {
+		init();
 	}, []);
 
 	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
@@ -70,7 +85,7 @@ const MediaDetailsScreen = ({ route }) => {
 	};
 
 	return (
-		<DetailsWrapper>
+		<DetailsWrapper refreshControl={<RefreshControl onRefresh={refreshData} refreshing={isRefreshing} />}>
 			<PosterDetails>
 				{renderTitle()}
 				<PosterInfo>
@@ -173,7 +188,7 @@ const MediaDetailsScreen = ({ route }) => {
 							onPress={() => {
 								navigation.push('MediaList', {
 									url: `/${state.type}/${state.id}/recommendations?api_key=${API_KEY}&language=en-US`,
-									title: `Recommendations for ${state.title}`,
+									title: `Because you like ${state.title}`,
 								});
 							}}
 						>

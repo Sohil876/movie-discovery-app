@@ -1,23 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { Text, FlatList, StyleSheet } from 'react-native';
+import BaseText from 'components/layout/BaseText';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { fetchMediaData } from '../utils/helpers';
 import MediaCard from './../components/layout/MediaCard';
-import BaseText from 'components/layout/BaseText';
 
 const MediaListScreen = ({ route }) => {
 	const { url, title } = route.params;
 	const [data, setData] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [isRefreshing, setIsRefreshing] = useState(false);
+	const [page, setPage] = useState(1);
 
-	useEffect(() => {
-		setIsLoading(true);
+	const fetchData = () => {
+		fetchMediaData(`${url}&page=${page}`)
+			.then(res => setData(prev => [...prev, ...res]))
+			.catch(er => console.error(er))
+			.finally(() => setIsLoading(false));
+	};
+
+	const refreshData = () => {
+		setIsRefreshing(true);
+		setPage(1);
+
 		fetchMediaData(url)
 			.then(res => setData(res))
 			.catch(er => console.error(er))
-			.finally(() => setIsLoading(false));
-	}, []);
+			.finally(() => setIsRefreshing(false));
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, [page]);
 
 	if (isLoading)
 		return (
@@ -29,20 +44,25 @@ const MediaListScreen = ({ route }) => {
 	return (
 		<Wrapper>
 			<ListTitle>{title}</ListTitle>
-			<ItemWrapper>
-				{data.map(item => (
-					<MediaCard media={item} key={item.id.toString()} />
-				))}
-			</ItemWrapper>
+
+			<FlatList
+				onEndReached={() => setPage(prev => prev + 1)}
+				onEndReachedThreshold={0.8}
+				onRefresh={refreshData}
+				refreshing={isRefreshing}
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ flexDirection: 'column', marginLeft: 30 }}
+				numColumns={2}
+				horizontal={false}
+				data={data}
+				keyExtractor={(item, index) => index.toString()}
+				renderItem={({ item }) => <MediaCard media={item} />}
+			/>
 		</Wrapper>
 	);
 };
 
-const styles = StyleSheet.create({
-	containerStyle: { justifyContent: 'center', alignItems: 'center', marginRight: 0 },
-});
-
-const Wrapper = styled.ScrollView`
+const Wrapper = styled.View`
 	flex: 1;
 	background-color: ${colors.primaryBg};
 	padding: 80px 20px 0;
@@ -58,14 +78,6 @@ const LoadingWrapper = styled.View`
 	justify-content: center;
 	align-items: center;
 	background-color: ${colors.primaryBg};
-`;
-
-const ItemWrapper = styled.View`
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	margin-right: -20px;
 `;
 
 const ListTitle = styled(BaseText)`

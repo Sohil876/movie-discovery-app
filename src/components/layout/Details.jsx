@@ -9,9 +9,9 @@ import { Overview } from 'screens/MediaDetailsScreen';
 const renderList = data => {
 	return data.map((item, i, arr) => {
 		if (i === arr.length - 1) {
-			return item.name;
+			return <Text key={i}>{item.name}</Text>;
 		} else {
-			return item.name + ', ';
+			return <Text key={i}>{item.name}, </Text>;
 		}
 	});
 };
@@ -51,9 +51,9 @@ export const TVDetails = ({ data }) => {
 			<Overview>
 				{data.episodeTimes?.map((item, i, arr) => {
 					if (i === arr.length - 1) {
-						return item;
+						return <Text key={i}>{item}</Text>;
 					} else {
-						return item + ', ';
+						return <Text key={i}>{item}, </Text>;
 					}
 				})}
 			</Overview>
@@ -84,9 +84,9 @@ const Details = ({ data }) => {
 				{data.spoken_languages?.length > 0
 					? data.spoken_languages.map((item, i, arr) => {
 							if (i === arr.length - 1) {
-								return <Text>{item.english_name}</Text>;
+								return <Text key={i}>{item.english_name}</Text>;
 							} else {
-								return <Text>{item.english_name}, </Text>;
+								return <Text key={i}>{item.english_name}, </Text>;
 							}
 					  })
 					: '-'}

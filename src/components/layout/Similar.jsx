@@ -20,7 +20,7 @@ export const Recommended = ({ data }) => {
 		<FlatList
 			horizontal
 			data={media}
-			keyExtractor={item => item.id.toString()}
+			keyExtractor={(_, index) => index.toString()}
 			renderItem={({ item }) => <MediaCard media={item} />}
 		/>
 	);
@@ -42,7 +42,7 @@ const Similar = ({ data }) => {
 		<FlatList
 			horizontal
 			data={media}
-			keyExtractor={item => item.id.toString()}
+			keyExtractor={(_, index) => index.toString()}
 			renderItem={({ item }) => <MediaCard media={item} />}
 		/>
 	);

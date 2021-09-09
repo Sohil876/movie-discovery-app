@@ -1,9 +1,9 @@
 import React from 'react';
+import { FlatList } from 'react-native';
+import { Overview } from 'screens/MediaDetailsScreen';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
-import { FlatList, Text, TouchableOpacity } from 'react-native';
 import { BASE_IMG_URL } from 'utils/requests';
-import { Overview } from 'screens/MediaDetailsScreen';
 
 const Cast = ({ data }) => {
 	if (!data?.length) return <Overview>Loading...</Overview>;
@@ -26,7 +26,7 @@ const Cast = ({ data }) => {
 					<Role>{`as ${item.character || 'Unknown'}`}</Role>
 				</Wrapper>
 			)}
-			keyExtractor={item => item.id.toString()}
+			keyExtractor={(item, index) => index.toString()}
 		/>
 	);
 };

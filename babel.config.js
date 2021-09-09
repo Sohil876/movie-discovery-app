@@ -6,6 +6,8 @@ module.exports = function (api) {
 			[
 				'module-resolver',
 				{
+					root: ['.'],
+					extensions: ['.android.js', '.js', '.jsx', '.json'],
 					alias: {
 						components: './src/components',
 						layoutcomp: './src/components/layout',

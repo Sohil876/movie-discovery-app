@@ -17,9 +17,10 @@ const MediaRow = ({ title, url }) => {
 		} else {
 			return (
 				<FlatList
+					showsHorizontalScrollIndicator={false}
 					horizontal
 					data={mediaData}
-					keyExtractor={item => item.id.toString()}
+					keyExtractor={(item, index) => index.toString()}
 					renderItem={({ item }) => {
 						return <MediaCard media={item} />;
 					}}
@@ -29,7 +30,10 @@ const MediaRow = ({ title, url }) => {
 	};
 
 	useEffect(() => {
+		let mounted = true;
 		fetchMediaData(url).then(res => setMediaData(res));
+
+		return () => (mounted = false);
 	}, []);
 
 	return (
