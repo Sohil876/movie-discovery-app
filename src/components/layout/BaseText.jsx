@@ -9,6 +9,7 @@ const BaseText = props => {
 const StyledText = styled.Text`
 	font-family: 'poppins-regular';
 	font-size: 14px;
+	color: #fff;
 `;
 
 export default BaseText;

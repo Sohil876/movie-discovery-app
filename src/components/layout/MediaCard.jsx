@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
 
 const MediaCard = ({ media }) => {
@@ -52,49 +52,49 @@ const MediaCard = ({ media }) => {
 	);
 };
 
-export const CardIcon = styled(FontAwesomeIcon)`
+const CardIcon = styled(FontAwesomeIcon)`
 	margin-right: 5px;
 	margin-top: 3px;
 `;
 
-export const CardInfo = styled.View`
+const CardInfo = styled.View`
 	margin-top: 15px;
 `;
 
-export const CardTitle = styled.Text`
+const CardTitle = styled.Text`
 	color: #fff;
 	width: 145px;
 	font-family: 'poppins-medium';
 	font-size: 15px;
 `;
 
-export const RatingWrapper = styled.View`
+const RatingWrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	padding-right: 5px;
 `;
 
-export const CardBottom = styled.View`
+const CardBottom = styled.View`
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 2px;
 	flex-direction: row;
 `;
 
-export const CardYear = styled.Text`
+const CardYear = styled.Text`
 	color: ${colors.offWhite};
 	font-family: 'poppins-regular';
 `;
 
-export const CardRating = styled.Text`
+const CardRating = styled.Text`
 	color: ${colors.yellow};
 	font-family: 'poppins-regular';
 `;
 
-export const CardImage = styled.Image`
+const CardImage = styled.Image`
 	height: 240px;
 	width: 150px;
-	border-radius: 10px;
+	border-radius: ${constants.borderRadiusLg};
 `;
 
 export const CardWrapper = styled.Pressable`

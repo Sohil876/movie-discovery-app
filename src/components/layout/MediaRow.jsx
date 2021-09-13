@@ -53,7 +53,7 @@ const MediaRow = ({ title, url }) => {
 	);
 };
 
-const RowTitle = styled.Text`
+export const RowTitle = styled.Text`
 	color: #fff;
 	font-size: 20px;
 	font-family: 'poppins-medium';

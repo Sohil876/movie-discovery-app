@@ -7,7 +7,7 @@ import HomeScreen from './../../screens/HomeScreen';
 import MediaListScreen from './../../screens/MediaListScreen';
 import SearchScreen from './../../screens/SearchScreen';
 import TrailersScreen from './../../screens/TrailersScreen';
-import VideosScreen from './../../screens/VideosScreen';
+import WatchVideosScreen from '../../screens/WatchVideosScreen';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -54,13 +54,14 @@ export const HomeScreenStack = () => (
 		<Home.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
 		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		<Home.Screen name="MediaList" component={MediaListScreen} />
-		<Home.Screen name="Videos" component={VideosScreen} />
+		<Home.Screen name="WatchVideos" component={WatchVideosScreen} />
 	</Home.Navigator>
 );
 
 export const SearchScreenStack = () => (
 	<Search.Navigator screenOptions={{ headerShown: false }}>
 		<Search.Screen name="Search" component={SearchScreen} />
+		<Search.Screen name="MediaDetails" component={MediaDetailsScreen} />
 	</Search.Navigator>
 );
 

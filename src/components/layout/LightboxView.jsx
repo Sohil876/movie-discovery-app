@@ -3,12 +3,13 @@
 import React from 'react';
 import { Modal, Text, StyleSheet } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import BaseText from './BaseText';
 
 const LightboxView = ({ imagePath, closeModal }) => {
 	return (
 		<Modal visible={true} transparent={true}>
 			<ImageViewer
-				renderHeader={() => <Text style={styles.text}>Swipe down to exit</Text>}
+				renderHeader={() => <BaseText style={styles.text}>Swipe down to exit</BaseText>}
 				imageUrls={imagePath}
 				saveToLocalByLongPress={false}
 				enableSwipeDown={true}
@@ -23,7 +24,9 @@ const LightboxView = ({ imagePath, closeModal }) => {
 const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
-		fontSize: 14,
+		fontSize: 15,
+		textAlign: 'center',
+		marginTop: 12,
 	},
 });
 

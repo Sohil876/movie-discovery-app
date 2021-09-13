@@ -43,3 +43,8 @@ export const colors = {
 	gray100: `${coolGray[100]}`,
 	gray50: `${coolGray[50]}`,
 };
+
+export const constants = {
+	borderRadiusSm: '5px',
+	borderRadiusLg: '10px',
+};

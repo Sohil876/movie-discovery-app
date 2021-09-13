@@ -6,7 +6,7 @@ import { colors } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
 
 const Cast = ({ data }) => {
-	if (!data?.length) return <Overview>Loading...</Overview>;
+	// if (!data?.length) return <Overview>Loading...</Overview>;
 	if (!data) return <Overview>No cast found.</Overview>;
 
 	return (

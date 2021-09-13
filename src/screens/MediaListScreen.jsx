@@ -41,13 +41,21 @@ const MediaListScreen = ({ route }) => {
 			</LoadingWrapper>
 		);
 
+	if (!data.length) {
+		return (
+			<LoadingWrapper>
+				<Loading>No media found.</Loading>
+			</LoadingWrapper>
+		);
+	}
+
 	return (
 		<Wrapper>
 			<ListTitle>{title}</ListTitle>
 
 			<FlatList
 				onEndReached={() => setPage(prev => prev + 1)}
-				onEndReachedThreshold={0.8}
+				onEndReachedThreshold={0.3}
 				onRefresh={refreshData}
 				refreshing={isRefreshing}
 				showsVerticalScrollIndicator={false}

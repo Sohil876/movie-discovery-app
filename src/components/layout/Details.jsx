@@ -128,10 +128,10 @@ const Title = styled.Text`
 	color: #fff;
 `;
 
-const Separator = styled.View`
+export const Separator = styled.View`
 	width: 100%;
 	border-bottom-width: 0.5px;
-	border-bottom-color: ${colors.gray700};
+	border-bottom-color: ${colors.gray800};
 	margin: 12px 0;
 `;
 

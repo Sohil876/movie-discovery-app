@@ -4,13 +4,13 @@ import Cast from 'components/layout/Cast';
 import { BtnText, SeeMoreBtn } from 'components/layout/MediaRow';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { Image, RefreshControl, StyleSheet, Text, View, Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
 import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
-import { colors } from './../assets/styles/styles';
+import { colors, constants } from './../assets/styles/styles';
 import { fetchMediaDetails } from './../utils/helpers';
 import { API_KEY, BASE_IMG_URL } from './../utils/requests';
 
@@ -27,7 +27,7 @@ const MediaDetailsScreen = ({ route }) => {
 				setState(prev => ({
 					...res,
 					...prev,
-					runtime: res.runtime || res.episode_run_time[0],
+					runtime: res.runtime ?? res.episode_run_time[0],
 					episodeTimes: res.episode_run_time, // array
 					genres: res.genres,
 					releaseDate: res.release_date || res.first_air_date,
@@ -51,10 +51,14 @@ const MediaDetailsScreen = ({ route }) => {
 		init();
 	}, []);
 
+	useEffect(() => {
+		console.log(state);
+	}, [state, 'STATE']);
+
 	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const goToVideos = () => {
-		navigation.navigate('Videos', { data: state.videos });
+		navigation.navigate('WatchVideos', { data: state.videos });
 	};
 
 	const renderGenres = () => {
@@ -118,7 +122,7 @@ const MediaDetailsScreen = ({ route }) => {
 					</SectionTitle>
 
 					{state.videos?.results.length > 0 ? (
-						<>
+						<Pressable onPress={goToVideos}>
 							<VideoImage
 								imageStyle={{ borderRadius: 10 }}
 								resizeMode="cover"
@@ -131,7 +135,7 @@ const MediaDetailsScreen = ({ route }) => {
 								<VideoIcon icon="play-circle" size={40} />
 							</VideoImage>
 							<Overlay />
-						</>
+						</Pressable>
 					) : (
 						<Overview>-</Overview>
 					)}
