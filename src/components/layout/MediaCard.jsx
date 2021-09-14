@@ -8,6 +8,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
+import { BasePressable } from './BaseComponents';
 
 const MediaCard = ({ media }) => {
 	const navigation = useNavigation();
@@ -27,13 +28,11 @@ const MediaCard = ({ media }) => {
 
 	return (
 		<CardWrapper
-			onPress={() => {
-				navigation.push('MediaDetails', { media: state });
-			}}
+			onPress={() => navigation.push('MediaDetails', { media: state })}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
 			<CardImage
-				// defaultSource={require('../../assets/images/no-img-found.png')}
+				defaultSource={require('../../assets/images/no-img-found.png')}
 				source={state.posterURL ? { uri: state.posterURL } : require('../../assets/images/no-img-found.png')}
 				resizeMode="cover"
 			/>

@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { fetchMediaData } from 'utils/helpers';
-import BaseText from './BaseText';
+import { BaseText } from './BaseComponents';
 import MediaCard from './MediaCard';
 
 const MediaRow = ({ title, url }) => {

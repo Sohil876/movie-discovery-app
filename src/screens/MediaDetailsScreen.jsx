@@ -174,7 +174,7 @@ const MediaDetailsScreen = ({ route }) => {
 						<SeeMoreBtn
 							onPress={() => {
 								navigation.push('MediaList', {
-									url: `/${state.type}/${state.id}/recommendations?api_key=${API_KEY}&language=en-US`,
+									url: `/${state.type}/${state.id}/similar?api_key=${API_KEY}&language=en-US`,
 									title: `More like ${state.title}`,
 								});
 							}}

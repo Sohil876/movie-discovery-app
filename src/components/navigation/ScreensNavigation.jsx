@@ -2,12 +2,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
-import MediaDetailsScreen from '../../screens/MediaDetailsScreen';
-import HomeScreen from './../../screens/HomeScreen';
-import MediaListScreen from './../../screens/MediaListScreen';
-import SearchScreen from './../../screens/SearchScreen';
-import TrailersScreen from './../../screens/TrailersScreen';
-import WatchVideosScreen from '../../screens/WatchVideosScreen';
+import MediaDetailsScreen from 'screens/MediaDetailsScreen';
+import HomeScreen from 'screens/HomeScreen';
+import MediaListScreen from 'screens/MediaListScreen';
+import SearchScreen from 'screens/SearchScreen';
+import TrailersScreen from 'screens/TrailersScreen';
+import WatchVideosScreen from 'screens/WatchVideosScreen';
+import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -47,26 +48,33 @@ const options = {
 			/>
 		),
 	},
+	noHeader: {
+		headerShown: false,
+	},
 };
 
 export const HomeScreenStack = () => (
 	<Home.Navigator screenOptions={options.mainOptions}>
-		<Home.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+		<Home.Screen name="Home" component={HomeScreen} options={options.noHeader} />
 		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		<Home.Screen name="MediaList" component={MediaListScreen} />
 		<Home.Screen name="WatchVideos" component={WatchVideosScreen} />
+		<Home.Screen name="PersonDetails" component={PersonDetailsScreen} />
 	</Home.Navigator>
 );
 
 export const SearchScreenStack = () => (
-	<Search.Navigator screenOptions={{ headerShown: false }}>
-		<Search.Screen name="Search" component={SearchScreen} />
+	<Search.Navigator screenOptions={options.mainOptions}>
+		<Search.Screen name="Search" component={SearchScreen} options={options.noHeader} />
 		<Search.Screen name="MediaDetails" component={MediaDetailsScreen} />
+		<Search.Screen name="MediaList" component={MediaListScreen} />
+		<Search.Screen name="WatchVideos" component={WatchVideosScreen} />
+		<Search.Screen name="PersonDetails" component={PersonDetailsScreen} />
 	</Search.Navigator>
 );
 
 export const TrailersScreenStack = () => (
-	<Trailers.Navigator screenOptions={{ headerShown: false }}>
+	<Trailers.Navigator screenOptions={options.mainOptions}>
 		<Trailers.Screen name="Trailers" component={TrailersScreen} />
 	</Trailers.Navigator>
 );

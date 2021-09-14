@@ -8,7 +8,15 @@ import 'intl/locale-data/jsonp/en';
  */
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import { faHome, faPlay, faPlayCircle, faSearch, faStar, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+	faHome,
+	faPlay,
+	faPlayCircle,
+	faSearch,
+	faStar,
+	faArrowCircleLeft,
+	faTimesCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
@@ -25,7 +33,7 @@ export default function App() {
 	 * so that they may be resused in different
 	 * components throughout the app
 	 */
-	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle, faArrowCircleLeft);
+	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle, faArrowCircleLeft, faTimesCircle);
 
 	// Load custom fonts
 	useEffect(() => {

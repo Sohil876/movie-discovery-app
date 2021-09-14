@@ -1,4 +1,4 @@
-import BaseText from 'components/layout/BaseText';
+import { BaseText } from 'components/layout/BaseComponents';
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';

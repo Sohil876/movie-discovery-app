@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, FlatList, Image } from 'react-native';
 import styled from 'styled-components/native';
 import YoutubePlayer, { getYoutubeMeta } from 'react-native-youtube-iframe';
 import { colors } from 'styles/styles.js';
-import BaseText from 'components/layout/BaseText';
+import { BaseText } from 'components/layout/BaseComponents';
 import { Separator } from 'components/layout/Details';
 
 const WatchVideosScreen = ({ route }) => {
@@ -23,7 +23,7 @@ const WatchVideosScreen = ({ route }) => {
 			<PlayerWrapper>
 				<YoutubePlayer
 					style={styles.player}
-					height={300}
+					height={360}
 					play={true}
 					videoId={currentVid.key}
 					forceAndroidAutoplay={true}

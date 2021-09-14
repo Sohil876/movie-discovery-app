@@ -3,7 +3,7 @@
 import React from 'react';
 import { Modal, Text, StyleSheet } from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
-import BaseText from './BaseText';
+import { BaseText } from './BaseComponents';
 
 const LightboxView = ({ imagePath, closeModal }) => {
 	return (
@@ -24,7 +24,7 @@ const LightboxView = ({ imagePath, closeModal }) => {
 const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
-		fontSize: 15,
+		fontSize: 17,
 		textAlign: 'center',
 		marginTop: 12,
 	},

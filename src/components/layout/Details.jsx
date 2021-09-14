@@ -1,10 +1,11 @@
 import * as Linking from 'expo-linking';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import { Overview } from 'screens/MediaDetailsScreen';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { formatAsCurrency, formatDate } from 'utils/helpers';
-import { Overview } from 'screens/MediaDetailsScreen';
+import { BasePressable } from './BaseComponents';
 
 const renderList = data => {
 	return data.map((item, i, arr) => {
@@ -109,9 +110,11 @@ const Details = ({ data }) => {
 			<Overview>{data.production_companies?.length > 0 ? renderList(data.production_companies) : '-'}</Overview>
 			<Separator />
 
-			<Title>Homepage</Title>
-			<Overview onPress={() => openWebsite(data.homepage)}>{data.homepage || '-'}</Overview>
-			<Separator />
+			<BasePressable onPress={() => openWebsite(data.homepage)}>
+				<Title>Homepage</Title>
+				<Overview>{data.homepage || '-'}</Overview>
+				<Separator />
+			</BasePressable>
 
 			<Title>Budget</Title>
 			<Overview>{formatAsCurrency(data.budget) || '-'}</Overview>

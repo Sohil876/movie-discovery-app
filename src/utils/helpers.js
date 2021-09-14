@@ -23,8 +23,54 @@ export const formatDate = date => {
 	return `${months[month]} ${day}, ${year}`;
 };
 
-export const fetchTrailers = () => {
-	return {};
+/**
+ * Multi Search (search for movies, tv shows and people simualtaneously)
+ *
+ * https://developers.themoviedb.org/3/search/multi-search
+ *
+ * @param {string} query string to search for
+ * @param {number} page page number to get results from
+ */
+
+export const fetchSearchResults = async (query, page = 1) => {
+	try {
+		const {
+			data: { results },
+			status,
+			statusText,
+		} = await tmdb.get(`/search/multi?api_key=${API_KEY}&query=${query}&page=${page}&language=en-US`);
+
+		if (status !== 200) throw Error(statusText);
+
+		return results;
+	} catch (er) {
+		console.error(er, 'Error fetching search results');
+	}
+};
+
+/**
+ * Fetch Person Details
+ *
+ * https://developers.themoviedb.org/3/people/get-person-details
+ */
+
+export const fetchPersonDetails = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(`/person/${id}?api_key=${API_KEY}&language=en-US`);
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'Error fetching person details');
+	}
+};
+
+/**
+ * Get full year from date
+ */
+
+export const getFullYear = date => {
+	return new Date(date).getFullYear();
 };
 
 /**

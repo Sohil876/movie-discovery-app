@@ -4,8 +4,11 @@ import { Overview } from 'screens/MediaDetailsScreen';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { BASE_IMG_URL } from 'utils/requests';
+import { useNavigation } from '@react-navigation/native';
 
 const Cast = ({ data }) => {
+	const navigation = useNavigation();
+
 	// if (!data?.length) return <Overview>Loading...</Overview>;
 	if (!data) return <Overview>No cast found.</Overview>;
 
@@ -14,7 +17,7 @@ const Cast = ({ data }) => {
 			horizontal
 			data={data}
 			renderItem={({ item }) => (
-				<Wrapper>
+				<Wrapper onPress={() => navigation.push('PersonDetails', { data: item })}>
 					<CastImage
 						source={
 							item.profile_path
