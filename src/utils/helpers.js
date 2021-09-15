@@ -49,14 +49,16 @@ export const fetchSearchResults = async (query, page = 1) => {
 };
 
 /**
- * Fetch Person Details
+ * Fetch Person Details including images
  *
  * https://developers.themoviedb.org/3/people/get-person-details
  */
 
 export const fetchPersonDetails = async id => {
 	try {
-		const { data, status, statusText } = await tmdb.get(`/person/${id}?api_key=${API_KEY}&language=en-US`);
+		const { data, status, statusText } = await tmdb.get(
+			`/person/${id}?api_key=${API_KEY}&language=en-US&append_to_response=images`
+		);
 		if (status !== 200) throw Error(statusText);
 
 		return data;
@@ -73,6 +75,13 @@ export const getFullYear = date => {
 	return new Date(date).getFullYear();
 };
 
+/**
+ * Calc age
+ */
+
+export const calcAge = date => {
+	return new Date().getFullYear - new Date(date).getFullYear();
+};
 /**
  * Format number as currency (USD)
  * @returns number formatted in USD (e.g. USD$10,000)

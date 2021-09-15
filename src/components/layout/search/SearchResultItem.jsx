@@ -32,16 +32,18 @@ const SearchResultItem = ({ data }) => {
 				<SubTitle>{toUpperCase(state.type)}</SubTitle>
 				<SubTitle>
 					{state.known_for[0]?.original_title || ''}{' '}
-					{state.known_for[0].release_date ? `(${getFullYear(state.known_for[0]?.release_date)})` : null}
+					{state.known_for[0]?.release_date ? `(${getFullYear(state.known_for[0]?.release_date)})` : null}
 				</SubTitle>
 			</View>
 		);
 	};
 
 	const goToDetails = () => {
-		if (state.type === 'person') return;
-
-		navigation.navigate('MediaDetails', { media: state });
+		if (state.type === 'person') {
+			navigation.navigate('PersonDetails', { data: state });
+		} else {
+			navigation.navigate('MediaDetails', { media: state });
+		}
 	};
 
 	const renderImage = () => {

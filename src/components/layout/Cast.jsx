@@ -17,7 +17,7 @@ const Cast = ({ data }) => {
 			horizontal
 			data={data}
 			renderItem={({ item }) => (
-				<Wrapper onPress={() => navigation.push('PersonDetails', { data: item })}>
+				<Wrapper onPress={() => navigation.navigate('PersonDetails', { data: item })}>
 					<CastImage
 						source={
 							item.profile_path

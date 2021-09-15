@@ -51,10 +51,6 @@ const MediaDetailsScreen = ({ route }) => {
 		init();
 	}, []);
 
-	useEffect(() => {
-		console.log(state);
-	}, [state, 'STATE']);
-
 	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
 	const goToVideos = () => {
@@ -304,7 +300,7 @@ const PosterImg = styled.Image`
 	z-index: -1;
 `;
 
-const SectionWrapper = styled.View`
+export const SectionWrapper = styled.View`
 	flex: 1;
 	margin-top: 30px;
 `;
@@ -316,7 +312,7 @@ export const Overview = styled.Text`
 	font-size: 15px;
 `;
 
-const SectionTitle = styled.Text`
+export const SectionTitle = styled.Text`
 	color: #fff;
 	margin-bottom: ${({ mb }) => (mb ? mb : '8px')};
 	font-size: 16px;

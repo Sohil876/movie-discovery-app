@@ -126,7 +126,7 @@ const Details = ({ data }) => {
 	);
 };
 
-const Title = styled.Text`
+export const Title = styled.Text`
 	font-family: 'poppins-regular';
 	color: #fff;
 `;
