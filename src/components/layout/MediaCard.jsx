@@ -28,17 +28,16 @@ const MediaCard = ({ media }) => {
 
 	return (
 		<CardWrapper
-			onPress={() => navigation.push('MediaDetails', { media: state })}
+			onPress={() => navigation.push('MediaDetails', { media })}
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
 			<CardImage
-				defaultSource={require('../../assets/images/no-img-found.png')}
 				source={state.posterURL ? { uri: state.posterURL } : require('../../assets/images/no-img-found.png')}
 				resizeMode="cover"
 			/>
 
 			<CardInfo>
-				<CardTitle numberOfLines={1}>{state.title}</CardTitle>
+				<CardTitle numberOfLines={1}>{state.title || 'N/A'}</CardTitle>
 				<CardBottom>
 					<CardYear>{state.year}</CardYear>
 					<RatingWrapper>
@@ -51,53 +50,57 @@ const MediaCard = ({ media }) => {
 	);
 };
 
-const CardIcon = styled(FontAwesomeIcon)`
+export const CardIcon = styled(FontAwesomeIcon)`
 	margin-right: 5px;
 	margin-top: 3px;
 `;
 
-const CardInfo = styled.View`
+export const CardInfo = styled.View`
 	margin-top: 15px;
 `;
 
-const CardTitle = styled.Text`
+export const CardTitle = styled.Text`
 	color: #fff;
 	width: 145px;
 	font-family: 'poppins-medium';
 	font-size: 15px;
 `;
 
-const RatingWrapper = styled.View`
+export const RatingWrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	padding-right: 5px;
 `;
 
-const CardBottom = styled.View`
+export const CardBottom = styled.View`
 	justify-content: space-between;
 	align-items: center;
 	margin-top: 2px;
 	flex-direction: row;
 `;
 
-const CardYear = styled.Text`
+export const CardYear = styled.Text`
 	color: ${colors.offWhite};
 	font-family: 'poppins-regular';
 `;
 
-const CardRating = styled.Text`
+export const CardRating = styled.Text`
 	color: ${colors.yellow};
 	font-family: 'poppins-regular';
 `;
 
-const CardImage = styled.Image`
+export const CardImage = styled.Image`
 	height: 240px;
 	width: 150px;
 	border-radius: ${constants.borderRadiusLg};
 `;
 
 export const CardWrapper = styled.Pressable`
-	margin: 20px 15px 0 0;
+	margin-top: ${({ mt }) => (mt ? mt : '20px')};
+	margin-right: 15px;
+	margin-bottom: 0;
+	margin-left: 0;
+	/* margin: 20px 15px 0 0; */
 `;
 
 // export const MemoizedMediaCard =

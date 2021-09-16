@@ -42,7 +42,7 @@ const SearchResultItem = ({ data }) => {
 		if (state.type === 'person') {
 			navigation.navigate('PersonDetails', { data: state });
 		} else {
-			navigation.navigate('MediaDetails', { media: state });
+			navigation.navigate('MediaDetails', { media: data });
 		}
 	};
 

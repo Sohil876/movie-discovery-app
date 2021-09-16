@@ -59,11 +59,32 @@ export const fetchPersonDetails = async id => {
 		const { data, status, statusText } = await tmdb.get(
 			`/person/${id}?api_key=${API_KEY}&language=en-US&append_to_response=images`
 		);
+
 		if (status !== 200) throw Error(statusText);
 
 		return data;
 	} catch (er) {
 		console.error(er, 'Error fetching person details');
+	}
+};
+
+/**
+ * Fetch Person Details including images
+ *
+ * https://developers.themoviedb.org/3/people/get-person-details
+ */
+
+export const fetchPersonCredits = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/person/${id}/combined_credits?api_key=${API_KEY}&language=en-US`
+		);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching person credits');
 	}
 };
 
@@ -80,7 +101,7 @@ export const getFullYear = date => {
  */
 
 export const calcAge = date => {
-	return new Date().getFullYear - new Date(date).getFullYear();
+	return new Date().getFullYear() - new Date(date).getFullYear();
 };
 /**
  * Format number as currency (USD)

@@ -41,6 +41,7 @@ export default function App() {
 			'poppins-regular': require('./src/assets/fonts/Poppins-Regular.ttf'),
 			'poppins-medium': require('./src/assets/fonts/Poppins-Medium.ttf'),
 			'poppins-semiBold': require('./src/assets/fonts/Poppins-SemiBold.ttf'),
+			'poppins-italic': require('./src/assets/fonts/Poppins-Italic.ttf'),
 		})
 			.then(() => setIsLoaded(true))
 			.catch(er => console.error(er))

@@ -11,6 +11,16 @@ const coolGray = {
 	[50]: '#F9FAFB',
 };
 
+const gray = {
+	// --clr-red: '#e60a15',
+	[1000]: 'hsl(252, 5%, 5%)',
+	[900]: '#151419',
+	[800]: ' #1e1d22',
+	[700]: '#292830',
+	[600]: ' #6f6e77',
+	[500]: ' hsl(248, 4%, 55%)',
+};
+
 const blue = {
 	[900]: '#1E3A8A',
 	[800]: '#1E40AF',
@@ -25,15 +35,16 @@ const blue = {
 };
 
 export const colors = {
-	primaryBg: '#0e0b20',
-	navbar: '#090227',
+	// primaryBg: '#0e0b20',
+	primaryBg: `${gray[900]}`,
+	navbar: `${gray[1000]}`,
 	offWhite: `${coolGray[400]}`,
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',
 
 	gray900: `${coolGray[900]}`,
-	gray800: `${coolGray[800]}`,
-	gray700: `${coolGray[700]}`,
+	gray800: `${gray[700]}`,
+	gray700: `${coolGray[800]}`,
 	gray600: `${coolGray[600]}`,
 	gray500: `${coolGray[500]}`,
 	gray400: `${coolGray[400]}`,

@@ -17,7 +17,7 @@ const Cast = ({ data }) => {
 			horizontal
 			data={data}
 			renderItem={({ item }) => (
-				<Wrapper onPress={() => navigation.navigate('PersonDetails', { data: item })}>
+				<Wrapper onPress={() => navigation.push('PersonDetails', { data: item })}>
 					<CastImage
 						source={
 							item.profile_path
@@ -53,7 +53,7 @@ const Name = styled.Text`
 `;
 
 const Role = styled.Text`
-	font-family: 'poppins-regular';
+	/* font-family: 'poppins-italic'; */
 	font-style: italic;
 	color: ${colors.offWhite};
 	font-size: 14px;

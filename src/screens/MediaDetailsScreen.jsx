@@ -9,14 +9,26 @@ import styled from 'styled-components/native';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
-import { calcMediaRuntime, fetchCredits, formatDate } from '../utils/helpers';
-import { colors, constants } from './../assets/styles/styles';
-import { fetchMediaDetails } from './../utils/helpers';
-import { API_KEY, BASE_IMG_URL } from './../utils/requests';
+import { colors, constants } from 'styles/styles.js';
+import { fetchMediaDetails, calcMediaRuntime, fetchCredits, formatDate } from 'utils/helpers';
+import { API_KEY, BASE_IMG_URL } from 'utils/requests';
 
 const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
-	const [state, setState] = useState(media);
+	const [state, setState] = useState({
+		...media,
+
+		title: media.title || media.name || media.original_title || media.original_name,
+
+		rating: Number(media.vote_average).toFixed(1) || 'NR',
+
+		posterURL: `${media.poster_path ? `${BASE_IMG_URL}${media.poster_path}` : null}`,
+
+		year: `${new Date(media.release_date || media.first_air_date).getFullYear() || 'N/A'}`,
+
+		type: `${media.title || media.original_title ? 'movie' : 'tv'}`,
+	});
+
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const navigation = useNavigation();
 
@@ -58,12 +70,12 @@ const MediaDetailsScreen = ({ route }) => {
 	};
 
 	const renderGenres = () => {
-		return (
-			state.genres?.map((genre, i) => {
-				if (i !== state.genres.length - 1) return genre.name + ', ';
-				else return genre.name;
-			}) || 'N/A'
-		);
+		return state.genres?.length > 0
+			? state.genres?.map((genre, i) => {
+					if (i !== state.genres.length - 1) return genre.name + ', ';
+					else return genre.name;
+			  })
+			: 'N/A';
 	};
 
 	const renderTitle = () => {
@@ -287,7 +299,7 @@ const PosterInfo = styled.View`
 const Title = styled.Text`
 	align-self: center;
 	font-family: 'poppins-semiBold';
-	font-size: 25px;
+	font-size: 26px;
 	text-align: center;
 	width: 75%;
 	color: #fff;
