@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
-import { calcAge, fetchPersonDetails, formatDate, fetchPersonCredits } from 'utils/helpers';
+import { calcAge, fetchPersonDetails, formatDate, fetchPersonMovieCredits, fetchPersonTVCredits } from 'utils/helpers';
 import { BASE_IMG_URL } from 'utils/requests';
 import { Overview, SectionTitle, SectionWrapper } from './MediaDetailsScreen';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -21,6 +21,7 @@ import {
 	CardIcon,
 	CardRating,
 } from 'components/layout/MediaCard';
+import MediaCardAlt from 'components/layout/person/MediaCardAlt';
 
 const PersonDetailsScreen = ({ route }) => {
 	const { data } = route.params;
@@ -28,7 +29,6 @@ const PersonDetailsScreen = ({ route }) => {
 	const [expanded, setExpanded] = useState(3);
 
 	const BottomNavBarHeight = useBottomTabBarHeight();
-	const navigation = useNavigation();
 
 	const init = () => {
 		fetchPersonDetails(data.id)
@@ -44,8 +44,12 @@ const PersonDetailsScreen = ({ route }) => {
 			)
 			.catch(er => console.error(er));
 
-		fetchPersonCredits(data.id)
-			.then(res => setState(prev => ({ ...prev, credits: res.cast })))
+		fetchPersonMovieCredits(data.id)
+			.then(res => setState(prev => ({ ...prev, movieCredits: res.cast })))
+			.catch(er => console.error(er));
+
+		fetchPersonTVCredits(data.id)
+			.then(res => setState(prev => ({ ...prev, tvCredits: res.cast })))
 			.catch(er => console.error(er));
 	};
 
@@ -60,9 +64,9 @@ const PersonDetailsScreen = ({ route }) => {
 		init();
 	}, []);
 
-	useEffect(() => {
-		console.log('PERSON', state);
-	}, [state]);
+	// useEffect(() => {
+	// 	console.log('PERSON', state);
+	// }, [state]);
 
 	if (!state) return null;
 
@@ -139,41 +143,45 @@ const PersonDetailsScreen = ({ route }) => {
 			</SectionWrapper>
 
 			<SectionWrapper>
-				<SectionTitle>Appeared In</SectionTitle>
+				<SectionTitle>Movies Appeared In</SectionTitle>
 
-				<FlatList
-					horizontal
-					showsHorizontalScrollIndicator={false}
-					keyExtractor={(_, index) => index.toString()}
-					data={state.credits}
-					renderItem={({ item }) => (
-						<CardWrapper mt="0" onPress={() => navigation.push('MediaDetails', { media: item })}>
-							<CardImage
-								source={
-									item.poster_path
-										? { uri: `${BASE_IMG_URL}${item.poster_path}` }
-										: require('../assets/images/no-img-found.png')
-								}
-								resizeMode="cover"
-							/>
+				{state.movieCredits?.length > 0 ? (
+					<FlatList
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						keyExtractor={(_, index) => index.toString()}
+						data={state.movieCredits}
+						renderItem={({ item }) => <MediaCardAlt data={item} />}
+					/>
+				) : (
+					<Overview>No movies found.</Overview>
+				)}
+			</SectionWrapper>
 
-							<CardInfo>
-								<CardTitle numberOfLines={1}>{item.title || 'Unknown'}</CardTitle>
-								<CardBottom>
-									<StyledCardYear numberOfLines={1}>
-										{'as ' + item.character || 'Unknown'}
-									</StyledCardYear>
-								</CardBottom>
-							</CardInfo>
-						</CardWrapper>
-					)}
-				/>
+			<SectionWrapper>
+				<SectionTitle>TV Shows Appeared In</SectionTitle>
+
+				{state.tvCredits?.length > 0 ? (
+					<FlatList
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						keyExtractor={(_, index) => index.toString()}
+						data={state.tvCredits}
+						renderItem={({ item }) => <MediaCardAlt data={item} />}
+					/>
+				) : (
+					<Overview>No TV Shows found.</Overview>
+				)}
 			</SectionWrapper>
 
 			<SectionWrapper style={{ paddingBottom: BottomNavBarHeight + 30 }}>
 				<SectionTitle>Photos</SectionTitle>
 
-				{state.images?.profiles && <Photos data={state.images.profiles} />}
+				{state.images?.profiles.length > 0 ? (
+					<Photos data={state.images.profiles} />
+				) : (
+					<Overview>No photos found.</Overview>
+				)}
 			</SectionWrapper>
 		</Wrapper>
 	);
@@ -205,12 +213,6 @@ const MainImage = styled.Image`
 	height: 350px;
 	width: 100%;
 	border-radius: ${constants.borderRadiusSm};
-`;
-
-const StyledCardYear = styled(CardYear)`
-	font-family: 'poppins-italic';
-	font-size: 14px;
-	width: 150px;
 `;
 
 export default PersonDetailsScreen;

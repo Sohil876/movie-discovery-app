@@ -33,7 +33,7 @@ const HomeScreen = () => {
 	);
 };
 
-const HomeWrapper = styled.ScrollView`
+export const HomeWrapper = styled.ScrollView`
 	flex: 1;
 	background-color: ${colors.primaryBg};
 	padding: 30px 20px;

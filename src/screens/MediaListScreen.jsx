@@ -50,7 +50,7 @@ const MediaListScreen = ({ route }) => {
 	}
 
 	return (
-		<Wrapper>
+		<MediaListWrapper>
 			<ListTitle>{title}</ListTitle>
 
 			<FlatList
@@ -66,11 +66,11 @@ const MediaListScreen = ({ route }) => {
 				keyExtractor={(item, index) => index.toString()}
 				renderItem={({ item }) => <MediaCard media={item} />}
 			/>
-		</Wrapper>
+		</MediaListWrapper>
 	);
 };
 
-const Wrapper = styled.View`
+export const MediaListWrapper = styled.View`
 	flex: 1;
 	background-color: ${colors.primaryBg};
 	padding: 80px 20px 0;
@@ -88,7 +88,7 @@ const LoadingWrapper = styled.View`
 	background-color: ${colors.primaryBg};
 `;
 
-const ListTitle = styled(BaseText)`
+export const ListTitle = styled(BaseText)`
 	color: #fff;
 	align-self: center;
 	font-size: 18px;

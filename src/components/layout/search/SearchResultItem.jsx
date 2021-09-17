@@ -55,7 +55,9 @@ const SearchResultItem = ({ data }) => {
 			return { uri: `${BASE_IMG_URL}${state.profile_path}` };
 		}
 
-		return require('../../../assets/images/no-img-found.png');
+		return state.type === 'person'
+			? require('../../../assets/images/no-cast-found.png')
+			: require('../../../assets/images/no-img-found.png');
 	};
 
 	return (

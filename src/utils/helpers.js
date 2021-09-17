@@ -49,7 +49,7 @@ export const fetchSearchResults = async (query, page = 1) => {
 };
 
 /**
- * Fetch Person Details including images
+ * Get the primary person details including images
  *
  * https://developers.themoviedb.org/3/people/get-person-details
  */
@@ -69,9 +69,9 @@ export const fetchPersonDetails = async id => {
 };
 
 /**
- * Fetch Person Details including images
+ * Get the movie and tv show credits for a person.
  *
- * https://developers.themoviedb.org/3/people/get-person-details
+ * https://developers.themoviedb.org/3/people/get-person-combined-credits
  */
 
 export const fetchPersonCredits = async id => {
@@ -85,6 +85,64 @@ export const fetchPersonCredits = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching person credits');
+	}
+};
+
+/**
+ * Get the movie credits for a person.
+ *
+ * https://developers.themoviedb.org/3/people/get-person-movie-credits
+ */
+
+export const fetchPersonMovieCredits = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/person/${id}/movie_credits?api_key=${API_KEY}&language=en-US`
+		);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching person movie credits');
+	}
+};
+
+/**
+ * Get the tv show credits for a person.
+ *
+ * https://developers.themoviedb.org/3/people/get-person-tv-credits
+ */
+
+export const fetchPersonTVCredits = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/person/${id}/tv_credits?api_key=${API_KEY}&language=en-US`
+		);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching person tv credits');
+	}
+};
+
+/**
+ * Get the cast and crew for a movie.
+ *
+ * https://developers.themoviedb.org/3/movies/get-movie-credits
+ */
+
+export const fetchMovieCredits = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(`/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching person tv credits');
 	}
 };
 

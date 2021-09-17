@@ -120,7 +120,18 @@ const MediaDetailsScreen = ({ route }) => {
 				</SectionWrapper>
 
 				<SectionWrapper>
-					<SectionTitle>Cast</SectionTitle>
+					<TitleWrapper style={{ marginBottom: 10 }}>
+						<SectionTitle>Cast</SectionTitle>
+
+						<SeeMoreBtn
+							onPress={() => {
+								navigation.push('CastAndCrew', { data: state });
+							}}
+						>
+							<BtnText>all cast &amp; crew</BtnText>
+						</SeeMoreBtn>
+					</TitleWrapper>
+
 					<Cast data={state.credits?.cast} />
 				</SectionWrapper>
 
