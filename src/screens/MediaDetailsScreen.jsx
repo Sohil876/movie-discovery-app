@@ -182,12 +182,8 @@ const MediaDetailsScreen = ({ route }) => {
 						<TitleWrapper>
 							<SectionTitle>TV Show Details</SectionTitle>
 
-							<SeeMoreBtn
-								onPress={() => {
-									navigation.push('MediaList', {});
-								}}
-							>
-								<BtnText>episodes &amp; seasons</BtnText>
+							<SeeMoreBtn onPress={() => navigation.push('MediaList', {})}>
+								<BtnText>episode guide</BtnText>
 							</SeeMoreBtn>
 						</TitleWrapper>
 						<TVDetails data={state} />

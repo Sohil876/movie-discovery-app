@@ -1,4 +1,5 @@
 import { BaseText } from 'components/layout/BaseComponents';
+import Loader from 'components/layout/Loader';
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
@@ -34,12 +35,7 @@ const MediaListScreen = ({ route }) => {
 		fetchData();
 	}, [page]);
 
-	if (isLoading)
-		return (
-			<LoadingWrapper>
-				<Loading>Loading...</Loading>
-			</LoadingWrapper>
-		);
+	if (isLoading) return <Loader />;
 
 	if (!data.length) {
 		return (
