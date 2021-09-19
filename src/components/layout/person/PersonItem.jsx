@@ -11,7 +11,7 @@ const PersonItem = ({ data }) => {
 		...data,
 		posterURL: data.profile_path
 			? { uri: `${BASE_IMG_URL}${data.profile_path}` }
-			: require('../../../assets/images/no-cast-found.png'),
+			: require('images/no-cast-found.png'),
 	});
 
 	return (

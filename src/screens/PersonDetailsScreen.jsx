@@ -177,7 +177,7 @@ const PersonDetailsScreen = ({ route }) => {
 };
 
 const Wrapper = styled.ScrollView`
-	padding: 70px 20px;
+	padding: 70px ${constants.horizontalPadding};
 	flex: 1;
 	height: 100%;
 	background-color: ${colors.primaryBg};

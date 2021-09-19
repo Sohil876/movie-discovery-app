@@ -58,4 +58,5 @@ export const colors = {
 export const constants = {
 	borderRadiusSm: '5px',
 	borderRadiusLg: '10px',
+	horizontalPadding: '20px',
 };

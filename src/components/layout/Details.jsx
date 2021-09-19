@@ -122,6 +122,7 @@ const Details = ({ data }) => {
 
 			<Title>Revenue</Title>
 			<Overview>{formatAsCurrency(data.revenue) || '-'}</Overview>
+			<Separator />
 		</View>
 	);
 };

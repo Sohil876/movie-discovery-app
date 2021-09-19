@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, Image } from 'react-native';
 import styled from 'styled-components/native';
 import YoutubePlayer, { getYoutubeMeta } from 'react-native-youtube-iframe';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import { BaseText } from 'components/layout/BaseComponents';
 import { Separator } from 'components/layout/Details';
 
@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
 });
 
 const VideoInfo = styled.View`
-	padding: 18px 20px;
+	padding: 18px ${constants.horizontalPadding};
 	margin-top: -70px;
 	background-color: #0000007b;
 `;
 
 const VideoItems = styled.ScrollView`
-	padding: 18px 20px;
+	padding: 18px ${constants.horizontalPadding};
 	height: 100%;
 `;
 

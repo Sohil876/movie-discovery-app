@@ -5,7 +5,7 @@ import PersonItem from 'components/layout/person/PersonItem';
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import { fetchMovieCredits, fetchTVCredits } from 'utils/helpers';
 import { ListTitle, MediaListWrapper } from './MediaListScreen';
 
@@ -119,7 +119,7 @@ export const activeBtnStyle = StyleSheet.create({
 });
 
 const Wrapper = styled(MediaListWrapper)`
-	padding: 80px 20px 0;
+	padding: 80px ${constants.horizontalPadding} 0;
 `;
 
 const Divider = styled.View`

@@ -10,6 +10,7 @@ import TrailersScreen from 'screens/TrailersScreen';
 import WatchVideosScreen from 'screens/WatchVideosScreen';
 import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import CastAndCrewScreen from 'screens/CastAndCrewScreen';
+import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -62,6 +63,7 @@ export const HomeScreenStack = () => (
 		<Home.Screen name="WatchVideos" component={WatchVideosScreen} />
 		<Home.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Home.Screen name="CastAndCrew" component={CastAndCrewScreen} />
+		<Home.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
 	</Home.Navigator>
 );
 
@@ -73,6 +75,7 @@ export const SearchScreenStack = () => (
 		<Search.Screen name="WatchVideos" component={WatchVideosScreen} />
 		<Search.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Search.Screen name="CastAndCrew" component={CastAndCrewScreen} />
+		<Search.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
 	</Search.Navigator>
 );
 

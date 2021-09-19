@@ -18,7 +18,7 @@ const MediaCardAlt = ({ data }) => {
 				source={
 					data.poster_path
 						? { uri: `${BASE_IMG_URL}${data.poster_path}` }
-						: require('../../../assets/images/no-img-found.png')
+						: require('images/no-img-found.png')
 				}
 				resizeMode="cover"
 			/>

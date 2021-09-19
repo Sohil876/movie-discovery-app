@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, FlatList } from 'react-native';
 import styled from 'styled-components/native';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import SearchBar from 'components/layout/search/SearchBar';
 import { RowTitle } from './../components/layout/MediaRow';
 import { fetchSearchResults } from 'utils/helpers';
@@ -55,7 +55,7 @@ const SearchScreen = () => {
 const Wrapper = styled.View`
 	flex: 1;
 	background-color: ${colors.primaryBg};
-	padding: 50px 20px;
+	padding: 50px ${constants.horizontalPadding};
 `;
 
 const Title = styled(RowTitle)`

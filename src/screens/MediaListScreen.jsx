@@ -3,7 +3,7 @@ import Loader from 'components/layout/Loader';
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import { fetchMediaData } from '../utils/helpers';
 import MediaCard from './../components/layout/MediaCard';
 
@@ -69,7 +69,7 @@ const MediaListScreen = ({ route }) => {
 export const MediaListWrapper = styled.View`
 	flex: 1;
 	background-color: ${colors.primaryBg};
-	padding: 80px 20px 0;
+	padding: 80px ${constants.horizontalPadding} 0;
 `;
 
 const Loading = styled(BaseText)`

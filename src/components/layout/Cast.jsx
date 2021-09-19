@@ -22,7 +22,7 @@ const Cast = ({ data }) => {
 						source={
 							item.profile_path
 								? { uri: `${BASE_IMG_URL}${item.profile_path}` }
-								: require('../../assets/images/no-cast-found.png')
+								: require('images/no-cast-found.png')
 						}
 					/>
 					<Name>{item.name || 'Unknown'}</Name>

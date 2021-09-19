@@ -109,7 +109,7 @@ const MediaDetailsScreen = ({ route }) => {
 			</PosterDetails>
 			<LinearGradient colors={['transparent', `${colors.primaryBg}`]} style={styles.gradient} />
 			<PosterImg
-				source={state.posterURL ? { uri: state.posterURL } : require('../assets/images/no-img-found.png')}
+				source={state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')}
 				style={styles.posterImg}
 			/>
 
@@ -162,6 +162,24 @@ const MediaDetailsScreen = ({ route }) => {
 					)}
 				</SectionWrapper>
 
+				{state.type === 'tv' && (
+					<SectionWrapper>
+						<TitleWrapper>
+							<SectionTitle>TV Show Details</SectionTitle>
+
+							<SeeMoreBtn onPress={() => navigation.push('EpisodeGuide', { data: state })}>
+								<BtnText>episode guide</BtnText>
+							</SeeMoreBtn>
+						</TitleWrapper>
+						<TVDetails data={state} />
+					</SectionWrapper>
+				)}
+
+				<SectionWrapper>
+					<SectionTitle>Details</SectionTitle>
+					<Details data={state} />
+				</SectionWrapper>
+
 				<SectionWrapper>
 					<SectionTitle>
 						Photos
@@ -175,24 +193,6 @@ const MediaDetailsScreen = ({ route }) => {
 					<View style={{ marginTop: 10 }}>
 						{state.images?.backdrops && <Photos data={state.images.backdrops} />}
 					</View>
-				</SectionWrapper>
-
-				{state.type === 'tv' && (
-					<SectionWrapper>
-						<TitleWrapper>
-							<SectionTitle>TV Show Details</SectionTitle>
-
-							<SeeMoreBtn onPress={() => navigation.push('MediaList', {})}>
-								<BtnText>episode guide</BtnText>
-							</SeeMoreBtn>
-						</TitleWrapper>
-						<TVDetails data={state} />
-					</SectionWrapper>
-				)}
-
-				<SectionWrapper>
-					<SectionTitle>Details</SectionTitle>
-					<Details data={state} />
 				</SectionWrapper>
 
 				<SectionWrapper>
@@ -272,7 +272,7 @@ const DetailsWrapper = styled.ScrollView`
 `;
 
 const DetailsBottom = styled.View`
-	padding: 0 30px;
+	padding: 0 ${constants.horizontalPadding};
 	margin-bottom: 20px;
 `;
 

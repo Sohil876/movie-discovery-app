@@ -17,6 +17,7 @@ import {
 	faArrowCircleLeft,
 	faTimesCircle,
 	faFrownOpen,
+	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -35,7 +36,18 @@ export default function App() {
 	 * so that they may be resused in different
 	 * components throughout the app
 	 */
-	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle, faArrowCircleLeft, faTimesCircle, faFrownOpen);
+	library.add(
+		fab,
+		faPlay,
+		faStar,
+		faHome,
+		faSearch,
+		faPlayCircle,
+		faChevronRight,
+		faArrowCircleLeft,
+		faTimesCircle,
+		faFrownOpen
+	);
 
 	// Load custom fonts
 	useEffect(() => {

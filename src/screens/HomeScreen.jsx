@@ -2,7 +2,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import MediaRow from 'layoutcomp/MediaRow';
 import React from 'react';
 import styled from 'styled-components/native';
-import { colors } from 'styles/styles.js';
+import { colors, constants } from 'styles/styles.js';
 import { movieRequests, tvRequests } from '../utils/requests';
 
 const HomeScreen = () => {
@@ -36,7 +36,7 @@ const HomeScreen = () => {
 export const HomeWrapper = styled.ScrollView`
 	flex: 1;
 	background-color: ${colors.primaryBg};
-	padding: 30px 20px;
+	padding: 30px ${constants.horizontalPadding};
 `;
 
 const MediaWrapper = styled.View`

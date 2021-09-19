@@ -7,6 +7,7 @@ import { fetchMediaData } from 'utils/helpers';
 import { BaseText } from './BaseComponents';
 import Loader from './Loader';
 import MediaCard from './MediaCard';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const MediaRow = ({ title, url }) => {
 	const navigation = useNavigation();
@@ -46,7 +47,15 @@ const MediaRow = ({ title, url }) => {
 						navigation.push('MediaList', { url, title });
 					}}
 				>
-					<BtnText>View All</BtnText>
+					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+						<BtnText>View All</BtnText>
+						<FontAwesomeIcon
+							icon={'chevron-right'}
+							color={colors.primaryClr}
+							size={12}
+							style={{ paddingLeft: 18, marginBottom: 3 }}
+						/>
+					</View>
 				</SeeMoreBtn>
 			</TitleWrapper>
 			{renderMediaRow()}
