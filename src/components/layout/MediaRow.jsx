@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { fetchMediaData } from 'utils/helpers';
@@ -38,7 +38,7 @@ const MediaRow = ({ title, url }) => {
 
 	return (
 		<View>
-			<TitleWrapper>
+			<TitleWrapper style={styles.margin}>
 				<RowTitle>{title}</RowTitle>
 				<SeeMoreBtn
 					onPress={() => {
@@ -53,6 +53,12 @@ const MediaRow = ({ title, url }) => {
 	);
 };
 
+const styles = StyleSheet.create({
+	margin: {
+		marginBottom: -20,
+	},
+});
+
 export const RowTitle = styled.Text`
 	color: #fff;
 	font-size: 20px;
@@ -62,6 +68,7 @@ export const RowTitle = styled.Text`
 export const SeeMoreBtn = styled.TouchableOpacity`
 	border-radius: 100px;
 	padding: 10px 20px;
+	margin-bottom: 8px;
 `;
 
 export const BtnText = styled(BaseText)`

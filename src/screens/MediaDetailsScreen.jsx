@@ -123,13 +123,15 @@ const MediaDetailsScreen = ({ route }) => {
 					<TitleWrapper style={{ marginBottom: 10 }}>
 						<SectionTitle>Cast</SectionTitle>
 
-						<SeeMoreBtn
-							onPress={() => {
-								navigation.push('CastAndCrew', { data: state });
-							}}
-						>
-							<BtnText>all cast &amp; crew</BtnText>
-						</SeeMoreBtn>
+						{state.credits?.cast.length > 0 && (
+							<SeeMoreBtn
+								onPress={() => {
+									navigation.push('CastAndCrew', { data: state });
+								}}
+							>
+								<BtnText>all cast &amp; crew</BtnText>
+							</SeeMoreBtn>
+						)}
 					</TitleWrapper>
 
 					<Cast data={state.credits?.cast} />
@@ -177,7 +179,17 @@ const MediaDetailsScreen = ({ route }) => {
 
 				{state.type === 'tv' && (
 					<SectionWrapper>
-						<SectionTitle>TV Show Details</SectionTitle>
+						<TitleWrapper>
+							<SectionTitle>TV Show Details</SectionTitle>
+
+							<SeeMoreBtn
+								onPress={() => {
+									navigation.push('MediaList', {});
+								}}
+							>
+								<BtnText>episodes &amp; seasons</BtnText>
+							</SeeMoreBtn>
+						</TitleWrapper>
 						<TVDetails data={state} />
 					</SectionWrapper>
 				)}

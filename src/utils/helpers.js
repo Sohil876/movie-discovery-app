@@ -142,7 +142,25 @@ export const fetchMovieCredits = async id => {
 
 		return data;
 	} catch (er) {
-		console.error(er, 'error fetching person tv credits');
+		console.error(er, 'error fetching cast and crew for movie');
+	}
+};
+
+/**
+ * Get the credits (cast and crew) that have been added to a TV show.
+ *
+ * https://developers.themoviedb.org/3/tv/get-tv-credits
+ */
+
+export const fetchTVCredits = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(`/tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching cast and crew for tv show');
 	}
 };
 

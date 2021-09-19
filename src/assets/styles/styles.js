@@ -42,17 +42,17 @@ export const colors = {
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',
 
-	gray900: `${coolGray[900]}`,
 	gray800: `${gray[700]}`,
-	gray700: `${coolGray[800]}`,
-	gray600: `${coolGray[600]}`,
-	gray500: `${coolGray[500]}`,
-	gray400: `${coolGray[400]}`,
-	gray500: `${coolGray[500]}`,
-	gray300: `${coolGray[300]}`,
-	gray200: `${coolGray[200]}`,
-	gray100: `${coolGray[100]}`,
-	gray50: `${coolGray[50]}`,
+	coolGray900: `${coolGray[900]}`,
+	coolGray700: `${coolGray[800]}`,
+	coolGray600: `${coolGray[600]}`,
+	coolGray500: `${coolGray[500]}`,
+	coolGray400: `${coolGray[400]}`,
+	coolGray500: `${coolGray[500]}`,
+	coolGray300: `${coolGray[300]}`,
+	coolGray200: `${coolGray[200]}`,
+	coolGray100: `${coolGray[100]}`,
+	coolGray50: `${coolGray[50]}`,
 };
 
 export const constants = {

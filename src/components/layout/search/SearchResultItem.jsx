@@ -29,7 +29,8 @@ const SearchResultItem = ({ data }) => {
 			<SubTitle>{formatDate(state.date)}</SubTitle>
 		) : (
 			<View>
-				<SubTitle>{toUpperCase(state.type)}</SubTitle>
+				{state.type && <SubTitle>{toUpperCase(state.type)}</SubTitle>}
+				{state.character && <SubTitle>as {toUpperCase(state.character) || 'N/A'}</SubTitle>}
 				<SubTitle>
 					{state.known_for[0]?.original_title || ''}{' '}
 					{state.known_for[0]?.release_date ? `(${getFullYear(state.known_for[0]?.release_date)})` : null}
@@ -40,9 +41,9 @@ const SearchResultItem = ({ data }) => {
 
 	const goToDetails = () => {
 		if (state.type === 'person') {
-			navigation.navigate('PersonDetails', { data: state });
+			navigation.push('PersonDetails', { data: state });
 		} else {
-			navigation.navigate('MediaDetails', { media: data });
+			navigation.push('MediaDetails', { media: data });
 		}
 	};
 
@@ -62,32 +63,36 @@ const SearchResultItem = ({ data }) => {
 
 	return (
 		<>
-			<Wrapper onPress={goToDetails} style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})} hitSlop={50}>
+			<ResultWrapper
+				onPress={goToDetails}
+				style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
+				hitSlop={50}
+			>
 				<Poster source={renderImage()} resizeMode="cover" />
 				<View>
 					<Title>{state.title}</Title>
 					{renderBottom()}
 				</View>
-			</Wrapper>
+			</ResultWrapper>
 			<StyledSeparator />
 		</>
 	);
 };
 
-const Wrapper = styled.Pressable`
+export const ResultWrapper = styled.Pressable`
 	width: 80%;
 	padding: 10px 20px;
 	flex-direction: row;
 	align-items: center;
 `;
 
-const Title = styled(BaseText)`
+export const Title = styled(BaseText)`
 	font-size: 15px;
 	line-height: 23px;
 	font-family: 'poppins-medium';
 `;
 
-const Poster = styled.Image`
+export const Poster = styled.Image`
 	height: 100px;
 	width: 70px;
 	border-radius: 3px;
@@ -95,13 +100,13 @@ const Poster = styled.Image`
 	margin-left: -18px;
 `;
 
-const SubTitle = styled(BaseText)`
+export const SubTitle = styled(BaseText)`
 	font-size: 14px;
 	color: ${colors.offWhite};
 	margin-top: 2px;
 `;
 
-const StyledSeparator = styled(Separator)`
+export const StyledSeparator = styled(Separator)`
 	margin: 2px 0;
 `;
 

@@ -1,34 +1,22 @@
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { BaseText } from 'components/layout/BaseComponents';
 import { Separator, Title } from 'components/layout/Details';
+import MediaCardAlt from 'components/layout/person/MediaCardAlt';
+import Photos from 'components/layout/Photos';
 import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity, FlatList } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
-import { calcAge, fetchPersonDetails, formatDate, fetchPersonMovieCredits, fetchPersonTVCredits } from 'utils/helpers';
+import { calcAge, fetchPersonDetails, fetchPersonMovieCredits, fetchPersonTVCredits, formatDate } from 'utils/helpers';
 import { BASE_IMG_URL } from 'utils/requests';
 import { Overview, SectionTitle, SectionWrapper } from './MediaDetailsScreen';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import Photos from 'components/layout/Photos';
-import { useNavigation } from '@react-navigation/native';
-import {
-	CardWrapper,
-	CardTitle,
-	CardImage,
-	CardYear,
-	CardInfo,
-	CardBottom,
-	RatingWrapper,
-	CardIcon,
-	CardRating,
-} from 'components/layout/MediaCard';
-import MediaCardAlt from 'components/layout/person/MediaCardAlt';
 
 const PersonDetailsScreen = ({ route }) => {
 	const { data } = route.params;
 	const [state, setState] = useState();
 	const [expanded, setExpanded] = useState(3);
 
-	const BottomNavBarHeight = useBottomTabBarHeight();
+	const bottomNavBarHeight = useBottomTabBarHeight();
 
 	const init = () => {
 		fetchPersonDetails(data.id)
@@ -74,7 +62,7 @@ const PersonDetailsScreen = ({ route }) => {
 		<Wrapper>
 			<MainImage source={state.profileImage} resizeMode={'contain'} />
 			<InfoWrapper>
-				<Name>{state.name}</Name>
+				<Name>{state.name || 'N/A'}</Name>
 
 				<View>
 					<PrimaryInfo>
@@ -100,7 +88,7 @@ const PersonDetailsScreen = ({ route }) => {
 				<SectionTitle>Personal Details</SectionTitle>
 
 				<Title>Name </Title>
-				<Overview>{state.name}</Overview>
+				<Overview>{state.name || 'N/A'}</Overview>
 				<Separator />
 
 				<Title>Age </Title>
@@ -174,7 +162,7 @@ const PersonDetailsScreen = ({ route }) => {
 				)}
 			</SectionWrapper>
 
-			<SectionWrapper style={{ paddingBottom: BottomNavBarHeight + 30 }}>
+			<SectionWrapper style={{ paddingBottom: bottomNavBarHeight + 30 }}>
 				<SectionTitle>Photos</SectionTitle>
 
 				{state.images?.profiles.length > 0 ? (

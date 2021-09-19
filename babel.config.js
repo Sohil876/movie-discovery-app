@@ -17,6 +17,7 @@ module.exports = function (api) {
 						navigation: './src/components/navigation',
 						images: './src/assets/images',
 						search: './src/components/layout/search',
+						person: './src/components/layout/person',
 					},
 				},
 			],
