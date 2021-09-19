@@ -4,7 +4,7 @@ import Cast from 'components/layout/Cast';
 import { BtnText, SeeMoreBtn } from 'components/layout/MediaRow';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl, StyleSheet, Text, View, Pressable } from 'react-native';
+import { Image, RefreshControl, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
@@ -143,7 +143,7 @@ const MediaDetailsScreen = ({ route }) => {
 					</SectionTitle>
 
 					{state.videos?.results.length > 0 ? (
-						<Pressable onPress={goToVideos}>
+						<TouchableOpacity onPress={goToVideos}>
 							<VideoImage
 								imageStyle={{ borderRadius: 10 }}
 								resizeMode="cover"
@@ -156,7 +156,7 @@ const MediaDetailsScreen = ({ route }) => {
 								<VideoIcon icon="play-circle" size={40} />
 							</VideoImage>
 							<Overlay />
-						</Pressable>
+						</TouchableOpacity>
 					) : (
 						<Overview>-</Overview>
 					)}

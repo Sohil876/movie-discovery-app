@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList, Image, Pressable, StyleSheet } from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import { BASE_IMG_URL } from 'utils/requests';
 import LightboxView from './LightboxView';
 
@@ -16,14 +16,14 @@ const Photos = ({ data }) => {
 				data={data}
 				keyExtractor={item => item.file_path}
 				renderItem={({ item }) => (
-					<Pressable
+					<TouchableOpacity
 						onPress={() => {
 							setImageURL(`${BASE_IMG_URL}${item.file_path}`);
 							setLightboxToggler(prev => !prev);
 						}}
 					>
 						<Image source={{ uri: `${BASE_IMG_URL}${item.file_path}` }} style={styles.image} />
-					</Pressable>
+					</TouchableOpacity>
 				)}
 			/>
 			{lightboxToggler && (

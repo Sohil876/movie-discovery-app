@@ -1,6 +1,7 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { BaseText } from 'components/layout/BaseComponents';
 import { Separator, Title } from 'components/layout/Details';
+import Loader from 'components/layout/Loader';
 import MediaCardAlt from 'components/layout/person/MediaCardAlt';
 import Photos from 'components/layout/Photos';
 import React, { useEffect, useState } from 'react';
@@ -56,7 +57,7 @@ const PersonDetailsScreen = ({ route }) => {
 	// 	console.log('PERSON', state);
 	// }, [state]);
 
-	if (!state) return null;
+	if (!state) return <Loader />;
 
 	return (
 		<Wrapper>

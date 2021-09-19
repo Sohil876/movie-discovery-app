@@ -9,7 +9,11 @@ const MediaCardAlt = ({ data }) => {
 	const navigation = useNavigation();
 
 	return (
-		<CardWrapper mt="0" onPress={() => navigation.push('MediaDetails', { media: data })}>
+		<CardWrapper
+			mt="0"
+			style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+			onPress={() => navigation.push('MediaDetails', { media: data })}
+		>
 			<CardImage
 				source={
 					data.poster_path

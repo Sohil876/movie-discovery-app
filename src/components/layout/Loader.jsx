@@ -3,10 +3,10 @@ import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 
-const Loader = ({ size = 50 }) => {
+const Loader = ({ size = 50, style }) => {
 	return (
 		<Wrapper>
-			<ActivityIndicator size={size} color={'#fff'} />
+			<ActivityIndicator size={size} color={'#fff'} style={style} />
 		</Wrapper>
 	);
 };

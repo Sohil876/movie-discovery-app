@@ -16,6 +16,7 @@ import {
 	faStar,
 	faArrowCircleLeft,
 	faTimesCircle,
+	faFrownOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -24,6 +25,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import BottomNavBar from './src/components/navigation/BottomNavBar';
 import { colors } from 'styles/styles.js';
+import Loader from 'components/layout/Loader';
 
 export default function App() {
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -33,7 +35,7 @@ export default function App() {
 	 * so that they may be resused in different
 	 * components throughout the app
 	 */
-	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle, faArrowCircleLeft, faTimesCircle);
+	library.add(fab, faPlay, faStar, faHome, faSearch, faPlayCircle, faArrowCircleLeft, faTimesCircle, faFrownOpen);
 
 	// Load custom fonts
 	useEffect(() => {
@@ -49,7 +51,7 @@ export default function App() {
 	}, []);
 
 	if (!isLoaded) {
-		return <Text style={styles.loading}>Loading...</Text>;
+		return <Loader />;
 	}
 
 	return (

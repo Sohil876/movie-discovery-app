@@ -100,7 +100,6 @@ export const CardWrapper = styled.Pressable`
 	margin-right: 15px;
 	margin-bottom: 0;
 	margin-left: 0;
-	/* margin: 20px 15px 0 0; */
 `;
 
 // export const MemoizedMediaCard =

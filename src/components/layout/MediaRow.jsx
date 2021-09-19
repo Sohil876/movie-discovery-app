@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';
 import { fetchMediaData } from 'utils/helpers';
 import { BaseText } from './BaseComponents';
+import Loader from './Loader';
 import MediaCard from './MediaCard';
 
 const MediaRow = ({ title, url }) => {
@@ -13,7 +14,7 @@ const MediaRow = ({ title, url }) => {
 
 	const renderMediaRow = () => {
 		if (!mediaData) {
-			return <Loading>Loading...</Loading>;
+			return <Loader size="large" style={{ marginTop: 40 }} />;
 		} else {
 			return (
 				<FlatList
