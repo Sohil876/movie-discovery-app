@@ -165,6 +165,26 @@ export const fetchTVCredits = async id => {
 };
 
 /**
+ * Get the TV season details by id.
+ *
+ * https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
+ */
+
+export const fetchTVSeasonDetails = async id => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US&append_to_response=videos,images`
+		);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching tv season details');
+	}
+};
+
+/**
  * Get full year from date
  */
 

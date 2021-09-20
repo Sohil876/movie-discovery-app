@@ -24,7 +24,7 @@ export const BANNER_IMG_URL = 'https://image.tmdb.org/t/p/w750';
  *
  * https://developers.themoviedb.org/3/discover/movie-discover
  */
-const movieUrl = '/discover/movie?api_key=';
+const movieDiscoverURL = '/discover/movie?api_key=';
 
 export const movieRequests = {
 	// trending movies

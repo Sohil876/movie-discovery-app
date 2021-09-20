@@ -31,6 +31,7 @@ const SearchScreen = () => {
 
 		return (
 			<FlatList
+				style={{ marginTop: 10 }}
 				showsVerticalScrollIndicator={false}
 				data={results}
 				keyExtractor={(item, index) => item.id.toString()}

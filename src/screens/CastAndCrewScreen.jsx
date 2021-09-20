@@ -122,14 +122,14 @@ const Wrapper = styled(MediaListWrapper)`
 	padding: 80px ${constants.horizontalPadding} 0;
 `;
 
-const Divider = styled.View`
+export const Divider = styled.View`
 	height: 20px;
 	width: 1px;
 	background-color: ${colors.coolGray600};
 	margin-top: 15px;
 `;
 
-const BtnItem = styled(BaseText)`
+export const BtnItem = styled(BaseText)`
 	font-family: 'poppins-medium';
 	font-size: 14px;
 	padding: 5px 40px 3px;
