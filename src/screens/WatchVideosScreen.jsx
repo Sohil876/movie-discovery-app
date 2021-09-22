@@ -29,6 +29,7 @@ const WatchVideosScreen = ({ route }) => {
 					forceAndroidAutoplay={true}
 				/>
 			</PlayerWrapper>
+
 			<VideoInfo>
 				<VideoTitle>{currentVid.name}</VideoTitle>
 				<VideoType>{currentVid.type}</VideoType>
@@ -50,7 +51,9 @@ const WatchVideosScreen = ({ route }) => {
 								<ItemTitle style={currentIndex === index ? styles.activeLink : {}}>
 									{item.name}
 								</ItemTitle>
-								<ItemType style={currentIndex === index ? styles.activeLink : {}}>{item.type}</ItemType>
+								<ItemType style={currentIndex === index ? styles.activeLink : {}}>
+									{item.type}
+								</ItemType>
 								<StyledSeparator />
 							</ItemWrapper>
 						);

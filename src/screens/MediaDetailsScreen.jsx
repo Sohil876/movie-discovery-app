@@ -1,20 +1,23 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import Cast from 'components/layout/Cast';
-import { BtnText, SeeMoreBtn } from 'components/layout/MediaRow';
+import SeeMoreBtn from 'components/layout/SeeMoreBtn';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Image, RefreshControl, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
+import { Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
+import { colors, constants } from 'styles/styles.js';
+import { calcMediaRuntime, fetchCredits, fetchMediaDetails, formatDate } from 'utils/helpers';
+import { API_KEY, BASE_IMG_URL } from 'utils/requests';
 import Details, { TVDetails } from '../components/layout/Details';
 import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
-import { colors, constants } from 'styles/styles.js';
-import { fetchMediaDetails, calcMediaRuntime, fetchCredits, formatDate } from 'utils/helpers';
-import { API_KEY, BASE_IMG_URL } from 'utils/requests';
+import ExpandableText from 'components/layout/ExpandableText';
+import VideoThumbnail from './../components/layout/VideoThumbnail';
 
-const MediaDetailsScreen = ({ route }) => {
+export const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
+
 	const [state, setState] = useState({
 		...media,
 
@@ -65,10 +68,6 @@ const MediaDetailsScreen = ({ route }) => {
 
 	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
 
-	const goToVideos = () => {
-		navigation.navigate('WatchVideos', { data: state.videos });
-	};
-
 	const renderGenres = () => {
 		return state.genres?.length > 0
 			? state.genres?.map((genre, i) => {
@@ -97,7 +96,9 @@ const MediaDetailsScreen = ({ route }) => {
 	};
 
 	return (
-		<DetailsWrapper refreshControl={<RefreshControl onRefresh={refreshData} refreshing={isRefreshing} />}>
+		<DetailsWrapper
+			refreshControl={<RefreshControl onRefresh={refreshData} refreshing={isRefreshing} />}
+		>
 			<PosterDetails>
 				{renderTitle()}
 				<PosterInfo>
@@ -107,7 +108,9 @@ const MediaDetailsScreen = ({ route }) => {
 				</PosterInfo>
 				<Tagline>{state.tagline || null}</Tagline>
 			</PosterDetails>
+
 			<LinearGradient colors={['transparent', `${colors.primaryBg}`]} style={styles.gradient} />
+
 			<PosterImg
 				source={state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')}
 				style={styles.posterImg}
@@ -116,7 +119,7 @@ const MediaDetailsScreen = ({ route }) => {
 			<DetailsBottom>
 				<SectionWrapper>
 					<SectionTitle>Description</SectionTitle>
-					<Overview>{state.overview || 'No summary available.'}</Overview>
+					<ExpandableText>{state.overview || 'No summary available.'}</ExpandableText>
 				</SectionWrapper>
 
 				<SectionWrapper>
@@ -125,12 +128,11 @@ const MediaDetailsScreen = ({ route }) => {
 
 						{state.credits?.cast.length > 0 && (
 							<SeeMoreBtn
-								onPress={() => {
+								handlePress={() => {
 									navigation.push('CastAndCrew', { data: state });
 								}}
-							>
-								<BtnText>all cast &amp; crew</BtnText>
-							</SeeMoreBtn>
+								message={'all cast & crew'}
+							/>
 						)}
 					</TitleWrapper>
 
@@ -139,17 +141,24 @@ const MediaDetailsScreen = ({ route }) => {
 
 				<SectionWrapper>
 					<SectionTitle>
-						Videos <Text style={styles.amount}>{state.videos && `(${state.videos.results.length})`}</Text>
+						Videos{' '}
+						<Text style={styles.amount}>
+							{state.videos && `(${state.videos.results.length})`}
+						</Text>
 					</SectionTitle>
 
-					{state.videos?.results.length > 0 ? (
+					{state.videos?.results && <VideoThumbnail data={state} />}
+
+					{/* {state.videos?.results.length > 0 ? (
 						<TouchableOpacity onPress={goToVideos}>
 							<VideoImage
 								imageStyle={{ borderRadius: 10 }}
 								resizeMode="cover"
 								source={
 									state.images?.backdrops.length > 0
-										? { uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}` }
+										? {
+												uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}`,
+										  }
 										: { uri: state.posterURL }
 								}
 							>
@@ -159,7 +168,7 @@ const MediaDetailsScreen = ({ route }) => {
 						</TouchableOpacity>
 					) : (
 						<Overview>-</Overview>
-					)}
+					)} */}
 				</SectionWrapper>
 
 				{state.type === 'tv' && (
@@ -167,9 +176,10 @@ const MediaDetailsScreen = ({ route }) => {
 						<TitleWrapper>
 							<SectionTitle>TV Show Details</SectionTitle>
 
-							<SeeMoreBtn onPress={() => navigation.push('EpisodeGuide', { data: state })}>
-								<BtnText>episode guide</BtnText>
-							</SeeMoreBtn>
+							<SeeMoreBtn
+								handlePress={() => navigation.push('EpisodeGuide', { data: state })}
+								message={'episode guide'}
+							/>
 						</TitleWrapper>
 						<TVDetails data={state} />
 					</SectionWrapper>
@@ -184,7 +194,8 @@ const MediaDetailsScreen = ({ route }) => {
 					<SectionTitle>
 						Photos
 						<Text style={styles.amount}>
-							{state.images && ` (${state.images.posters.length + state.images.backdrops.length})`}
+							{state.images &&
+								` (${state.images.posters.length + state.images.backdrops.length})`}
 						</Text>
 					</SectionTitle>
 
@@ -199,15 +210,13 @@ const MediaDetailsScreen = ({ route }) => {
 					<TitleWrapper>
 						<SectionTitle mb="0">More Like This</SectionTitle>
 						<SeeMoreBtn
-							onPress={() => {
+							handlePress={() => {
 								navigation.push('MediaList', {
 									url: `/${state.type}/${state.id}/similar?api_key=${API_KEY}&language=en-US`,
 									title: `More like ${state.title}`,
 								});
 							}}
-						>
-							<BtnText>view all</BtnText>
-						</SeeMoreBtn>
+						/>
 					</TitleWrapper>
 					<Similar data={state} />
 				</SectionWrapper>
@@ -216,15 +225,13 @@ const MediaDetailsScreen = ({ route }) => {
 					<TitleWrapper>
 						<SectionTitle mb="0">Recommended</SectionTitle>
 						<SeeMoreBtn
-							onPress={() => {
+							handlePress={() => {
 								navigation.push('MediaList', {
 									url: `/${state.type}/${state.id}/recommendations?api_key=${API_KEY}&language=en-US`,
 									title: `Because you like ${state.title}`,
 								});
 							}}
-						>
-							<BtnText>view all</BtnText>
-						</SeeMoreBtn>
+						/>
 					</TitleWrapper>
 					<Recommended data={state} />
 				</SectionWrapper>
@@ -233,7 +240,7 @@ const MediaDetailsScreen = ({ route }) => {
 	);
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 	gradient: {
 		position: 'absolute',
 		flex: 1,
@@ -266,17 +273,17 @@ const styles = StyleSheet.create({
 	},
 });
 
-const DetailsWrapper = styled.ScrollView`
+export const DetailsWrapper = styled.ScrollView`
 	flex: 1;
 	background-color: ${colors.primaryBg};
 `;
 
-const DetailsBottom = styled.View`
+export const DetailsBottom = styled.View`
 	padding: 0 ${constants.horizontalPadding};
 	margin-bottom: 20px;
 `;
 
-const Overlay = styled.View`
+export const Overlay = styled.View`
 	flex: 1;
 	height: 100%;
 
@@ -284,12 +291,12 @@ const Overlay = styled.View`
 	background-color: #00000063;
 `;
 
-const VideoIcon = styled(FontAwesomeIcon)`
+export const VideoIcon = styled(FontAwesomeIcon)`
 	color: #fff;
 	z-index: 1;
 `;
 
-const VideoImage = styled.ImageBackground`
+export const VideoImage = styled.ImageBackground`
 	flex: 1;
 	height: 200px;
 	width: 100%;
@@ -297,17 +304,17 @@ const VideoImage = styled.ImageBackground`
 	align-items: center;
 `;
 
-const PosterDetails = styled.View`
+export const PosterDetails = styled.View`
 	margin-top: 68%;
 `;
 
-const TitleWrapper = styled.View`
+export const TitleWrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 `;
 
-const PosterInfo = styled.View`
+export const PosterInfo = styled.View`
 	flex-direction: row;
 	justify-content: center;
 	flex-wrap: wrap;
@@ -315,7 +322,7 @@ const PosterInfo = styled.View`
 	width: 90%;
 `;
 
-const Title = styled.Text`
+export const Title = styled.Text`
 	align-self: center;
 	font-family: 'poppins-semiBold';
 	font-size: 26px;
@@ -324,7 +331,7 @@ const Title = styled.Text`
 	color: #fff;
 `;
 
-const PosterImg = styled.Image`
+export const PosterImg = styled.Image`
 	height: 400;
 	width: 100%;
 	position: absolute;

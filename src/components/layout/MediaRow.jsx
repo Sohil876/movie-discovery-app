@@ -8,6 +8,7 @@ import { BaseText } from './BaseComponents';
 import Loader from './Loader';
 import MediaCard from './MediaCard';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import SeeMoreBtn from './SeeMoreBtn';
 
 const MediaRow = ({ title, url }) => {
 	const navigation = useNavigation();
@@ -22,7 +23,7 @@ const MediaRow = ({ title, url }) => {
 					showsHorizontalScrollIndicator={false}
 					horizontal
 					data={mediaData}
-					keyExtractor={(item, index) => index.toString()}
+					keyExtractor={(_, index) => index.toString()}
 					renderItem={({ item }) => {
 						return <MediaCard media={item} />;
 					}}
@@ -42,21 +43,8 @@ const MediaRow = ({ title, url }) => {
 		<View>
 			<TitleWrapper style={styles.margin}>
 				<RowTitle>{title}</RowTitle>
-				<SeeMoreBtn
-					onPress={() => {
-						navigation.push('MediaList', { url, title });
-					}}
-				>
-					<View style={{ flexDirection: 'row', alignItems: 'center' }}>
-						<BtnText>View All</BtnText>
-						<FontAwesomeIcon
-							icon={'chevron-right'}
-							color={colors.primaryClr}
-							size={12}
-							style={{ paddingLeft: 18, marginBottom: 3 }}
-						/>
-					</View>
-				</SeeMoreBtn>
+
+				<SeeMoreBtn handlePress={() => navigation.push('MediaList', { url, title })} />
 			</TitleWrapper>
 			{renderMediaRow()}
 		</View>
@@ -73,17 +61,6 @@ export const RowTitle = styled.Text`
 	color: #fff;
 	font-size: 20px;
 	font-family: 'poppins-medium';
-`;
-
-export const SeeMoreBtn = styled.TouchableOpacity`
-	border-radius: 100px;
-	padding: 10px 20px;
-	margin-bottom: 8px;
-`;
-
-export const BtnText = styled(BaseText)`
-	color: ${colors.primaryClr};
-	text-transform: capitalize;
 `;
 
 const TitleWrapper = styled.View`

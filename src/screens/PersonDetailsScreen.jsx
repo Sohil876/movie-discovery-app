@@ -5,10 +5,16 @@ import Loader from 'components/layout/Loader';
 import MediaCardAlt from 'components/layout/person/MediaCardAlt';
 import Photos from 'components/layout/Photos';
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
-import { calcAge, fetchPersonDetails, fetchPersonMovieCredits, fetchPersonTVCredits, formatDate } from 'utils/helpers';
+import {
+	calcAge,
+	fetchPersonDetails,
+	fetchPersonMovieCredits,
+	fetchPersonTVCredits,
+	formatDate,
+} from 'utils/helpers';
 import { BASE_IMG_URL } from 'utils/requests';
 import { Overview, SectionTitle, SectionWrapper } from './MediaDetailsScreen';
 
@@ -71,7 +77,9 @@ const PersonDetailsScreen = ({ route }) => {
 						{state.place_of_birth && `in ${state.place_of_birth}`}
 					</PrimaryInfo>
 
-					{state.deathday && <PrimaryInfo>{`Died on ${formatDate(state.deathday)}`}</PrimaryInfo>}
+					{state.deathday && (
+						<PrimaryInfo>{`Died on ${formatDate(state.deathday)}`}</PrimaryInfo>
+					)}
 				</View>
 			</InfoWrapper>
 

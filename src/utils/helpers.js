@@ -6,7 +6,20 @@
 import tmdb from './baseURL';
 import { API_KEY } from './requests';
 
-export const months = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+export const months = [
+	'Jan.',
+	'Feb.',
+	'Mar.',
+	'Apr.',
+	'May',
+	'Jun.',
+	'Jul.',
+	'Aug.',
+	'Sep.',
+	'Oct.',
+	'Nov.',
+	'Dec.',
+];
 
 /**
  * Formats date from '2021-09-11' to 'September 11, 2021'
@@ -38,13 +51,16 @@ export const fetchSearchResults = async (query, page = 1) => {
 			data: { results },
 			status,
 			statusText,
-		} = await tmdb.get(`/search/multi?api_key=${API_KEY}&query=${query}&page=${page}&language=en-US`);
+		} = await tmdb.get(
+			`/search/multi?api_key=${API_KEY}&query=${query}&page=${page}&language=en-US`
+		);
 
 		if (status !== 200) throw Error(statusText);
 
 		return results;
 	} catch (er) {
 		console.error(er, 'Error fetching search results');
+		throw Error(er);
 	}
 };
 
@@ -65,6 +81,7 @@ export const fetchPersonDetails = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'Error fetching person details');
+		throw Error(er);
 	}
 };
 
@@ -85,6 +102,7 @@ export const fetchPersonCredits = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching person credits');
+		throw Error(er);
 	}
 };
 
@@ -105,6 +123,7 @@ export const fetchPersonMovieCredits = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching person movie credits');
+		throw Error(er);
 	}
 };
 
@@ -125,6 +144,7 @@ export const fetchPersonTVCredits = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching person tv credits');
+		throw Error(er);
 	}
 };
 
@@ -136,13 +156,16 @@ export const fetchPersonTVCredits = async id => {
 
 export const fetchMovieCredits = async id => {
 	try {
-		const { data, status, statusText } = await tmdb.get(`/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+		const { data, status, statusText } = await tmdb.get(
+			`/movie/${id}/credits?api_key=${API_KEY}&language=en-US`
+		);
 
 		if (status !== 200) throw Error(statusText);
 
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching cast and crew for movie');
+		throw Error(er);
 	}
 };
 
@@ -154,13 +177,16 @@ export const fetchMovieCredits = async id => {
 
 export const fetchTVCredits = async id => {
 	try {
-		const { data, status, statusText } = await tmdb.get(`/tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+		const { data, status, statusText } = await tmdb.get(
+			`/tv/${id}/credits?api_key=${API_KEY}&language=en-US`
+		);
 
 		if (status !== 200) throw Error(statusText);
 
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching cast and crew for tv show');
+		throw Error(er);
 	}
 };
 
@@ -170,10 +196,10 @@ export const fetchTVCredits = async id => {
  * https://developers.themoviedb.org/3/tv-seasons/get-tv-season-details
  */
 
-export const fetchTVSeasonDetails = async id => {
+export const fetchTVSeasonDetails = async (id, seasonNumber) => {
 	try {
 		const { data, status, statusText } = await tmdb.get(
-			`/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US&append_to_response=videos,images`
+			`/tv/${id}/season/${seasonNumber}?api_key=${API_KEY}&language=en-US&append_to_response=images,videos`
 		);
 
 		if (status !== 200) throw Error(statusText);
@@ -181,6 +207,28 @@ export const fetchTVSeasonDetails = async id => {
 		return data;
 	} catch (er) {
 		console.error(er, 'error fetching tv season details');
+		throw Error(er);
+	}
+};
+
+/**
+ * Get the TV episode details by id.
+ *
+ * https://developers.themoviedb.org/3/tv-episodes/get-tv-episode-details
+ */
+
+export const fetchTVEpisodeDetails = async (id, seasonNumber, episodeNumber) => {
+	try {
+		const { data, status, statusText } = await tmdb.get(
+			`/tv/${id}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${API_KEY}&language=en-US&append_to_response=images,videos`
+		);
+
+		if (status !== 200) throw Error(statusText);
+
+		return data;
+	} catch (er) {
+		console.error(er, 'error fetching tv episode details');
+		throw Error(er);
 	}
 };
 
@@ -260,7 +308,9 @@ export const fetchRecommended = async (media, type) => {
 export const fetchGenres = async type => {
 	// type param can either be 'movie' || 'tv'
 	try {
-		const { data, status, statusText } = await tmdb.get(`/genre/${type}/list?api_key=${API_KEY}&language=en-US`);
+		const { data, status, statusText } = await tmdb.get(
+			`/genre/${type}/list?api_key=${API_KEY}&language=en-US`
+		);
 		if (status !== 200) throw Error(statusText);
 
 		return data;
@@ -320,7 +370,7 @@ export const calcMediaRuntime = runtime => {
 	else if (runtime > 60) {
 		const hours = Math.floor(runtime / 60);
 		const min = runtime % 60;
-		return `${hours}hr ${min}m`;
+		return `${hours} hr ${min} m`;
 		// if runtime is less than an hour AND is not 0 mins or less
 	} else if (runtime <= 60 && runtime !== 0) {
 		return `${runtime} m`;
@@ -336,9 +386,11 @@ export const fetchMediaImages = async (type, media) => {
 			`/${type}/${media.id}/images?api_key=${API_KEY}&include_image_language=en&language=en-US`
 		);
 		if (status !== 200) throw Error(statusText);
+
 		return data;
 	} catch (e) {
 		console.error(e);
+		throw Error(er);
 	}
 };
 

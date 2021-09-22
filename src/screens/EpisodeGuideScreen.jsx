@@ -6,16 +6,32 @@ import { BaseWrapper, BaseText } from 'components/layout/BaseComponents';
 import { Title, Separator } from 'components/layout/Details';
 import { formatDate } from 'utils/helpers';
 import { activeBtnStyle, BtnItem, Divider } from './CastAndCrewScreen';
+import { fetchTVSeasonDetails } from '../utils/helpers';
+import EpisodeItem from '../components/layout/episode/EpisodeItem';
 
 const EpisodeGuideScreen = ({ route }) => {
 	const { data } = route.params;
 	const [state, setState] = useState(data);
 	const [currentSeason, setCurrentSeason] = useState(1);
 
+	useEffect(() => {
+		fetchTVSeasonDetails(data.id, currentSeason)
+			.then(res => setState(prev => ({ ...prev, ...res })))
+			.catch(er => console.error(er));
+	}, [currentSeason]);
+
+	// useEffect(() => {
+	// 	console.log(state.episodes, 'STATE EPISODES');
+	// }, [state]);
+
 	return (
-		<BaseWrapper>
+		<Wrapper>
 			<TopContainer>
-				<PosterImg source={state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')} />
+				<PosterImg
+					source={
+						state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')
+					}
+				/>
 				<Info>
 					<Name numberOfLines={2}>{state.title}</Name>
 
@@ -35,7 +51,7 @@ const EpisodeGuideScreen = ({ route }) => {
 
 			<View>
 				<FlatList
-					style={{ paddingVertical: 15 }}
+					style={{ paddingTop: 5, paddingBottom: 25 }}
 					horizontal
 					showsHorizontalScrollIndicator={false}
 					data={state.seasons}
@@ -45,7 +61,9 @@ const EpisodeGuideScreen = ({ route }) => {
 							<BtnItem
 								style={[
 									styles.padRight,
-									item.season_number == currentSeason ? activeBtnStyle.activeBtn : null,
+									item.season_number == currentSeason
+										? activeBtnStyle.activeBtn
+										: null,
 								]}
 							>
 								Season {item.season_number}
@@ -55,13 +73,20 @@ const EpisodeGuideScreen = ({ route }) => {
 				/>
 			</View>
 
-			{/* <SeasonHeader>
-				<CurrentSeason>Season {currentSeason} •</CurrentSeason>
-				<Text>{state.seasons[0].name}</Text>
-			</SeasonHeader> */}
-		</BaseWrapper>
+			<FlatList
+				data={state.episodes}
+				keyExtractor={(_, index) => index.toString()}
+				renderItem={({ item }) => <EpisodeItem data={item} />}
+			/>
+		</Wrapper>
 	);
 };
+
+const Wrapper = styled.View`
+	flex: 1;
+	padding: 80px ${constants.horizontalPadding} 0;
+	background-color: ${colors.primaryBg};
+`;
 
 const styles = StyleSheet.create({
 	padRight: {
@@ -70,9 +95,7 @@ const styles = StyleSheet.create({
 });
 
 const TopContainer = styled.View`
-	flex: 0.4;
 	flex-direction: row;
-	margin-bottom: 70px;
 `;
 
 const SeasonHeader = styled.View`

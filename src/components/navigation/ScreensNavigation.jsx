@@ -11,6 +11,7 @@ import WatchVideosScreen from 'screens/WatchVideosScreen';
 import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import CastAndCrewScreen from 'screens/CastAndCrewScreen';
 import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
+import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -33,7 +34,12 @@ const options = {
 
 		// custom back btn
 		headerBackImage: () => (
-			<FontAwesomeIcon icon="arrow-circle-left" color="#fff" style={{ marginLeft: 5 }} size={25} />
+			<FontAwesomeIcon
+				icon="arrow-circle-left"
+				color="#fff"
+				style={{ marginLeft: 5 }}
+				size={25}
+			/>
 		),
 
 		headerBackground: () => (
@@ -64,6 +70,7 @@ export const HomeScreenStack = () => (
 		<Home.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Home.Screen name="CastAndCrew" component={CastAndCrewScreen} />
 		<Home.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
+		<Home.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
 	</Home.Navigator>
 );
 
@@ -76,6 +83,7 @@ export const SearchScreenStack = () => (
 		<Search.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Search.Screen name="CastAndCrew" component={CastAndCrewScreen} />
 		<Search.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
+		<Search.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
 	</Search.Navigator>
 );
 
