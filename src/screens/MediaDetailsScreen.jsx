@@ -148,27 +148,6 @@ export const MediaDetailsScreen = ({ route }) => {
 					</SectionTitle>
 
 					{state.videos?.results && <VideoThumbnail data={state} />}
-
-					{/* {state.videos?.results.length > 0 ? (
-						<TouchableOpacity onPress={goToVideos}>
-							<VideoImage
-								imageStyle={{ borderRadius: 10 }}
-								resizeMode="cover"
-								source={
-									state.images?.backdrops.length > 0
-										? {
-												uri: `${BASE_IMG_URL}${state.images?.backdrops[0]?.file_path}`,
-										  }
-										: { uri: state.posterURL }
-								}
-							>
-								<VideoIcon icon="play-circle" size={40} />
-							</VideoImage>
-							<Overlay />
-						</TouchableOpacity>
-					) : (
-						<Overview>-</Overview>
-					)} */}
 				</SectionWrapper>
 
 				{state.type === 'tv' && (

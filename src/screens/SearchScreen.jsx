@@ -59,7 +59,7 @@ const Wrapper = styled.View`
 	padding: 50px ${constants.horizontalPadding};
 `;
 
-const Title = styled(RowTitle)`
+export const Title = styled(RowTitle)`
 	font-size: 25px;
 	margin-bottom: 8px;
 `;

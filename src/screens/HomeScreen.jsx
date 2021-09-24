@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
 import { movieRequests, tvRequests } from '../utils/requests';
+import { View } from 'react-native';
 
 const HomeScreen = () => {
 	const bottomNavBarHeight = useBottomTabBarHeight();
@@ -36,7 +37,7 @@ const HomeScreen = () => {
 export const HomeWrapper = styled.ScrollView`
 	flex: 1;
 	background-color: ${colors.primaryBg};
-	padding: 30px ${constants.horizontalPadding};
+	padding: 25px ${constants.horizontalPadding};
 `;
 
 const MediaWrapper = styled.View`

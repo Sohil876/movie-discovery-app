@@ -1,13 +1,9 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from 'screens/HomeScreen';
-import SearchScreen from 'screens/SearchScreen';
-import TrailersScreen from 'screens/TrailersScreen';
-import { colors } from 'styles/styles.js';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import MediaDetailsScreen from 'screens/MediaDetailsScreen';
-import { HomeScreenStack, SearchScreenStack, TrailersScreenStack } from './ScreensNavigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { colors } from 'styles/styles.js';
+import { DiscoverScreenStack, HomeScreenStack, SearchScreenStack } from './ScreensNavigation';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -48,10 +44,10 @@ const BottomNavBar = () => {
 				}}
 			/>
 			<Screen
-				name="TrailersScreen"
-				component={TrailersScreenStack}
+				name="DiscoverScreen"
+				component={DiscoverScreenStack}
 				options={{
-					tabBarIcon: ({ focused }) => renderTabIcon('play-circle', focused),
+					tabBarIcon: ({ focused }) => renderTabIcon('film', focused),
 				}}
 			/>
 		</Navigator>

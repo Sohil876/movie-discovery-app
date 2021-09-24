@@ -18,6 +18,7 @@ import {
 	faTimesCircle,
 	faFrownOpen,
 	faChevronRight,
+	faFilm,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -46,7 +47,8 @@ export default function App() {
 		faChevronRight,
 		faArrowCircleLeft,
 		faTimesCircle,
-		faFrownOpen
+		faFrownOpen,
+		faFilm
 	);
 
 	// Load custom fonts
@@ -73,16 +75,3 @@ export default function App() {
 		</NavigationContainer>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	loading: {
-		justifyContent: 'center',
-		alignSelf: 'center',
-		color: '#000',
-		fontSize: 20,
-		top: '50%',
-	},
-});

@@ -23,7 +23,7 @@ export const BasePressable = props => {
 
 const Wrapper = styled.View`
 	flex: 1;
-	padding: 80px ${constants.horizontalPadding};
+	padding: 50px ${constants.horizontalPadding};
 	background-color: ${colors.primaryBg};
 `;
 

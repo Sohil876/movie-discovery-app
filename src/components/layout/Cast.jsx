@@ -9,8 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 const Cast = ({ data }) => {
 	const navigation = useNavigation();
 
-	// if (!data?.length) return <Overview>Loading...</Overview>;
-	if (!data) return <Overview>No cast found.</Overview>;
+	if (!data) return <Overview>Loading...</Overview>;
+	if (!data.length) return <Overview>No cast found.</Overview>;
 
 	return (
 		<FlatList

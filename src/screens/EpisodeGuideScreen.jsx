@@ -35,15 +35,23 @@ const EpisodeGuideScreen = ({ route }) => {
 				<Info>
 					<Name numberOfLines={2}>{state.title}</Name>
 
-					<Title>No. of seasons: {state.number_of_seasons}</Title>
+					<Title>
+						<Text style={styles.gray400}>No. of seasons:</Text> {state.number_of_seasons}
+					</Title>
 
 					<Separator />
 
-					<Title>No. of episodes: {state.number_of_episodes}</Title>
+					<Title>
+						<Text style={styles.gray400}>No. of episodes: </Text>
+						{state.number_of_episodes}
+					</Title>
 
 					<Separator />
 
-					<Title>Release Date: {formatDate(state.first_air_date)}</Title>
+					<Title>
+						<Text style={styles.gray400}>Release Date:</Text>{' '}
+						{formatDate(state.first_air_date)}
+					</Title>
 
 					<Separator />
 				</Info>
@@ -76,23 +84,26 @@ const EpisodeGuideScreen = ({ route }) => {
 			<FlatList
 				data={state.episodes}
 				keyExtractor={(_, index) => index.toString()}
-				renderItem={({ item }) => <EpisodeItem data={item} />}
+				renderItem={({ item }) => <EpisodeItem data={{ ...item, showID: data.id }} />}
 			/>
 		</Wrapper>
 	);
 };
+
+const styles = StyleSheet.create({
+	gray400: {
+		color: colors.coolGray400,
+	},
+	padRight: {
+		marginRight: 15,
+	},
+});
 
 const Wrapper = styled.View`
 	flex: 1;
 	padding: 80px ${constants.horizontalPadding} 0;
 	background-color: ${colors.primaryBg};
 `;
-
-const styles = StyleSheet.create({
-	padRight: {
-		marginRight: 15,
-	},
-});
 
 const TopContainer = styled.View`
 	flex-direction: row;

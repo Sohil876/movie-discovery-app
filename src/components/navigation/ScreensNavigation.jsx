@@ -10,56 +10,14 @@ import TrailersScreen from 'screens/TrailersScreen';
 import WatchVideosScreen from 'screens/WatchVideosScreen';
 import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import CastAndCrewScreen from 'screens/CastAndCrewScreen';
+import DiscoverScreen from 'screens/DiscoverScreen';
 import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
 import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
-const Trailers = createStackNavigator();
-
-const options = {
-	mainOptions: {
-		gestureEnabled: true,
-		gestureDirection: 'horizontal',
-
-		headerTitleStyle: {
-			fontFamily: 'poppins-regular',
-			fontSize: 18,
-			marginTop: 5,
-			color: '#fff',
-		},
-
-		title: false,
-		headerTransparent: true,
-
-		// custom back btn
-		headerBackImage: () => (
-			<FontAwesomeIcon
-				icon="arrow-circle-left"
-				color="#fff"
-				style={{ marginLeft: 5 }}
-				size={25}
-			/>
-		),
-
-		headerBackground: () => (
-			<View
-				style={{
-					backgroundColor: '#0b0d24d1',
-					color: '#fff',
-					height: 45,
-					width: 45,
-					borderRadius: 100,
-					top: 30,
-					left: 6,
-				}}
-			/>
-		),
-	},
-	noHeader: {
-		headerShown: false,
-	},
-};
+const Discover = createStackNavigator();
 
 export const HomeScreenStack = () => (
 	<Home.Navigator screenOptions={options.mainOptions}>
@@ -87,8 +45,47 @@ export const SearchScreenStack = () => (
 	</Search.Navigator>
 );
 
-export const TrailersScreenStack = () => (
-	<Trailers.Navigator screenOptions={options.mainOptions}>
-		<Trailers.Screen name="Trailers" component={TrailersScreen} />
-	</Trailers.Navigator>
+export const DiscoverScreenStack = () => (
+	<Discover.Navigator screenOptions={options.mainOptions}>
+		<Discover.Screen name="Discover" component={DiscoverScreen} options={options.noHeader} />
+	</Discover.Navigator>
 );
+
+const options = {
+	mainOptions: {
+		gestureEnabled: true,
+		gestureDirection: 'horizontal',
+
+		headerTitleStyle: {
+			fontFamily: 'poppins-regular',
+			fontSize: 18,
+			marginTop: 5,
+			color: '#fff',
+		},
+
+		title: false,
+		headerTransparent: true,
+
+		// custom back btn
+		headerBackImage: () => (
+			<FontAwesomeIcon icon="arrow-circle-left" color="#fff" style={{ marginLeft: 5 }} size={25} />
+		),
+
+		headerBackground: () => (
+			<View
+				style={{
+					backgroundColor: '#0b0d24d1',
+					color: '#fff',
+					height: 45,
+					width: 45,
+					borderRadius: 100,
+					top: 30,
+					left: 6,
+				}}
+			/>
+		),
+	},
+	noHeader: {
+		headerShown: false,
+	},
+};

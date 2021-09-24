@@ -3,9 +3,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { colors } from 'styles/styles.js';
-import { formatDate } from 'utils/helpers';
+import { formatDate, fetchTVEpisodeDetails } from 'utils/helpers';
 import { BASE_IMG_URL } from 'utils/requests';
-import Cast from './../components/layout/Cast';
+import Cast from 'components/layout/Cast';
+import VideoThumbnail from 'components/layout/VideoThumbnail';
+import Photos from 'components/layout/Photos';
 import {
 	DetailsBottom,
 	DetailsWrapper,
@@ -26,8 +28,11 @@ const EpisodeDetailsScreen = ({ route }) => {
 		posterURL: data.still_path ? `${BASE_IMG_URL}${data.still_path}` : null,
 	});
 
+	useEffect(() => console.log('STATE', state), [state]);
 	useEffect(() => {
-		console.log('SEASON #', data.season_number, 'EPISODE #', data.episode_number, 'ID', data.id);
+		fetchTVEpisodeDetails(state.showID, state.season_number, state.episode_number)
+			.then(res => setState(prev => ({ ...prev, ...res })))
+			.catch(er => console.error(er));
 	}, []);
 
 	return (
@@ -61,8 +66,18 @@ const EpisodeDetailsScreen = ({ route }) => {
 				</SectionWrapper>
 
 				<SectionWrapper>
-					<SectionTitle>Videos</SectionTitle>
-					<Cast data={state.guest_stars} />
+					<SectionTitle>
+						Videos <Text style={styles.amount}>({state.videos?.results.length})</Text>
+					</SectionTitle>
+					{state.videos?.results && <VideoThumbnail data={state} />}
+				</SectionWrapper>
+
+				<SectionWrapper>
+					<SectionTitle>
+						Photos <Text style={styles.amount}>({state.images?.stills.length})</Text>
+					</SectionTitle>
+
+					{state.images?.stills && <Photos data={state.images.stills} />}
 				</SectionWrapper>
 			</DetailsBottom>
 		</DetailsWrapper>
