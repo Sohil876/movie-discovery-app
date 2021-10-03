@@ -37,6 +37,25 @@ export const formatDate = date => {
 };
 
 /**
+ * Discover movies by different types of data like average rating,
+ * number of votes, genres and certifications.
+ *
+ * https://developers.themoviedb.org/3/discover/movie-discover
+ */
+
+export const movieDiscover = async params => {
+	try {
+		const { data, status, statusText } = await tmdb.get('/discover/movie', { params });
+		if (status !== 200) throw Error(statusText);
+
+		return data.results;
+	} catch (er) {
+		console.error(er, 'error fetching movie discover');
+		throw Error(er);
+	}
+};
+
+/**
  * Multi Search (search for movies, tv shows and people simualtaneously)
  *
  * https://developers.themoviedb.org/3/search/multi-search
@@ -303,10 +322,10 @@ export const fetchRecommended = async (media, type) => {
 
 /**
  * Fetch genre list
+ * @param {string} type 'movie' | 'tv'
  */
 
 export const fetchGenres = async type => {
-	// type param can either be 'movie' || 'tv'
 	try {
 		const { data, status, statusText } = await tmdb.get(
 			`/genre/${type}/list?api_key=${API_KEY}&language=en-US`
@@ -324,10 +343,11 @@ export const fetchGenres = async type => {
  * Fetch Media Data
  *
  * @param {string} url url to fetch
+ * @param {object} params object containing URL parameters
  */
-export const fetchMediaData = async url => {
+export const fetchMediaData = async (url, params = null) => {
 	try {
-		const { data, status, statusText } = await tmdb.get(url);
+		const { data, status, statusText } = await tmdb.get(url, params);
 		if (status !== 200) throw Error(statusText);
 
 		return data.results;
@@ -341,6 +361,7 @@ export const fetchMediaData = async url => {
  * Fetch Media Details
  *
  * @param {string} type 'movie' or 'tv'
+ * @param {object} media media object
  *
  * This will also fetch images and videos:
  * See https://developers.themoviedb.org/3/getting-started/append-to-response
@@ -363,6 +384,7 @@ export const fetchMediaDetails = async (type, media) => {
 
 /**
  * Calculate media runtime
+ * @param {number} runtime
  */
 export const calcMediaRuntime = runtime => {
 	if (!runtime) return 'N/A';

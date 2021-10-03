@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import { Overview } from 'screens/MediaDetailsScreen';
 import styled from 'styled-components/native';
 import { colors } from 'styles/styles.js';

@@ -10,7 +10,7 @@ import TrailersScreen from 'screens/TrailersScreen';
 import WatchVideosScreen from 'screens/WatchVideosScreen';
 import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import CastAndCrewScreen from 'screens/CastAndCrewScreen';
-import DiscoverScreen from 'screens/DiscoverScreen';
+import DiscoverScreen from 'screens/discover/DiscoverScreen';
 import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
 import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -48,6 +48,13 @@ export const SearchScreenStack = () => (
 export const DiscoverScreenStack = () => (
 	<Discover.Navigator screenOptions={options.mainOptions}>
 		<Discover.Screen name="Discover" component={DiscoverScreen} options={options.noHeader} />
+		<Discover.Screen name="MediaDetails" component={MediaDetailsScreen} />
+		<Discover.Screen name="MediaList" component={MediaListScreen} />
+		<Discover.Screen name="WatchVideos" component={WatchVideosScreen} />
+		<Discover.Screen name="PersonDetails" component={PersonDetailsScreen} />
+		<Discover.Screen name="CastAndCrew" component={CastAndCrewScreen} />
+		<Discover.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
+		<Discover.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
 	</Discover.Navigator>
 );
 

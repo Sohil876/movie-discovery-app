@@ -44,7 +44,7 @@ export const colors = {
 
 	gray800: `${gray[700]}`,
 	coolGray900: `${coolGray[900]}`,
-	coolGray700: `${coolGray[800]}`,
+	coolGray700: `${coolGray[700]}`,
 	coolGray600: `${coolGray[600]}`,
 	coolGray500: `${coolGray[500]}`,
 	coolGray400: `${coolGray[400]}`,

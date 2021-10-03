@@ -59,7 +59,7 @@ const MediaListScreen = ({ route }) => {
 				numColumns={2}
 				horizontal={false}
 				data={data}
-				keyExtractor={(item, index) => index.toString()}
+				keyExtractor={(item, index) => item.id.toString()}
 				renderItem={({ item }) => <MediaCard media={item} />}
 			/>
 		</MediaListWrapper>

@@ -93,6 +93,7 @@ export const CardImage = styled.Image`
 	height: 240px;
 	width: 150px;
 	border-radius: ${constants.borderRadiusLg};
+	margin-bottom: -10px;
 `;
 
 export const CardWrapper = styled.Pressable`
@@ -102,5 +103,4 @@ export const CardWrapper = styled.Pressable`
 	margin-left: 0;
 `;
 
-// export const MemoizedMediaCard =
 export default React.memo(MediaCard);

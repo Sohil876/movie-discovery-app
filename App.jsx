@@ -19,6 +19,7 @@ import {
 	faFrownOpen,
 	faChevronRight,
 	faFilm,
+	faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -48,7 +49,8 @@ export default function App() {
 		faArrowCircleLeft,
 		faTimesCircle,
 		faFrownOpen,
-		faFilm
+		faFilm,
+		faFilter
 	);
 
 	// Load custom fonts

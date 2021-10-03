@@ -1,13 +1,22 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import MediaRow from 'layoutcomp/MediaRow';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
 import { movieRequests, tvRequests } from '../utils/requests';
 import { View } from 'react-native';
+import tmdb from 'utils/baseURL';
 
 const HomeScreen = () => {
 	const bottomNavBarHeight = useBottomTabBarHeight();
+
+	useEffect(() => {
+		console.log(
+			tmdb.get('/trending/movie/day', {
+				params: { api_key: '1234' },
+			})
+		);
+	}, []);
 
 	return (
 		<HomeWrapper>

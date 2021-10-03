@@ -23,7 +23,7 @@ const MediaRow = ({ title, url }) => {
 					showsHorizontalScrollIndicator={false}
 					horizontal
 					data={mediaData}
-					keyExtractor={(_, index) => index.toString()}
+					keyExtractor={(item, index) => item.id.toString()}
 					renderItem={({ item }) => {
 						return <MediaCard media={item} />;
 					}}
@@ -34,6 +34,7 @@ const MediaRow = ({ title, url }) => {
 
 	useEffect(() => {
 		let mounted = true;
+
 		fetchMediaData(url).then(res => setMediaData(res));
 
 		return () => (mounted = false);
