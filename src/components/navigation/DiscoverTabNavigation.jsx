@@ -16,13 +16,14 @@ const DiscoverTabNavigation = () => {
 		>
 			<Discover.Screen
 				name="Movies"
-				component={MovieDiscoverTab}
+				// component={MovieDiscoverTab}
+				children={props => <MovieDiscoverTab {...props} />}
 				options={{
 					tabBarLabel: (focused, color) => (
 						<BaseText style={styles.tabBarLabelStyle}>Movies</BaseText>
 					),
 				}}
-			/>
+			></Discover.Screen>
 			<Discover.Screen
 				name="TV"
 				component={TVDiscoverTab}

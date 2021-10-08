@@ -14,6 +14,8 @@ import DiscoverScreen from 'screens/discover/DiscoverScreen';
 import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
 import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import FilterScreen from 'screens/discover/FilterScreen';
+import { MovieDiscoverTab } from 'screens/discover/DiscoverTabs';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -23,7 +25,7 @@ export const HomeScreenStack = () => (
 	<Home.Navigator screenOptions={options.mainOptions}>
 		<Home.Screen name="Home" component={HomeScreen} options={options.noHeader} />
 		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} />
-		<Home.Screen name="MediaList" component={MediaListScreen} />
+		<Home.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
 		<Home.Screen name="WatchVideos" component={WatchVideosScreen} />
 		<Home.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Home.Screen name="CastAndCrew" component={CastAndCrewScreen} />
@@ -36,7 +38,7 @@ export const SearchScreenStack = () => (
 	<Search.Navigator screenOptions={options.mainOptions}>
 		<Search.Screen name="Search" component={SearchScreen} options={options.noHeader} />
 		<Search.Screen name="MediaDetails" component={MediaDetailsScreen} />
-		<Search.Screen name="MediaList" component={MediaListScreen} />
+		<Search.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
 		<Search.Screen name="WatchVideos" component={WatchVideosScreen} />
 		<Search.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Search.Screen name="CastAndCrew" component={CastAndCrewScreen} />
@@ -49,12 +51,14 @@ export const DiscoverScreenStack = () => (
 	<Discover.Navigator screenOptions={options.mainOptions}>
 		<Discover.Screen name="Discover" component={DiscoverScreen} options={options.noHeader} />
 		<Discover.Screen name="MediaDetails" component={MediaDetailsScreen} />
-		<Discover.Screen name="MediaList" component={MediaListScreen} />
+		<Discover.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
 		<Discover.Screen name="WatchVideos" component={WatchVideosScreen} />
 		<Discover.Screen name="PersonDetails" component={PersonDetailsScreen} />
 		<Discover.Screen name="CastAndCrew" component={CastAndCrewScreen} />
 		<Discover.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
 		<Discover.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
+		<Discover.Screen name="FilterScreen" component={FilterScreen} />
+		{/* <Discover.Screen name="Movies" component={MovieDiscoverTab} /> */}
 	</Discover.Navigator>
 );
 

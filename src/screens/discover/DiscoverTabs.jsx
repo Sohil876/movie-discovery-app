@@ -13,16 +13,15 @@ const config = {
 	// [primaryReleaseDateGreaterThan]: '',
 };
 
-export const MovieDiscoverTab = ({ route }) => {
-	const { data } = route.params;
+export const MovieDiscoverTab = ({ filters }) => {
 	const [state, setState] = useState();
-	const [params, setParams] = useState(data || config);
+	const [params, setParams] = useState(filters || config);
 
 	useEffect(() => {
 		fetchMediaData(`/discover/movie`, { params })
 			.then(res => setState(res))
 			.catch(er => console.error(er));
-	}, []);
+	}, [params]);
 
 	if (!state) return null;
 
