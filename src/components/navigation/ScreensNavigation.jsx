@@ -2,27 +2,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
-import MediaDetailsScreen from 'screens/MediaDetailsScreen';
-import HomeScreen from 'screens/HomeScreen';
-import MediaListScreen from 'screens/MediaListScreen';
-import SearchScreen from 'screens/SearchScreen';
-import TrailersScreen from 'screens/TrailersScreen';
-import WatchVideosScreen from 'screens/WatchVideosScreen';
-import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import CastAndCrewScreen from 'screens/CastAndCrewScreen';
 import DiscoverScreen from 'screens/discover/DiscoverScreen';
-import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
-import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import FilterScreen from 'screens/discover/FilterScreen';
-import { MovieDiscoverTab } from 'screens/discover/DiscoverTabs';
+import EpisodeDetailsScreen from 'screens/EpisodeDetailsScreen';
+import EpisodeGuideScreen from 'screens/EpisodeGuideScreen';
+import HomeScreen from 'screens/HomeScreen';
+import MediaDetailsScreen from 'screens/MediaDetailsScreen';
+import MediaListScreen from 'screens/MediaListScreen';
+import PersonDetailsScreen from 'screens/PersonDetailsScreen';
+import SearchScreen from 'screens/SearchScreen';
+import WatchVideosScreen from 'screens/WatchVideosScreen';
+import { API_KEY } from '../../utils/requests';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
 const Discover = createStackNavigator();
 
 export const HomeScreenStack = () => (
-	<Home.Navigator screenOptions={options.mainOptions}>
+	<Home.Navigator screenOptions={options.screenOptions}>
 		<Home.Screen name="Home" component={HomeScreen} options={options.noHeader} />
 		<Home.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		<Home.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
@@ -35,7 +33,7 @@ export const HomeScreenStack = () => (
 );
 
 export const SearchScreenStack = () => (
-	<Search.Navigator screenOptions={options.mainOptions}>
+	<Search.Navigator screenOptions={options.screenOptions}>
 		<Search.Screen name="Search" component={SearchScreen} options={options.noHeader} />
 		<Search.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		<Search.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
@@ -48,8 +46,13 @@ export const SearchScreenStack = () => (
 );
 
 export const DiscoverScreenStack = () => (
-	<Discover.Navigator screenOptions={options.mainOptions}>
-		<Discover.Screen name="Discover" component={DiscoverScreen} options={options.noHeader} />
+	<Discover.Navigator screenOptions={options.screenOptions}>
+		<Discover.Screen
+			name="Discover"
+			initialParams={{ api_key: API_KEY, language: 'en-US' }}
+			component={DiscoverScreen}
+			options={options.noHeader}
+		/>
 		<Discover.Screen name="MediaDetails" component={MediaDetailsScreen} />
 		<Discover.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
 		<Discover.Screen name="WatchVideos" component={WatchVideosScreen} />
@@ -58,12 +61,11 @@ export const DiscoverScreenStack = () => (
 		<Discover.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
 		<Discover.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
 		<Discover.Screen name="FilterScreen" component={FilterScreen} />
-		{/* <Discover.Screen name="Movies" component={MovieDiscoverTab} /> */}
 	</Discover.Navigator>
 );
 
 const options = {
-	mainOptions: {
+	screenOptions: {
 		gestureEnabled: true,
 		gestureDirection: 'horizontal',
 

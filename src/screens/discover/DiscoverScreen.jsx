@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import MediaCard from 'components/layout/MediaCard';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
@@ -9,6 +9,8 @@ import { fetchMediaData } from 'utils/helpers';
 import { API_KEY } from 'utils/requests';
 import { activeBtnStyle, BtnItem, Divider } from '../CastAndCrewScreen';
 import { Title } from '../SearchScreen';
+import Loader from 'components/layout/Loader';
+import { useFocusEffect } from '@react-navigation/native';
 
 const config = {
 	api_key: API_KEY,
@@ -18,23 +20,31 @@ const config = {
 	// [primaryReleaseDateGreaterThan]: '',
 };
 
-const DiscoverScreen = () => {
+const DiscoverScreen = ({ route }) => {
 	const navigation = useNavigation();
+	// const { params } = route;
+
 	const [active, setActive] = useState({ movies: true, tv: false });
 	const [state, setState] = useState(null);
-	const [params, setParams] = useState(config);
+	const [filters, setFilters] = useState(route.params); // initialParams
+	const [isLoading, setIsLoading] = useState(true);
 
 	const init = () => {
+		setIsLoading(true);
+		setState(null);
+
 		if (active.movies) {
 			// fetch discover movies data
-			fetchMediaData(`/discover/movie`, { params })
+			fetchMediaData(`/discover/movie`, { params: filters })
 				.then(res => setState(res))
-				.catch(er => console.error(er));
+				.catch(er => console.error(er))
+				.finally(setIsLoading(false));
 		} else {
 			// fetch tv shows discover data
-			fetchMediaData(`/discover/tv`, { params })
+			fetchMediaData(`/discover/tv`, { params: filters })
 				.then(res => setState(res))
-				.catch(er => console.error(er));
+				.catch(er => console.error(er))
+				.finally(setIsLoading(false));
 		}
 	};
 
@@ -68,14 +78,22 @@ const DiscoverScreen = () => {
 		}
 	};
 
-	const handleSwitch = () => {
-		// ....
-	};
-
 	useEffect(() => {
 		init();
-		// console.log(params);
-	}, []);
+		console.log(route, 'ROUTES');
+	}, [active, filters]);
+
+	// Do something when the screen is focused
+	useFocusEffect(() => {
+		if (route.params.filters) {
+			setFilters(route.params.filters);
+			console.log('useFocusEffect ran');
+		}
+	});
+
+	if (isLoading) {
+		return <Loader />;
+	}
 
 	return (
 		<Wrapper>
@@ -89,21 +107,20 @@ const DiscoverScreen = () => {
 				</TouchableOpacity>
 			</View>
 
-			{/* <DiscoverTabNavigation /> */}
-
 			<View style={styles.row}>
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => setActive({ movies: true, tv: false })}>
 					<BtnItem style={active.movies && activeBtnStyle.activeBtn}>Movies</BtnItem>
 				</TouchableOpacity>
 
 				<Divider />
 
-				<TouchableOpacity>
+				<TouchableOpacity onPress={() => setActive({ tv: true, movies: false })}>
 					<BtnItem style={active.tv && activeBtnStyle.activeBtn}>TV Shows</BtnItem>
 				</TouchableOpacity>
 			</View>
 
 			{active.movies && renderMedia('movies')}
+			{active.tv && renderMedia('tv')}
 		</Wrapper>
 	);
 };

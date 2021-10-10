@@ -1,16 +1,13 @@
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import React, { useState, useCallback, useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, Pressable, TouchableOpacity, SafeAreaView } from 'react-native';
-import styled from 'styled-components/native';
-import { constants, colors } from 'styles/styles.js';
-import { API_KEY } from 'utils/requests';
-import { BaseText } from 'components/layout/BaseComponents';
 import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-datepicker';
-import CheckboxGroup from 'react-native-checkbox-group';
 import { useNavigation } from '@react-navigation/native';
-import { MovieDiscoverTab } from './DiscoverTabs';
-import { DiscoverScreen } from 'screens/discover/DiscoverScreen';
+import { BaseText } from 'components/layout/BaseComponents';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import CheckboxGroup from 'react-native-checkbox-group';
+import DatePicker from 'react-native-datepicker';
+import styled from 'styled-components/native';
+import { colors, constants } from 'styles/styles.js';
+import { API_KEY } from 'utils/requests';
 
 const genreList = [
 	{ label: 'action', value: 28 },
@@ -34,6 +31,9 @@ const genreList = [
 	{ label: 'SciFi', value: 878 },
 ];
 
+const releaseDateGTE = 'release_date.gte';
+const releaseDateLTE = 'release_date.lte';
+
 const FilterScreen = () => {
 	const navigation = useNavigation();
 
@@ -45,13 +45,10 @@ const FilterScreen = () => {
 	const [releaseDateGreaterThan, setReleaseDateGreaterThan] = useState(null);
 	const [releaseDateLessThan, setReleaseDateLessThan] = useState(null);
 
-	const releaseDateGTE = 'release_date.gte';
-	const releaseDateLTE = 'release_date.lte';
-
 	const [params, setParams] = useState({
 		api_key: API_KEY, // TMDB API key
 		language, // language filter
-		sort_by: null,
+		sort_by: sortBy,
 		with_genres: null, // genres to include
 		[releaseDateGTE]: null, // show media released after this date
 		[releaseDateLTE]: null, // show media released before this date
@@ -190,30 +187,21 @@ const FilterScreen = () => {
 							style={[styles.button, styles.buttonApply]}
 							onPress={() => {
 								navigation.navigate('Discover', {
-									screen: 'DiscoverScreen',
-									params: { filters: params },
+									filters: {
+										api_key: API_KEY, // TMDB API key
+										language, // language filter
+										sort_by: sortBy,
+										[releaseDateGTE]: releaseDateGreaterThan,
+										[releaseDateLTE]: releaseDateLessThan,
+										with_genres: selectedGenres.toString(),
+									},
 								});
 							}}
 						>
-							<Text style={styles.textStyle}>Apply to Movies</Text>
+							<Text style={styles.textStyle}>Apply</Text>
 						</ApplyBtn>
 
-						<ApplyBtn
-							style={[styles.button, styles.buttonApply]}
-							onPress={() => {
-								navigation.navigate('TV', {
-									screen: 'TVDiscoverTab',
-									params: { data: params },
-								});
-							}}
-						>
-							<Text style={styles.textStyle}>Apply to TV</Text>
-						</ApplyBtn>
-
-						<TouchableOpacity
-							style={[styles.button, styles.buttonClose]}
-							onPress={() => setModalVisible(false)}
-						>
+						<TouchableOpacity style={[styles.button, styles.buttonClose]}>
 							<Text style={styles.textStyle}>Clear Filters</Text>
 						</TouchableOpacity>
 					</ModalBtns>
