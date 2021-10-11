@@ -28,7 +28,7 @@ const EpisodeDetailsScreen = ({ route }) => {
 		posterURL: data.still_path ? `${BASE_IMG_URL}${data.still_path}` : null,
 	});
 
-	useEffect(() => console.log('STATE', state), [state]);
+	// useEffect(() => console.log('STATE', state), [state]);
 	useEffect(() => {
 		fetchTVEpisodeDetails(state.showID, state.season_number, state.episode_number)
 			.then(res => setState(prev => ({ ...prev, ...res })))

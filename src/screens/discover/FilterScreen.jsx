@@ -54,16 +54,6 @@ const FilterScreen = () => {
 		[releaseDateLTE]: null, // show media released before this date
 	});
 
-	const handleGenreSelection = genreID => {
-		if (selectedGenres.includes(genreID)) {
-			// remove genre
-			setSelectedGenres(selectedGenres.filter(itemID => itemID !== genreID));
-			return;
-		}
-
-		setSelectedGenres(prev => [...prev, genreID]);
-	};
-
 	// useEffect(() => alert(params.with_genres), [selectedGenres]);
 
 	return (
@@ -165,7 +155,7 @@ const FilterScreen = () => {
 
 						<View style={{ flexWrap: 'wrap' }}>
 							<CheckboxGroup
-								callback={selected => handleGenreSelection(selected)}
+								callback={selected => setSelectedGenres(selected)}
 								iconColor={'#ffffff'}
 								iconSize={30}
 								checkedIcon="ios-checkbox-outline"

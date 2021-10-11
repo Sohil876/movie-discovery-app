@@ -16,13 +16,10 @@ const config = {
 	api_key: API_KEY,
 	language: 'en-US',
 	sort_by: null,
-	// primary_release_year: '2021',
-	// [primaryReleaseDateGreaterThan]: '',
 };
 
 const DiscoverScreen = ({ route }) => {
 	const navigation = useNavigation();
-	// const { params } = route;
 
 	const [active, setActive] = useState({ movies: true, tv: false });
 	const [state, setState] = useState(null);
@@ -80,14 +77,12 @@ const DiscoverScreen = ({ route }) => {
 
 	useEffect(() => {
 		init();
-		console.log(route, 'ROUTES');
 	}, [active, filters]);
 
 	// Do something when the screen is focused
 	useFocusEffect(() => {
 		if (route.params.filters) {
 			setFilters(route.params.filters);
-			console.log('useFocusEffect ran');
 		}
 	});
 
