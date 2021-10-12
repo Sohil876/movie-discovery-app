@@ -11,6 +11,7 @@ import { activeBtnStyle, BtnItem, Divider } from '../CastAndCrewScreen';
 import { Title } from '../SearchScreen';
 import Loader from 'components/layout/Loader';
 import { useFocusEffect } from '@react-navigation/native';
+import FilterScreen from './FilterScreen';
 
 const config = {
 	api_key: API_KEY,
@@ -23,7 +24,7 @@ const DiscoverScreen = ({ route }) => {
 
 	const [active, setActive] = useState({ movies: true, tv: false });
 	const [state, setState] = useState(null);
-	const [filters, setFilters] = useState(route.params); // initialParams
+	const [filters, setFilters] = useState(config); // initialParams
 	const [isLoading, setIsLoading] = useState(true);
 
 	const init = () => {
@@ -38,7 +39,13 @@ const DiscoverScreen = ({ route }) => {
 				.finally(setIsLoading(false));
 		} else {
 			// fetch tv shows discover data
-			fetchMediaData(`/discover/tv`, { params: filters })
+			fetchMediaData(`/discover/tv`, {
+				params: {
+					...filters,
+					'first_air_date.gte': filters['release_date.gte'],
+					'first_air_date.lte': filters['release_date.lte'],
+				},
+			})
 				.then(res => setState(res))
 				.catch(er => console.error(er))
 				.finally(setIsLoading(false));
@@ -81,9 +88,7 @@ const DiscoverScreen = ({ route }) => {
 
 	// Do something when the screen is focused
 	useFocusEffect(() => {
-		if (route.params.filters) {
-			setFilters(route.params.filters);
-		}
+		if (route.params.filters) setFilters(route.params.filters);
 	});
 
 	if (isLoading) {
@@ -91,32 +96,37 @@ const DiscoverScreen = ({ route }) => {
 	}
 
 	return (
-		<Wrapper>
-			<View style={styles.flex}>
-				<Title>Discover</Title>
-				<TouchableOpacity
-					onPress={() => navigation.navigate('FilterScreen')}
-					hitSlop={styles.hitSlop}
-				>
-					<FilterIcon icon="filter" color="#fff" size={20} />
-				</TouchableOpacity>
-			</View>
+		<>
+			<Wrapper>
+				<View style={styles.flex}>
+					<Title>Discover</Title>
+					<TouchableOpacity
+						onPress={() => {
+							navigation.navigate('FilterScreen', { filters: filters });
+							// setShowFilters(prev => !prev);
+						}}
+						hitSlop={styles.hitSlop}
+					>
+						<FilterIcon icon="filter" color="#fff" size={20} />
+					</TouchableOpacity>
+				</View>
 
-			<View style={styles.row}>
-				<TouchableOpacity onPress={() => setActive({ movies: true, tv: false })}>
-					<BtnItem style={active.movies && activeBtnStyle.activeBtn}>Movies</BtnItem>
-				</TouchableOpacity>
+				<View style={styles.row}>
+					<TouchableOpacity onPress={() => setActive({ movies: true, tv: false })}>
+						<BtnItem style={active.movies && activeBtnStyle.activeBtn}>Movies</BtnItem>
+					</TouchableOpacity>
 
-				<Divider />
+					<Divider />
 
-				<TouchableOpacity onPress={() => setActive({ tv: true, movies: false })}>
-					<BtnItem style={active.tv && activeBtnStyle.activeBtn}>TV Shows</BtnItem>
-				</TouchableOpacity>
-			</View>
+					<TouchableOpacity onPress={() => setActive({ tv: true, movies: false })}>
+						<BtnItem style={active.tv && activeBtnStyle.activeBtn}>TV Shows</BtnItem>
+					</TouchableOpacity>
+				</View>
 
-			{active.movies && renderMedia('movies')}
-			{active.tv && renderMedia('tv')}
-		</Wrapper>
+				{active.movies && renderMedia('movies')}
+				{active.tv && renderMedia('tv')}
+			</Wrapper>
+		</>
 	);
 };
 

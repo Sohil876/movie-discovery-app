@@ -14,6 +14,7 @@ import PersonDetailsScreen from 'screens/PersonDetailsScreen';
 import SearchScreen from 'screens/SearchScreen';
 import WatchVideosScreen from 'screens/WatchVideosScreen';
 import { API_KEY } from '../../utils/requests';
+import { colors } from 'styles/styles.js';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
@@ -87,7 +88,7 @@ const options = {
 		headerBackground: () => (
 			<View
 				style={{
-					backgroundColor: '#0b0d24d1',
+					backgroundColor: '#0000007f',
 					color: '#fff',
 					height: 45,
 					width: 45,
