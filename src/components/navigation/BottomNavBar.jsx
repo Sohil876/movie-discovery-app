@@ -3,7 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { colors } from 'styles/styles.js';
-import { DiscoverScreenStack, HomeScreenStack, SearchScreenStack } from './ScreensNavigation';
+import {
+	DiscoverScreenStack,
+	HomeScreenStack,
+	SearchScreenStack,
+	UserLibraryScreenStack,
+} from './ScreensNavigation';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -48,6 +53,13 @@ const BottomNavBar = () => {
 				component={DiscoverScreenStack}
 				options={{
 					tabBarIcon: ({ focused }) => renderTabIcon('film', focused),
+				}}
+			/>
+			<Screen
+				name="UserLibraryScreen"
+				component={UserLibraryScreenStack}
+				options={{
+					tabBarIcon: ({ focused }) => renderTabIcon('user', focused),
 				}}
 			/>
 		</Navigator>

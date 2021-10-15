@@ -13,6 +13,7 @@ import {
 	faPlay,
 	faPlayCircle,
 	faSearch,
+	faUser,
 	faStar,
 	faArrowCircleLeft,
 	faTimesCircle,
@@ -20,6 +21,9 @@ import {
 	faChevronRight,
 	faFilm,
 	faFilter,
+	faHeart,
+	faTv,
+	faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
@@ -50,7 +54,11 @@ export default function App() {
 		faTimesCircle,
 		faFrownOpen,
 		faFilm,
-		faFilter
+		faFilter,
+		faUser,
+		faHeart,
+		faTv,
+		faClock
 	);
 
 	// Load custom fonts

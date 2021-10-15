@@ -15,10 +15,13 @@ import SearchScreen from 'screens/SearchScreen';
 import WatchVideosScreen from 'screens/WatchVideosScreen';
 import { API_KEY } from '../../utils/requests';
 import { colors } from 'styles/styles.js';
+import UserLibraryScreen from '../../screens/library/UserLibraryScreen';
+import FavoritesScreen from '../../screens/library/FavoritesScreen';
 
 const Home = createStackNavigator();
 const Search = createStackNavigator();
 const Discover = createStackNavigator();
+const UserLibrary = createStackNavigator();
 
 export const HomeScreenStack = () => (
 	<Home.Navigator screenOptions={options.screenOptions}>
@@ -63,6 +66,20 @@ export const DiscoverScreenStack = () => (
 		<Discover.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
 		<Discover.Screen name="FilterScreen" component={FilterScreen} />
 	</Discover.Navigator>
+);
+
+export const UserLibraryScreenStack = () => (
+	<UserLibrary.Navigator screenOptions={options.screenOptions}>
+		<UserLibrary.Screen name="Library" component={UserLibraryScreen} options={options.noHeader} />
+		<UserLibrary.Screen name="Favorites" component={FavoritesScreen} />
+		<UserLibrary.Screen name="MediaDetails" component={MediaDetailsScreen} />
+		<UserLibrary.Screen name="MediaList" children={props => <MediaListScreen {...props} />} />
+		<UserLibrary.Screen name="WatchVideos" component={WatchVideosScreen} />
+		<UserLibrary.Screen name="PersonDetails" component={PersonDetailsScreen} />
+		<UserLibrary.Screen name="CastAndCrew" component={CastAndCrewScreen} />
+		<UserLibrary.Screen name="EpisodeGuide" component={EpisodeGuideScreen} />
+		<UserLibrary.Screen name="EpisodeDetails" component={EpisodeDetailsScreen} />
+	</UserLibrary.Navigator>
 );
 
 const options = {

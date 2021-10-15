@@ -1,45 +1,73 @@
-import { Picker } from '@react-native-picker/picker';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { BaseText } from 'components/layout/BaseComponents';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CheckboxGroup from 'react-native-checkbox-group';
 import DatePicker from 'react-native-datepicker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
 import { API_KEY } from 'utils/requests';
-
-const genreList = [
-	{ label: 'action', value: 28 },
-	{ label: 'Adventure', value: 12 },
-	{ label: 'Animation', value: 16 },
-	{ label: 'Comedy', value: 35 },
-	{ label: 'Crime', value: 80 },
-	{ label: 'drama', value: 18 },
-	{ label: 'documentary', value: 99 },
-	{ label: 'family', value: 10751 },
-	{ label: 'fantasy', value: 14 },
-	{ label: 'history', value: 36 },
-	{ label: 'music', value: 10402 },
-	{ label: 'mystery', value: 9648 },
-	{ label: 'TV Movie', value: 10770 },
-	{ label: 'thriller', value: 53 },
-	{ label: 'war', value: 10752 },
-	{ label: 'western', value: 37 },
-	{ label: 'horror', value: 27 },
-	{ label: 'romance', value: 10749 },
-	{ label: 'SciFi', value: 878 },
-];
 
 const FilterScreen = ({ route }) => {
 	const navigation = useNavigation();
 
 	const [language, setLanguage] = useState('en-US');
-	const [sortBy, setSortBy] = useState('popularity.desc');
+	const [sortBy, setSortBy] = useState(null);
 	const [selectedGenres, setSelectedGenres] = useState([]);
 
 	const [releaseDateGreaterThan, setReleaseDateGreaterThan] = useState(null);
 	const [releaseDateLessThan, setReleaseDateLessThan] = useState(null);
+
+	const [openModal, setOpenModal] = useState(false);
+	const [sortByItems] = useState([
+		{
+			label: 'Most Popular',
+			value: 'popularity.desc',
+		},
+		{
+			label: 'Least Popular',
+			value: 'popularity.asc',
+		},
+		{
+			label: 'Most Recent',
+			value: 'release_date.desc',
+		},
+		{
+			label: 'Least Recent',
+			value: 'release_date.asc',
+		},
+		{
+			label: 'Highest Rated',
+			value: 'vote_average.desc',
+		},
+		{
+			label: 'Lowest Rated',
+			value: 'vote_average.asc',
+		},
+	]);
+
+	const [genreList, setGenreList] = useState([
+		{ label: 'action', value: 28 },
+		{ label: 'Adventure', value: 12 },
+		{ label: 'Animation', value: 16 },
+		{ label: 'Comedy', value: 35 },
+		{ label: 'Crime', value: 80 },
+		{ label: 'drama', value: 18 },
+		{ label: 'documentary', value: 99 },
+		{ label: 'family', value: 10751 },
+		{ label: 'fantasy', value: 14 },
+		{ label: 'history', value: 36 },
+		{ label: 'music', value: 10402 },
+		{ label: 'mystery', value: 9648 },
+		{ label: 'TV Movie', value: 10770 },
+		{ label: 'thriller', value: 53 },
+		{ label: 'war', value: 10752 },
+		{ label: 'western', value: 37 },
+		{ label: 'horror', value: 27 },
+		{ label: 'romance', value: 10749 },
+		{ label: 'SciFi', value: 878 },
+	]);
 
 	useEffect(() => {
 		console.log('FILTER SCREEN FOCUSED', route.params.filters);
@@ -53,6 +81,21 @@ const FilterScreen = ({ route }) => {
 			setReleaseDateGreaterThan(filters['release_date.gte']);
 			setReleaseDateLessThan(filters['release_date.lte']);
 			setSortBy(filters.sort_by);
+
+			if (filters.with_genres) {
+				const genres = filters.with_genres.split(',');
+				const newGenreList = [];
+
+				genreList.map(item => {
+					genres.map(genre => {
+						if (item.value === +genre) newGenreList.push({ ...item, selected: true });
+						else newGenreList.push(item);
+					});
+				});
+
+				setGenreList(newGenreList);
+				console.log(newGenreList, 'NEW GENRE LIST');
+			}
 		}
 	}, []);
 
@@ -63,45 +106,13 @@ const FilterScreen = ({ route }) => {
 
 				<FilterGroup>
 					<FilterTitle>Sort by: </FilterTitle>
-					<Picker
-						mode={'dropdown'}
-						dropdownIconColor="#fff"
-						selectedValue={sortBy}
-						style={{ height: 50, width: 150 }}
-						onValueChange={(itemValue, itemIndex) => setSortBy(itemValue)}
-					>
-						<Picker.Item label="None" value={null} style={styles.picker} />
-						<Picker.Item
-							label="Least Popular"
-							value="popularity.asc"
-							style={styles.picker}
-						/>
-						<Picker.Item
-							label="Most Popular"
-							value="popularity.desc"
-							style={styles.picker}
-						/>
-						<Picker.Item
-							label="Highest Rated"
-							value="vote_average.asc"
-							style={styles.picker}
-						/>
-						<Picker.Item
-							label="Lowest Rated"
-							value="vote_average.desc"
-							style={styles.picker}
-						/>
-						<Picker.Item
-							label="Most Recent"
-							value="primary_release_date.desc"
-							style={styles.picker}
-						/>
-						<Picker.Item
-							label="Least Recent"
-							value="primary_release_date.asc"
-							style={styles.picker}
-						/>
-					</Picker>
+					<DropDownPicker
+						open={openModal}
+						value={sortBy}
+						items={sortByItems}
+						setOpen={setOpenModal}
+						setValue={setSortBy}
+					/>
 				</FilterGroup>
 
 				<FilterGroup>
@@ -183,6 +194,16 @@ const FilterScreen = ({ route }) => {
 									'release_date.gte': releaseDateGreaterThan,
 									'release_date.lte': releaseDateLessThan,
 									with_genres: selectedGenres.toString(),
+									// if user sorts by 'Most Recent' only show
+									// items with a release year of current year + 1
+									year:
+										sortBy === 'release_date.desc'
+											? new Date().getFullYear() + 1
+											: null,
+									first_air_date_year:
+										sortBy === 'release_date.desc'
+											? new Date().getFullYear() + 1
+											: null,
 								},
 							});
 						}}

@@ -49,7 +49,7 @@ export const HomeWrapper = styled.ScrollView`
 	padding: 25px ${constants.horizontalPadding};
 `;
 
-const MediaWrapper = styled.View`
+export const MediaWrapper = styled.View`
 	flex: 1;
 	margin-top: 40px;
 	margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : '0px')};

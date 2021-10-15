@@ -32,7 +32,12 @@ const MediaCard = ({ media }) => {
 			style={({ pressed }) => (pressed ? { opacity: 0.5 } : {})}
 		>
 			<CardImage
-				source={state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')}
+				defaultSource={require('../../assets/images/no-img-found.png')}
+				source={
+					state.posterURL
+						? { uri: state.posterURL }
+						: require('../../assets/images/no-img-found.png')
+				}
 				resizeMode="contain"
 			/>
 

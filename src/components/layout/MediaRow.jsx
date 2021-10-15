@@ -54,7 +54,7 @@ const MediaRow = ({ title, url }) => {
 
 const styles = StyleSheet.create({
 	margin: {
-		marginBottom: -20,
+		// marginBottom: -20,
 	},
 });
 
@@ -64,10 +64,11 @@ export const RowTitle = styled.Text`
 	font-family: 'poppins-medium';
 `;
 
-const TitleWrapper = styled.View`
+export const TitleWrapper = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	margin-bottom: -20px;
 `;
 
 const Loading = styled.Text`
