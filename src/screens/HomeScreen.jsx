@@ -10,17 +10,9 @@ import tmdb from 'utils/baseURL';
 const HomeScreen = () => {
 	const bottomNavBarHeight = useBottomTabBarHeight();
 
-	useEffect(() => {
-		console.log(
-			tmdb.get('/trending/movie/day', {
-				params: { api_key: '1234' },
-			})
-		);
-	}, []);
-
 	return (
 		<HomeWrapper>
-			<MediaWrapper>
+			<MediaWrapper> 
 				<MediaRow title="In Cinemas Now" url={movieRequests.fetchNowPlaying} />
 			</MediaWrapper>
 

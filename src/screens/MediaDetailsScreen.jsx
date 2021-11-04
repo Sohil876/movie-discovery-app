@@ -14,6 +14,8 @@ import Photos from '../components/layout/Photos';
 import Similar, { Recommended } from '../components/layout/Similar';
 import ExpandableText from 'components/layout/ExpandableText';
 import VideoThumbnail from './../components/layout/VideoThumbnail';
+import { BaseText } from './../components/layout/BaseComponents';
+import AddToLibrary from './../components/layout/AddToLibrary';
 
 export const MediaDetailsScreen = ({ route }) => {
 	const { media } = route.params;
@@ -63,10 +65,13 @@ export const MediaDetailsScreen = ({ route }) => {
 	};
 
 	useEffect(() => {
+		let mounted = true;
 		init();
+
+		return () => (mounted = false);
 	}, []);
 
-	// useEffect(() => console.log(state, 'STATE OBJ'), [state]);
+	// useEffect(() => console.log(state.title , 'STATE OBJ'), []);
 
 	const renderGenres = () => {
 		return state.genres?.length > 0
@@ -100,6 +105,7 @@ export const MediaDetailsScreen = ({ route }) => {
 			refreshControl={<RefreshControl onRefresh={refreshData} refreshing={isRefreshing} />}
 		>
 			<PosterDetails>
+				<AddToLibrary media={state} />
 				{renderTitle()}
 				<PosterInfo>
 					<Text style={styles.posterInfo}>{formatDate(state.releaseDate)} • </Text>
@@ -115,6 +121,15 @@ export const MediaDetailsScreen = ({ route }) => {
 				source={state.posterURL ? { uri: state.posterURL } : require('images/no-img-found.png')}
 				style={styles.posterImg}
 			/>
+			<View
+				style={{
+					position: 'absolute',
+					top: 30,
+					right: 10,
+				}}
+			>
+				<BaseText style={{ fontSize: 30 }}>Hello</BaseText>
+			</View>
 
 			<DetailsBottom>
 				<SectionWrapper>
@@ -311,6 +326,8 @@ export const Title = styled.Text`
 `;
 
 export const PosterImg = styled.Image`
+	/* top: 2
+	0; */
 	height: 400;
 	width: 100%;
 	position: absolute;

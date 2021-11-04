@@ -39,6 +39,7 @@
     "react-native-image-pan-zoom": "^2.1.12",
     "react-native-image-zoom-viewer": "^3.0.1",
     "react-native-lightbox-v2": "^0.8.8",
+    "react-native-material-menu": "^2.0.0",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-pager-view": "5.0.12",
     "react-native-reanimated": "^2.2.2",

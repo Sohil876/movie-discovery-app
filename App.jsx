@@ -24,14 +24,13 @@ import {
 	faHeart,
 	faTv,
 	faClock,
+	faEllipsisV,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
 import BottomNavBar from './src/components/navigation/BottomNavBar';
-import { colors } from 'styles/styles.js';
 import Loader from 'components/layout/Loader';
 
 export default function App() {
@@ -58,7 +57,8 @@ export default function App() {
 		faUser,
 		faHeart,
 		faTv,
-		faClock
+		faClock,
+		faEllipsisV
 	);
 
 	// Load custom fonts

@@ -7,20 +7,28 @@ export const FAVORITE_MOVIES_KEY = 'FAVORITE_MOVIES';
 export const FAVORITE_TV_SHOWS_KEY = 'FAVORITE_TV_SHOWS';
 
 /**
+ * Check if movie belo
+ * @param {*} object
+ */
+
+/**
  * Add movie to favorites
  * @param {} object value to store in local storage
  */
-export const addToFavoriteMovies = async object => {
+export const addToFavorites = async (object, type) => {
+	const mediaType = type === 'movie' ? FAVORITE_MOVIES_KEY : FAVORITE_TV_SHOWS_KEY;
+	alert(mediaType);
+
 	try {
 		const objectJSON = JSON.stringify(object);
 
-		const favoriteMoviesArr = await AsyncStorage.getItem(FAVORITE_MOVIES_KEY);
+		const favoritesArr = await AsyncStorage.getItem(mediaType);
 
-		if (!favoriteMoviesArr || !favoriteMoviesArr.length) {
+		if (!favoritesArr || !favoritesArr.length) {
 			// create new array and add movie item to local storage
 			const movies = JSON.stringify([objectJSON]);
 
-			await AsyncStorage.setItem(FAVORITE_MOVIES_KEY, movies, () => {
+			await AsyncStorage.setItem(mediaType, movies, () => {
 				ToastAndroid.showWithGravity(
 					'Added to favorites!',
 					ToastAndroid.SHORT,
@@ -29,10 +37,10 @@ export const addToFavoriteMovies = async object => {
 			});
 		} else {
 			// add new movie to existing favorites
-			const parsedArr = JSON.parse(favoriteMoviesArr);
-			const newFavMoviesArr = JSON.stringify([...parsedArr, objectJSON]);
+			const parsedArr = JSON.parse(favoritesArr);
+			const newFavoritesArr = JSON.stringify([...parsedArr, objectJSON]);
 
-			await AsyncStorage.setItem(FAVORITE_MOVIES_KEY, newFavMoviesArr, () => {
+			await AsyncStorage.setItem(mediaType, newFavoritesArr, () => {
 				ToastAndroid.showWithGravity(
 					'Added to favorites!',
 					ToastAndroid.SHORT,
@@ -45,23 +53,3 @@ export const addToFavoriteMovies = async object => {
 		throw new Error(err.message);
 	}
 };
-
-const randomMovie = {
-	adult: false,
-	backdrop_path: '/owraiceOKtSOa3t8sp3wA9K2Ox6.jpg',
-	genre_ids: [16, 28, 12, 878],
-	id: 703771,
-	original_language: 'en',
-	original_title: 'Deathstroke: Knights & Dragons - The Movie',
-	overview:
-		'The assassin Deathstroke tries to save his family from the wrath of H.I.V.E. and the murderous Jackal.',
-	popularity: 2055.471,
-	poster_path: '/vFIHbiy55smzi50RmF8LQjmpGcx.jpg',
-	release_date: '2020-08-04',
-	title: 'Deathstroke: Knights & Dragons - The Movie',
-	video: false,
-	vote_average: 6.9,
-	vote_count: 268,
-};
-
-addToFavoriteMovies(randomMovie);

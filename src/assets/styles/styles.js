@@ -42,7 +42,6 @@ export const colors = {
 	primaryClr: '#f35600',
 	yellow: '#ffb70c',
 
-	gray800: `${gray[700]}`,
 	coolGray900: `${coolGray[900]}`,
 	coolGray700: `${coolGray[700]}`,
 	coolGray600: `${coolGray[600]}`,
@@ -53,10 +52,18 @@ export const colors = {
 	coolGray200: `${coolGray[200]}`,
 	coolGray100: `${coolGray[100]}`,
 	coolGray50: `${coolGray[50]}`,
+
+	gray1000: `${gray[1000]}`,
+	gray900: `${gray[900]}`,
+	gray800: `${gray[700]}`,
+	gray700: `${gray[800]}`,
+	gray600: `${gray[600]}`,
+	gray500: `${gray[500]}`,
 };
 
 export const constants = {
 	borderRadiusSm: '5px',
 	borderRadiusLg: '10px',
 	horizontalPadding: '20px',
+	hitSlop: { top: 10, bottom: 10, left: 10, right: 10 },
 };
