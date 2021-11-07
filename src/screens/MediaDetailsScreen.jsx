@@ -35,6 +35,7 @@ export const MediaDetailsScreen = ({ route }) => {
 	});
 
 	const [isRefreshing, setIsRefreshing] = useState(false);
+	const [isLibraryLoading, setIsLibraryLoading] = useState(false)
 	const navigation = useNavigation();
 
 	const init = () => {

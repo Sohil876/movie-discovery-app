@@ -17,7 +17,6 @@ export const FAVORITE_TV_SHOWS_KEY = 'FAVORITE_TV_SHOWS';
  */
 export const addToFavorites = async (object, type) => {
 	const mediaType = type === 'movie' ? FAVORITE_MOVIES_KEY : FAVORITE_TV_SHOWS_KEY;
-	alert(mediaType);
 
 	try {
 		const objectJSON = JSON.stringify(object);

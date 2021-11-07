@@ -2,20 +2,57 @@ import styled from 'styled-components/native';
 import React, { useEffect } from 'react';
 import { Text, StyleSheet, ToastAndroid, TouchableOpacity, Pressable } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { addToFavorites } from './../../asyncStorage/asyncStorage';
+import {
+	addToFavorites,
+	FAVORITE_MOVIES_KEY,
+	FAVORITE_TV_SHOWS_KEY,
+} from './../../asyncStorage/asyncStorage';
+import { colors } from '../../assets/styles/styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { parse } from 'expo-linking';
+import { useState } from 'react';
+
+const ICON_SIZE = 25;
+
+const isInLibrary = async media => {
+	try {
+		const type = media.type === 'movie' ? FAVORITE_MOVIES_KEY : FAVORITE_TV_SHOWS_KEY;
+
+		const favoritesArr = await AsyncStorage.getItem(type);
+
+		if (!favoritesArr || !favoritesArr.length) return false;
+
+		const parsedArr = JSON.parse(favoritesArr);
+		const parsedArrOfMedia = parsedArr.map(item => JSON.parse(item));
+
+		for (let i = 0; i < parsedArrOfMedia.length; i++) {
+			if (parsedArrOfMedia[i].id === media.id) {
+				console.log('movie in in favs');
+				return true;
+			}
+		}
+	} catch (err) {
+		console.error(err);
+	}
+};
 
 const AddToLibrary = ({ media }) => {
+	const [state, setState] = useState({ inFavorites: false, inWatchlist: false, inReminders: false });
+
+	useEffect(() => {
+		isInLibrary(media).then(res => {
+			setState(prev => ({ ...prev, inFavorites: res }));
+		});
+	}, []);
+
 	return (
 		<Wrapper>
-			<Pressable
-				onPress={() => addToFavorites(media, media.type)}
-				style={styles.onTop}
-			>
+			<Pressable onPress={() => addToFavorites(media, media.type)} style={styles.onTop}>
 				<Icon
 					/**prettier-ignore */
 					icon={'heart'}
-					color={'#fff'}
-					size={20}
+					color={state.inFavorites ? colors.primaryClr : '#fff'}
+					size={ICON_SIZE}
 					style={styles.margin}
 				/>
 			</Pressable>
@@ -24,7 +61,7 @@ const AddToLibrary = ({ media }) => {
 					/**prettier-ignore */
 					icon={'tv'}
 					color={'#fff'}
-					size={20}
+					size={ICON_SIZE}
 					style={styles.margin}
 				/>
 			</Pressable>
@@ -33,7 +70,7 @@ const AddToLibrary = ({ media }) => {
 					/**prettier-ignore */
 					icon={'clock'}
 					color={'#fff'}
-					size={20}
+					size={ICON_SIZE}
 				/>
 			</Pressable>
 		</Wrapper>
