@@ -11,39 +11,54 @@ import { colors } from '../../assets/styles/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { parse } from 'expo-linking';
 import { useState } from 'react';
+import { Overview } from 'screens/MediaDetailsScreen';
+import Loader from './Loader';
 
 const ICON_SIZE = 25;
 
-const isInLibrary = async media => {
-	try {
-		const type = media.type === 'movie' ? FAVORITE_MOVIES_KEY : FAVORITE_TV_SHOWS_KEY;
-
-		const favoritesArr = await AsyncStorage.getItem(type);
-
-		if (!favoritesArr || !favoritesArr.length) return false;
-
-		const parsedArr = JSON.parse(favoritesArr);
-		const parsedArrOfMedia = parsedArr.map(item => JSON.parse(item));
-
-		for (let i = 0; i < parsedArrOfMedia.length; i++) {
-			if (parsedArrOfMedia[i].id === media.id) {
-				console.log('movie in in favs');
-				return true;
-			}
-		}
-	} catch (err) {
-		console.error(err);
-	}
-};
-
 const AddToLibrary = ({ media }) => {
 	const [state, setState] = useState({ inFavorites: false, inWatchlist: false, inReminders: false });
+	const [isLoading, setIsLoading] = useState(true);
+
+	const isInLibrary = async media => {
+		try {
+			const type = media.type === 'movie' ? FAVORITE_MOVIES_KEY : FAVORITE_TV_SHOWS_KEY;
+
+			const favoritesArr = await AsyncStorage.getItem(type);
+
+			if (!favoritesArr || !favoritesArr.length) {
+				return false;
+			}
+
+			const parsedArr = JSON.parse(favoritesArr);
+			const parsedArrOfMedia = parsedArr.map(item => JSON.parse(item));
+
+			for (let i = 0; i < parsedArrOfMedia.length; i++) {
+				if (parsedArrOfMedia[i].id === media.id) {
+					console.log('movie in in favs');
+					return true;
+				}
+			}
+		} catch (err) {
+			console.error(err);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	useEffect(() => {
+		let mounted = true;
+
 		isInLibrary(media).then(res => {
 			setState(prev => ({ ...prev, inFavorites: res }));
 		});
+
+		return () => (mounted = false);
 	}, []);
+
+	if (isLoading) {
+		return <Loader size={20} />;
+	}
 
 	return (
 		<Wrapper>

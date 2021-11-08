@@ -35,7 +35,6 @@ export const MediaDetailsScreen = ({ route }) => {
 	});
 
 	const [isRefreshing, setIsRefreshing] = useState(false);
-	const [isLibraryLoading, setIsLibraryLoading] = useState(false)
 	const navigation = useNavigation();
 
 	const init = () => {
@@ -72,8 +71,6 @@ export const MediaDetailsScreen = ({ route }) => {
 		return () => (mounted = false);
 	}, []);
 
-	// useEffect(() => console.log(state.title , 'STATE OBJ'), []);
-
 	const renderGenres = () => {
 		return state.genres?.length > 0
 			? state.genres?.map((genre, i) => {
@@ -107,6 +104,7 @@ export const MediaDetailsScreen = ({ route }) => {
 		>
 			<PosterDetails>
 				<AddToLibrary media={state} />
+
 				{renderTitle()}
 				<PosterInfo>
 					<Text style={styles.posterInfo}>{formatDate(state.releaseDate)} • </Text>
