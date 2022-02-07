@@ -1,0 +1,26 @@
+{
+  "cli": {
+    "version": ">= 0.46.0"
+  },
+  "build": {
+    "devel": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "devel2": {
+      "android": {
+        "distribution": "internal",
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "devel3": {
+      "developmentClient": true
+  },
+  "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}
