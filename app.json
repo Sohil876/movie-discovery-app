@@ -24,7 +24,9 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "io.Sohil876.MovieDiscover"
+      "package": "io.Sohil876.MovieDiscover",
+      "versionCode": 1, 
+      "enableDangerousExperimentalLeanBuilds" : true
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"
