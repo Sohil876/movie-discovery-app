@@ -20,7 +20,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@react-navigation/stack": "^6.0.7",
-    "axios": "^0.21.4",
+    "axios": "^0.26.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "expo": "^44.0.0",
     "expo-font": "~10.0.4",
