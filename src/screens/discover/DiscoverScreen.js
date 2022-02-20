@@ -36,7 +36,7 @@ const DiscoverScreen = ({ route }) => {
 			fetchMediaData(`/discover/movie`, { params: filters })
 				.then(res => setState(res))
 				.catch(er => console.error(er))
-				.finally(setIsLoading(false));
+				.finally(() => setIsLoading(false));
 		} else {
 			// fetch tv shows discover data
 			fetchMediaData(`/discover/tv`, {
@@ -48,7 +48,7 @@ const DiscoverScreen = ({ route }) => {
 			})
 				.then(res => setState(res))
 				.catch(er => console.error(er))
-				.finally(setIsLoading(false));
+				.finally(() => setIsLoading(false));
 		}
 	};
 
