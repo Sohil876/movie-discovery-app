@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { BaseText } from 'components/layout/BaseComponents';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CheckboxGroup from 'react-native-checkbox-group';
 import DatePicker from 'react-native-datepicker';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -48,25 +48,25 @@ const FilterScreen = ({ route }) => {
 	]);
 
 	const [genreList, setGenreList] = useState([
-		{ label: 'action', value: 28 },
+		{ label: 'Action', value: 28 },
 		{ label: 'Adventure', value: 12 },
 		{ label: 'Animation', value: 16 },
 		{ label: 'Comedy', value: 35 },
 		{ label: 'Crime', value: 80 },
-		{ label: 'drama', value: 18 },
-		{ label: 'documentary', value: 99 },
-		{ label: 'family', value: 10751 },
-		{ label: 'fantasy', value: 14 },
-		{ label: 'history', value: 36 },
-		{ label: 'music', value: 10402 },
-		{ label: 'mystery', value: 9648 },
-		{ label: 'TV Movie', value: 10770 },
-		{ label: 'thriller', value: 53 },
-		{ label: 'war', value: 10752 },
-		{ label: 'western', value: 37 },
-		{ label: 'horror', value: 27 },
-		{ label: 'romance', value: 10749 },
+		{ label: 'Documentary', value: 99 },
+		{ label: 'Drama', value: 18 },
+		{ label: 'Family', value: 10751 },
+		{ label: 'Fantasy', value: 14 },
+		{ label: 'History', value: 36 },
+		{ label: 'Horror', value: 27 },
+		{ label: 'Music', value: 10402 },
+		{ label: 'Mystery', value: 9648 },
+		{ label: 'Romance', value: 10749 },
 		{ label: 'SciFi', value: 878 },
+		{ label: 'Thriller', value: 53 },
+		{ label: 'TV Movie', value: 10770 },
+		{ label: 'War', value: 10752 },
+		{ label: 'Western', value: 37 },
 	]);
 
 	useEffect(() => {
@@ -116,7 +116,7 @@ const FilterScreen = ({ route }) => {
 				</FilterGroup>
 
 				<FilterGroup>
-					<FilterTitle style={{ marginBottom: 5 }}>Release Dates: </FilterTitle>
+					<FilterTitle style={{ marginBottom: '5%' }}> Release Dates: </FilterTitle>
 
 					<GroupContainer>
 						<Column>
@@ -160,27 +160,22 @@ const FilterScreen = ({ route }) => {
 					</GroupContainer>
 				</FilterGroup>
 
-				<FilterGroup>
-					<FilterTitle>Genres: </FilterTitle>
-
-					<View style={{ flexWrap: 'wrap' }}>
+			    <FilterTitle> Genres: </FilterTitle>
+                <ScrollView style={styles.scrollView} showsVerticalScrollIndicator persistentScrollbar>
 						<CheckboxGroup
 							callback={selected => setSelectedGenres(selected)}
 							iconColor={'#ffffff'}
-							iconSize={30}
+							iconSize={25}
 							checkedIcon="ios-checkbox-outline"
 							uncheckedIcon="ios-square-outline"
 							checkboxes={genreList}
-							labelStyle={{
-								color: '#ffffff',
-							}}
+							labelStyle={styles.checkBoxLabel}
 							rowStyle={{
-								flexDirection: 'row',
+                                flexDirection: 'row',
 							}}
-							rowDirection={'row'}
+							rowDirection={'column'}
 						/>
-					</View>
-				</FilterGroup>
+				</ScrollView>
 
 				<ModalBtns>
 					<ApplyBtn
@@ -243,7 +238,7 @@ const ModalTitle = styled.Text`
 	font-family: 'poppins-semiBold';
 	font-size: 22px;
 	color: #fff;
-	margin-bottom: 15px;
+	margin-bottom: 5%;
 	text-align: center;
 `;
 
@@ -258,17 +253,19 @@ const ModalBtns = styled.View`
 `;
 
 const FilterGroup = styled.View`
-	margin-bottom: 15px;
+	margin-bottom: 5%;
 `;
 
 const FilterTitle = styled(BaseText)`
 	color: #fff;
 	font-size: 16px;
 	font-family: 'poppins-semiBold';
+	text-align: center;
 `;
 
 const ReleaseDateText = styled(BaseText)`
-	margin-bottom: 5px;
+	margin-bottom: 5%;
+	text-align: center;
 `;
 
 const styles = StyleSheet.create({
@@ -277,6 +274,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100%',
+	},
+	checkBoxLabel: {
+	    color: '#fff',
+	    fontSize: 17,
 	},
 	picker: {
 		backgroundColor: colors.navbar,
@@ -294,7 +295,14 @@ const styles = StyleSheet.create({
 	},
 	buttonClose: {
 		backgroundColor: `${colors.coolGray900}`,
-		marginTop: 10,
+	},
+	scrollView: {
+	    backgroundColor: '#2a2a2a',
+	    borderRadius: 10,
+	    padding: 2,
+	    minHeight: '10%',
+	    maxHeight: '50%',
+	    marginBottom: '10%',
 	},
 	textStyle: {
 		color: 'white',
