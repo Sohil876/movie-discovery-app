@@ -243,7 +243,7 @@ export const styles = StyleSheet.create({
 	},
 
 	posterImg: {
-		elevation: -1,
+		padding: 5,
 	},
 
 	posterInfo: {
@@ -327,7 +327,7 @@ export const Title = styled.Text`
 export const PosterImg = styled.Image`
 	/* top: 2
 	0; */
-	height: 400;
+	height: 400px;
 	width: 100%;
 	position: absolute;
 	z-index: -1;
