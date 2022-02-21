@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
 
 const options = {
 	screenOptions: {
-		gestureEnabled: true,
+		gestureEnabled: false,
 		gestureDirection: 'horizontal',
 
 		// headerTitleStyle: {
