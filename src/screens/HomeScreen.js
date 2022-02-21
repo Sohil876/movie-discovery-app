@@ -43,8 +43,7 @@ export const HomeWrapper = styled.ScrollView`
 
 export const MediaWrapper = styled.View`
 	flex: 1;
-	margin-top: 40px;
-	margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : '0px')};
+	margin-bottom: ${({ marginBottom }) => (marginBottom ? `${marginBottom}px` : '5%')};
 `;
 
 export default HomeScreen;

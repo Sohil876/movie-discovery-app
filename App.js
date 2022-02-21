@@ -28,7 +28,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import * as Font from 'expo-font';
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import BottomNavBar from './src/components/navigation/BottomNavBar';
 import Loader from 'components/layout/Loader';
@@ -80,7 +79,6 @@ export default function App() {
 
 	return (
 		<NavigationContainer>
-			<StatusBar style="light" backgroundColor="#000" />
 			<BottomNavBar />
 		</NavigationContainer>
 	);

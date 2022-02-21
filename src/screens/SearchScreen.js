@@ -56,12 +56,12 @@ const SearchScreen = () => {
 const Wrapper = styled.View`
 	flex: 1;
 	background-color: ${colors.primaryBg};
-	padding: 50px ${constants.horizontalPadding};
+	padding: 25px ${constants.horizontalPadding};
 `;
 
 export const Title = styled(RowTitle)`
-	font-size: 25px;
-	margin-bottom: 8px;
+	margin-top: 2%;
+	margin-bottom: 5%;
 `;
 
 export default SearchScreen;

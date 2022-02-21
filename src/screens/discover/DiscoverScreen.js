@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
 
 const Wrapper = styled.View`
 	flex: 1;
-	padding: 50px ${constants.horizontalPadding} 10px;
+	padding: 25px ${constants.horizontalPadding} 10px;
 	background-color: ${colors.primaryBg};
 `;
 

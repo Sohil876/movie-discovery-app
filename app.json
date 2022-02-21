@@ -2,13 +2,36 @@
   "expo": {
     "name": "Movie-Discover",
     "slug": "Movie-Discover",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "splash": {
       "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#000000"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#000000",
+      "barStyle": "light-content",
+      "translucent": false
+    },
+    "androidNavigationBar": {
+      /*
+        Determines to show or hide bottom navigation bar.
+        "true" to show, "false" to hide.
+        If set to false, status bar will also be hide. As it's a general rule to hide both status bar and navigation bar on Android developer official docs.
+      */
+      "visible": "true",
+      /*
+        Configure the navigation bar icons to have light or dark color.
+        Valid values: "light-content", "dark-content".
+      */
+      "barStyle": "light-content",
+      /*
+        Configuration for android navigation bar.
+        6 character long hex color string, eg: "#000000"
+      */
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +45,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000000"
       },
       "package": "io.Sohil876.MovieDiscover"
     },
