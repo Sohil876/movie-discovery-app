@@ -3,7 +3,7 @@ import { BaseText } from 'components/layout/BaseComponents';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CheckboxGroup from 'react-native-checkbox-group';
-import DatePicker from 'react-native-datepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import styled from 'styled-components/native';
 import { colors, constants } from 'styles/styles.js';
@@ -16,6 +16,30 @@ const FilterScreen = ({ route }) => {
 	const [sortBy, setSortBy] = useState(null);
 	const [selectedGenres, setSelectedGenres] = useState([]);
 
+    const minDate = new Date(1000, 1, 1);
+    const maxDate = new Date(2999, 1, 1);
+    const [fromDate, setFromDate] = useState(null);
+    const [toDate, setToDate] = useState(null);
+    if (fromDate === null) {
+        setFromDate(new Date(2000, 1, 1));
+    };
+    if (toDate === null) {
+        setToDate(new Date());
+    };
+    const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
+    const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
+    const showFromDatePicker = () => {
+        setFromDatePickerVisibility(true);
+    };
+    const showToDatePicker = () => {
+        setToDatePickerVisibility(true);
+    };
+    const hideFromDatePicker = () => {
+        setFromDatePickerVisibility(false);
+    };
+    const hideToDatePicker = () => {
+        setToDatePickerVisibility(false);
+    };
 	const [releaseDateGreaterThan, setReleaseDateGreaterThan] = useState(null);
 	const [releaseDateLessThan, setReleaseDateLessThan] = useState(null);
 
@@ -122,39 +146,46 @@ const FilterScreen = ({ route }) => {
 						<Column>
 							<ReleaseDateText
 								style={{ marginRight: 40 }}
-								onPress={() => setFromDatePicker(true)}
+								onPress={showFromDatePicker}
 							>
-								From
+							    From
 							</ReleaseDateText>
 
-							<DatePicker
-								style={{ width: 100, marginRight: 15 }}
-								date={releaseDateGreaterThan}
-								mode="date"
-								placeholder="Select Date"
-								format="YYYY-MM-DD"
-								minDate="1000-01-01"
-								maxDate="2999-01-01"
-								showIcon={false}
-								customStyles={datePickerStyles}
-								onDateChange={date => setReleaseDateGreaterThan(date)}
+							<DateTimePickerModal
+							    style={{ width: 100, marginRight: 15 }}
+							    isVisible={isFromDatePickerVisible}
+                                mode="date"
+								date={fromDate}
+                                minimumDate={minDate}
+								maximumDate={maxDate}
+                                onConfirm={(date) => {
+								    setFromDatePickerVisibility(false);
+								    setFromDate(date);
+								    setReleaseDateGreaterThan(date);
+								}}
+                                onCancel={hideFromDatePicker}
 							/>
 						</Column>
 
 						<Column>
-							<ReleaseDateText>To</ReleaseDateText>
+							<ReleaseDateText
+							    onPress={showToDatePicker}
+							>
+							    To
+							</ReleaseDateText>
 
-							<DatePicker
-								style={{ width: 100 }}
-								date={releaseDateLessThan}
+							<DateTimePickerModal
+							    isVisible={isToDatePickerVisible}
 								mode="date"
-								placeholder="select date"
-								format="YYYY-MM-DD"
-								minDate="1000-01-01"
-								maxDate="2999-01-01"
-								showIcon={false}
-								customStyles={datePickerStyles}
-								onDateChange={date => setReleaseDateLessThan(date)}
+								date={toDate}
+								minimumDate={minDate}
+								maximumDate={maxDate}
+								onConfirm={(date) => {
+								    setToDatePickerVisibility(false);
+								    setToDate(date);
+								    setReleaseDateLessThan(date);
+								}}
+                                onCancel={hideToDatePicker}
 							/>
 						</Column>
 					</GroupContainer>

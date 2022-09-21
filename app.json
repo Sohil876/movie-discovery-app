@@ -10,6 +10,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#000000"
     },
+    "userInterfaceStyle": "automatic",
     "androidStatusBar": {
       "backgroundColor": "#000000",
       "barStyle": "light-content",
@@ -21,7 +22,7 @@
         "true" to show, "false" to hide.
         If set to false, status bar will also be hide. As it's a general rule to hide both status bar and navigation bar on Android developer official docs.
       */
-      "visible": "true",
+      "visible": true,
       /*
         Configure the navigation bar icons to have light or dark color.
         Valid values: "light-content", "dark-content".
@@ -47,6 +48,7 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
+      "userInterfaceStyle": "automatic",
       "package": "io.Sohil876.MovieDiscover"
     },
     "web": {
