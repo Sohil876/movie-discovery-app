@@ -17,39 +17,10 @@
       "translucent": false
     },
     "androidNavigationBar": {
-      /*
-        Determines to show or hide bottom navigation bar.
-        "true" to show, "false" to hide.
-        If set to false, status bar will also be hide. As it's a general rule to hide both status bar and navigation bar on Android developer official docs.
-      */
       "visible": true,
-      /*
-        Configure the navigation bar icons to have light or dark color.
-        Valid values: "light-content", "dark-content".
-      */
       "barStyle": "light-content",
-      /*
-        Configuration for android navigation bar.
-        6 character long hex color string, eg: "#000000"
-      */
       "backgroundColor": "#000000"
     },
-    "plugins": [
-      [
-        "expo-build-properties",
-          {
-            "android": {
-            "compileSdkVersion": 31,
-            "targetSdkVersion": 31,
-            "buildToolsVersion": "31.0.0",
-            "enableProguardInReleaseBuilds": true,
-          },
-          "ios": {
-            "deploymentTarget": "13.0"
-            }
-          }
-      ]
-    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -70,6 +41,14 @@
     "web": {
       "favicon": "./src/assets/images/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "plugins": [
+      ["expo-build-properties",
+      {
+        "android": {
+          "enableProguardInReleaseBuilds": true,
+        },
+      }]
+    ]
   }
 }

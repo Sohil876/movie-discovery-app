@@ -18,7 +18,11 @@
     "devel3": {
       "developmentClient": true
   },
-  "production": {}
+  "production": {
+    "android": {
+      "buildType": "apk"
+    }
+  }
   },
   "submit": {
     "production": {}

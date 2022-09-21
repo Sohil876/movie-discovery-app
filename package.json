@@ -53,7 +53,8 @@
     "react-native-youtube-iframe": "^2.2.2",
     "styled-components": "^5.3.1",
     "webpack": "^5.69.1",
-    "webpack-sources": "^3.2.3"
+    "webpack-sources": "^3.2.3",
+    "expo-build-properties": "~0.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6"
