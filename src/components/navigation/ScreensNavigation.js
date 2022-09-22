@@ -154,10 +154,7 @@ const styles = StyleSheet.create({
 
 const options = {
 	screenOptions: {
-		gestureEnabled: false,
-		gestureDirection: 'horizontal',
-
-		// headerTitleStyle: {
+    	// headerTitleStyle: {
 		// 	fontFamily: 'poppins-regular',
 		// 	fontSize: 18,
 		// 	marginTop: 5,

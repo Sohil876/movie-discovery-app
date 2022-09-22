@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler'; // This import should ALWAYS be first or else app might crash in prod
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 

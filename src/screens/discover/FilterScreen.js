@@ -16,32 +16,20 @@ const FilterScreen = ({ route }) => {
 	const [sortBy, setSortBy] = useState(null);
 	const [selectedGenres, setSelectedGenres] = useState([]);
 
-    const minDate = new Date(1000, 1, 1);
-    const maxDate = new Date(2999, 1, 1);
-    const [fromDate, setFromDate] = useState(null);
-    const [toDate, setToDate] = useState(null);
-    if (fromDate === null) {
-        setFromDate(new Date(2000, 1, 1));
+    const minDate = new Date("1800-01-01");
+    const maxDate = new Date("2100-01-01");
+
+	const [releaseDateGreaterThan, setReleaseDateGreaterThan] = useState(null);
+    if (releaseDateGreaterThan == null) {
+        setReleaseDateGreaterThan(new Date("2000-01-01"));
     };
-    if (toDate === null) {
-        setToDate(new Date());
+
+	const [releaseDateLessThan, setReleaseDateLessThan] = useState(null);
+    if (releaseDateLessThan == null) {
+        setReleaseDateLessThan(new Date("2022-12-31"));
     };
     const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
     const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
-    const showFromDatePicker = () => {
-        setFromDatePickerVisibility(true);
-    };
-    const showToDatePicker = () => {
-        setToDatePickerVisibility(true);
-    };
-    const hideFromDatePicker = () => {
-        setFromDatePickerVisibility(false);
-    };
-    const hideToDatePicker = () => {
-        setToDatePickerVisibility(false);
-    };
-	const [releaseDateGreaterThan, setReleaseDateGreaterThan] = useState(null);
-	const [releaseDateLessThan, setReleaseDateLessThan] = useState(null);
 
 	const [openModal, setOpenModal] = useState(false);
 	const [sortByItems] = useState([
@@ -104,7 +92,7 @@ const FilterScreen = ({ route }) => {
 			const { filters } = route.params;
 			setReleaseDateGreaterThan(filters['release_date.gte']);
 			setReleaseDateLessThan(filters['release_date.lte']);
-			setSortBy(filters.sort_by);
+			setSortBy(filters['sort_by']);
 
 			if (filters.with_genres) {
 				const genres = filters.with_genres.split(',');
@@ -145,47 +133,46 @@ const FilterScreen = ({ route }) => {
 					<GroupContainer>
 						<Column>
 							<ReleaseDateText
-								style={{ marginRight: 40 }}
-								onPress={showFromDatePicker}
+								style={{ marginRight: "5%" }}
+								onPress={() => setFromDatePickerVisibility(true)}
 							>
-							    From
+							    From: {releaseDateGreaterThan != null && ' ' + JSON.stringify(releaseDateGreaterThan.toDateString())}
 							</ReleaseDateText>
 
 							<DateTimePickerModal
 							    style={{ width: 100, marginRight: 15 }}
 							    isVisible={isFromDatePickerVisible}
                                 mode="date"
-								date={fromDate}
+								date={releaseDateGreaterThan}
                                 minimumDate={minDate}
 								maximumDate={maxDate}
                                 onConfirm={(date) => {
 								    setFromDatePickerVisibility(false);
-								    setFromDate(date);
 								    setReleaseDateGreaterThan(date);
 								}}
-                                onCancel={hideFromDatePicker}
+                                onCancel={() => setFromDatePickerVisibility(false)}
 							/>
 						</Column>
 
 						<Column>
 							<ReleaseDateText
-							    onPress={showToDatePicker}
+							    style={{ marginLeft: "5%" }}
+							    onPress={() => setToDatePickerVisibility(true)}
 							>
-							    To
+							    To: {releaseDateLessThan != null && ' ' + JSON.stringify(releaseDateLessThan.toDateString())}
 							</ReleaseDateText>
 
 							<DateTimePickerModal
 							    isVisible={isToDatePickerVisible}
 								mode="date"
-								date={toDate}
+								date={releaseDateLessThan}
 								minimumDate={minDate}
 								maximumDate={maxDate}
 								onConfirm={(date) => {
 								    setToDatePickerVisibility(false);
-								    setToDate(date);
 								    setReleaseDateLessThan(date);
-								}}
-                                onCancel={hideToDatePicker}
+    							}}
+                                onCancel={() => setToDatePickerVisibility(false)}
 							/>
 						</Column>
 					</GroupContainer>
@@ -196,7 +183,7 @@ const FilterScreen = ({ route }) => {
 						<CheckboxGroup
 							callback={selected => setSelectedGenres(selected)}
 							iconColor={'#ffffff'}
-							iconSize={25}
+							iconSize={23}
 							checkedIcon="ios-checkbox-outline"
 							uncheckedIcon="ios-square-outline"
 							checkboxes={genreList}
