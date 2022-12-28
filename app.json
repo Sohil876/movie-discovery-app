@@ -27,9 +27,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
@@ -37,9 +34,6 @@
       },
       "userInterfaceStyle": "automatic",
       "package": "io.Sohil876.MovieDiscover"
-    },
-    "web": {
-      "favicon": "./src/assets/images/favicon.png"
     },
     "description": "",
     "plugins": [
