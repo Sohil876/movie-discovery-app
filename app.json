@@ -17,7 +17,6 @@
       "translucent": false
     },
     "androidNavigationBar": {
-      "visible": true,
       "barStyle": "light-content",
       "backgroundColor": "#000000"
     },
