@@ -184,8 +184,8 @@ const FilterScreen = ({ route }) => {
 							callback={selected => setSelectedGenres(selected)}
 							iconColor={'#ffffff'}
 							iconSize={23}
-							checkedIcon="ios-checkbox-outline"
-							uncheckedIcon="ios-square-outline"
+							checkedIcon="checkbox-outline"
+							uncheckedIcon="square-outline"
 							checkboxes={genreList}
 							labelStyle={styles.checkBoxLabel}
 							rowStyle={{
