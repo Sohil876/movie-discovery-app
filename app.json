@@ -39,7 +39,8 @@
     "plugins": [
       [
         "expo-build-properties"
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {
